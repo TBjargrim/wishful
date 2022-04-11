@@ -1,0 +1,21 @@
+@import '../../styles/_varibles.scss';
+
+.base{
+     min-width: 14rem;
+    min-height: 2.5rem; 
+}
+
+.primary {
+background-color:$color-white;
+    min-width: 14rem;
+    min-height: 2.5rem;
+}
+
+.primary-color{
+background-color:$color-primary;
+}
+
+.secondary{
+    min-width: 14rem;
+    min-height: 2.5rem;
+}
