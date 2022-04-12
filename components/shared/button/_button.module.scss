@@ -1,4 +1,4 @@
-@import '../../styles/_varibles.scss';
+@import '../../../styles/_varibles.scss';
 
 @mixin baseButton($width, $height, $background-color, $color) {
   min-width: $width;
@@ -11,6 +11,7 @@
   color: $color;
   letter-spacing: 0.05rem;
   font-size: 1rem;
+  cursor: pointer;
 }
 
 .default {
@@ -32,7 +33,7 @@
   @include baseButton(9.125rem, 2.188rem, $color-white, $color-grey800);
   border-radius: 0.625rem;
   font-weight: 500;
-    border: 0.063rem solid $color-grey400;
+  border: 0.063rem solid $color-grey400;
 }
 
 .transparent {
