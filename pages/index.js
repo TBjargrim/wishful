@@ -1,7 +1,9 @@
 import Icon from '../components/shared/Icon';
 import Button from '../components/shared/button/Button';
+import Link from 'next/link';
 
 import styles from '../styles/_landing.module.scss';
+
 const LandingPage = () => {
   return (
     <div className={styles.landingWrapper}>
@@ -14,8 +16,16 @@ const LandingPage = () => {
             present i tid? <span>Vi kan hjälpa dig!</span>
           </p>
           <div className={styles.buttonSection}>
-            <Button> Skapa konto</Button>
-            <Button type="primary">Logga in</Button>
+            <Link href={'/skapa-konto'} passHref>
+              <a>
+                <Button> Skapa konto</Button>
+              </a>
+            </Link>
+            <Link href={'/logga-in'} passHref>
+              <a>
+                <Button type="primary">Logga in</Button>
+              </a>
+            </Link>
           </div>
         </div>
         <div>

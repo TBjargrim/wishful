@@ -5,6 +5,7 @@ import styles from './_footer.module.scss';
 const Footer = () => {
   return (
     <section className={styles.footerContainer}>
+      
       <div className={styles.leftColumn}>
         <Icon src="/logo_2.svg" altText="logo" width="100" height="30" />
         <h5>Kontakta oss</h5>
@@ -20,11 +21,12 @@ const Footer = () => {
           <Icon
             src="/balloons1.svg"
             altText="Balloons"
-            width="200"
-            height="200"
+            width="250"
+            height="250"
           />
         </div>
       </div>
+
       <div className={styles.rightColumn}>
         <div className={styles.leftName}>
           <h5>Sandra Persson</h5>
@@ -65,8 +67,8 @@ const Footer = () => {
           <Icon
             src="/balloons1.svg"
             altText="Balloons"
-            width="200"
-            height="200"
+            width="250"
+            height="250"
           />
         </div>
       </div>
