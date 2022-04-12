@@ -1,0 +1,61 @@
+@import '../../styles/_varibles.scss';
+
+.footerContainer {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+
+  h5 {
+    color: $color-grey900;
+    letter-spacing: 0.1rem;
+    text-transform: capitalize;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: $color-grey900;
+    font-size: 0.75rem;
+    letter-spacing: 0.05rem;
+    font-weight: $font-weight-regular;
+  }
+}
+
+.leftColumn {
+  background-color: #e9f0f2;
+  position: relative;
+  width: 30%;
+  padding: 2.125rem 0 2.125rem 6rem;
+}
+
+.rightColumn {
+  display: flex;
+  justify-content: space-around;
+  width: 70%;
+  padding: 2.125rem 6rem 2.125rem 0;
+  justify-content: flex-end;
+
+  .leftName {
+    padding-right: 4rem;
+  }
+}
+
+.contactInfo {
+  display: flex;
+  padding: 0.2rem 1rem;
+
+  p {
+    margin-left: 0.5rem;
+  }
+}
+
+.balloonsImageLeft {
+  position: absolute;
+  top: 0;
+  right: -3rem;
+}
+
+.balloonsImageRight {
+  position: absolute;
+  top: -3rem;
+  right: -1rem;
+}

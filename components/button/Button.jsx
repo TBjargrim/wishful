@@ -1,20 +1,17 @@
- import styles from './_button.module.scss'
+import styles from './_button.module.scss';
 
-const Button = ({ type, color, children, placeholder }) => {
-    console.log(color)
-
-    const colorClass = color === 'primaryColor' ? 'styles.primary-color' : ''
-
-
+const Button = ({ type, children }) => {
   return type === 'primary' ? (
-    <button className={styles.primary} placeholder={placeholder}>{children}</button>
-  ) : 
-    type ===
-          'secondary' ? (
-              <button className={colorClass} placeholder={placeholder}>{children}</button>)
-     : (
-      <button className={styles.base} placeholder={placeholder}>{children}</button>
+    <button className={styles.primary}>{children}</button>
+  ) : type === 'secondary' ? (
+    <button className={styles.secondary}>{children}</button>
+  ) : type === 'tertiary' ? (
+    <button className={styles.tertiary}>{children}</button>
+  ) : type === 'transparent' ? (
+    <button className={styles.transparent}>{children}</button>
+  ) : (
+    <button className={styles.default}>{children}</button>
   );
 };
 
-export default Button     
+export default Button;

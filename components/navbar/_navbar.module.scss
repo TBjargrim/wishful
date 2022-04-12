@@ -1,0 +1,41 @@
+@import '../../styles/_varibles.scss';
+
+.navbarContainer {
+  background: linear-gradient(
+    180deg,
+    #deedf1 12.06%,
+    rgba(225, 232, 234, 0) 116.31%
+  );
+  display: flex;
+  justify-content: space-between;
+  padding: 0 3.125rem;
+  
+  div {
+    display: flex;
+  }
+}
+
+.navbarList {
+  display: flex;
+  align-items: center;
+
+  li {
+    list-style: none;
+    margin-right: 5.313rem;
+
+    a {
+      text-decoration: none;
+      color: $color-grey900;
+      font-size: $fs-p1;
+      font-weight: $font-weight-medium;
+      letter-spacing: 0.05rem;
+      text-transform: uppercase;
+      transition: color 0.3s, border-bottom 2s ease-in;
+
+      &:hover {
+        color: $color-primary;
+        border-bottom: 0.063rem solid $color-primary;
+      }
+    }
+  }
+}
