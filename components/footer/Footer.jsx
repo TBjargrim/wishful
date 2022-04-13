@@ -21,8 +21,8 @@ const Footer = () => {
           <Icon
             src="/balloons1.svg"
             altText="Balloons"
-            width="250"
-            height="250"
+            width="200"
+            height="150"
           />
         </div>
       </div>
@@ -68,7 +68,7 @@ const Footer = () => {
             src="/balloons1.svg"
             altText="Balloons"
             width="250"
-            height="250"
+            height="180"
           />
         </div>
       </div>

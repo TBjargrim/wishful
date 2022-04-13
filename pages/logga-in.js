@@ -6,18 +6,21 @@ const SignIn = () => {
   return (
     <section className={styles.signinWrapper}>
       <h2>Logga in</h2>
-      <form>
+      <form className={styles.form}>
         <label htmlFor="name">Email</label>
         <input id="name" type="email" />
         <label htmlFor="password">Lösenord</label>
         <input id="password" type="password" />
       </form>
-      <Button>Logga in</Button>
-      <Link href={'/'} passHref>
-        <a>
-          <Button type="primary">Tillbaka</Button>
-        </a>
-      </Link>
+
+      <div className={styles.buttonWrapper}>
+        <Button>Logga in</Button>
+        <Link href={'/'} passHref>
+          <a>
+            <Button type="transparent">Tillbaka</Button>
+          </a>
+        </Link>
+      </div>
     </section>
   );
 };

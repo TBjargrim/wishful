@@ -1,15 +1,19 @@
 @import '../../styles/_varibles.scss';
+@import '../../styles/_mixins.scss';
 
 .navbarContainer {
+  width: 100%;
   background: linear-gradient(
     180deg,
     #deedf1 12.06%,
     rgba(225, 232, 234, 0) 116.31%
   );
   display: flex;
+  align-items: center;
   justify-content: space-between;
   padding: 0 3.125rem;
-  
+  height: 5.625rem;
+
   div {
     display: flex;
   }
@@ -37,5 +41,59 @@
         border-bottom: 0.063rem solid $color-primary;
       }
     }
+  }
+
+  @include respond(tablet) {
+    display: none;
+  }
+}
+
+.mobileContainer {
+  display: none;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    width: 70px;
+    cursor: pointer;
+
+    span {
+      background: $color-primary;
+      border-radius: 10px;
+      height: 7px;
+      margin: 7px 0;
+      transition: 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+
+      &:nth-of-type(1) {
+        width: 50%;
+      }
+
+      &:nth-of-type(2) {
+        width: 100%;
+      }
+
+      &:nth-of-type(3) {
+        width: 75%;
+      }
+    }
+  }
+
+  input[type='checkbox'] {
+    display: none;
+  }
+
+  input[type='checkbox']:checked ~ span:nth-of-type(1) {
+    transform-origin: bottom;
+    transform: rotatez(45deg) translate(8px, 0px);
+  }
+  input[type='checkbox']:checked ~ span:nth-of-type(2) {
+    transform-origin: top;
+    transform: rotatez(-45deg);
+  }
+
+  input[type='checkbox']:checked ~ span:nth-of-type(3) {
+    transform-origin: bottom;
+    width: 50%;
+    transform: translate(30px, -11px) rotatez(45deg);
   }
 }
