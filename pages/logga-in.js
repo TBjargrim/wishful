@@ -14,7 +14,11 @@ const SignIn = () => {
       </form>
 
       <div className={styles.buttonWrapper}>
-        <Button>Logga in</Button>
+        <Link href={'/hemsida'} passHref>
+          <a>
+            <Button>Logga in</Button>
+          </a>
+        </Link>
         <Link href={'/'} passHref>
           <a>
             <Button type="transparent">Tillbaka</Button>

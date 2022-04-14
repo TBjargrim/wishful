@@ -15,7 +15,7 @@ const Navbar = () => {
   return (
     <>
       <section className={styles.navbarContainer}>
-        <Link href="/">
+        <Link href="/hemsida">
           <a aria-label="link to homepage">
             <NextImage src="/logo_2.svg" alt="logo" width="90" height="90" />
           </a>
@@ -24,7 +24,7 @@ const Navbar = () => {
         <div>
           <ul className={styles.navbarList}>
             <li>
-              <Link href="/">
+              <Link href="/hemsida">
                 <a aria-label="link to homepage">Hem</a>
               </Link>
             </li>
