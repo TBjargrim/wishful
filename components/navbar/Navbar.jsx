@@ -1,8 +1,17 @@
+import { useState } from 'react';
 import NextImage from 'next/image';
 import Link from 'next/link';
 import styles from './_navbar.module.scss';
 
 const Navbar = () => {
+  const [openMenu, setOpenMenu] = useState(false);
+
+  const burgerMenuClass = openMenu ? `${styles.open}` : '';
+
+  const handleClick = () => {
+    setOpenMenu((open) => !open);
+  };
+
   return (
     <>
       <section className={styles.navbarContainer}>
@@ -33,9 +42,9 @@ const Navbar = () => {
           <NextImage src="/avatar_1.svg" alt="avatar" width="64" height="64" />
         </div>
 
-        <div className={styles.mobileContainer}>
+        <div className={`${styles.mobileContainer} ${burgerMenuClass}`}>
           <label for="check">
-            <input type="checkbox" id="check" />
+            <input type="checkbox" id="check" onClick={handleClick} />
             <span></span>
             <span></span>
             <span></span>
