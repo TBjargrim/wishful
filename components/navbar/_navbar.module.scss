@@ -61,6 +61,8 @@
       flex-direction: column;
       width: 70px;
       cursor: pointer;
+      position: absolute;
+      right: 0;
 
       span {
         background: $color-primary;
@@ -106,7 +108,8 @@
 
 .open {
   background-color: #dfedf2;
-  display: block;
+  display: flex;
+  flex-direction: column;
   position: fixed;
   width: 100%;
   will-change: transform;
@@ -115,5 +118,34 @@
   bottom: 0;
   left: 0;
   z-index: 1;
-  overflow: scroll;
+  /*   overflow: scroll; */
+}
+
+.mobileList {
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  color: $color-grey900;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  li {
+    list-style: none;
+
+    a {
+      text-decoration: none;
+      font-size: $fs-p1;
+      font-weight: $font-weight-medium;
+      letter-spacing: 0.05rem;
+      text-transform: uppercase;
+      transition: color 0.3s, border-bottom 2s ease-in;
+
+      &:hover {
+        color: $color-primary;
+        border-bottom: 0.063rem solid $color-primary;
+      }
+    }
+  }
 }
