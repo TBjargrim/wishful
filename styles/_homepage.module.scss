@@ -1,0 +1,127 @@
+@import 'varibles';
+
+.homepageContainer {
+  min-height: calc(100vh - 17.125rem);
+  display: flex;
+}
+
+.leftContainer {
+  margin-left: 4.375rem;
+  margin-bottom: 4rem;
+  width: 27rem;
+  min-height: 48.438rem;
+  box-shadow: 4px 5px 18px rgba(0, 0, 0, 0.12);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.5rem;
+}
+
+.searchWrapper {
+  margin: 3rem 0;
+  input {
+    box-shadow: 2px 4px 9px rgba(0, 0, 0, 0.11);
+    border-radius: 5px;
+    border: none;
+    width: 20.625rem;
+    height: 2rem;
+    outline: none;
+  }
+}
+
+.eventsWrapper {
+  width: 100%;
+  h3 {
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #c1c1c1;
+  }
+}
+
+.cardWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2rem 0;
+}
+
+.eventCard {
+  box-shadow: 2px 4px 9px rgba(0, 0, 0, 0.11);
+  border-radius: 15px;
+  width: 7rem;
+  height: 6.2rem;
+  margin: 1rem 0.5rem;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h4 {
+    font-weight: $font-weight-bold;
+  }
+
+  p {
+    font-size: $fs-p4;
+    text-align: center;
+    padding: 0 0.2rem;
+  }
+}
+
+.cardImg {
+  margin-top: -1rem;
+}
+
+.emptyMessage {
+  font-size: $fs-p2;
+  font-weight: $font-weight-medium;
+  text-align: center;
+  margin: 3rem 4rem;
+}
+
+.rightContainer {
+  margin: 5rem;
+}
+
+.reminders {
+  margin: 2rem 0 5rem 0;
+}
+
+.reminderCard {
+  width: 11.563rem;
+  height: 6.875rem;
+  background: #fff8f6;
+  box-shadow: 2px 4px 9px rgba(0, 0, 0, 0.11);
+  border-radius: 5px;
+  margin: 0.5rem 0.5rem;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  h6 {
+    font-size: $fs-p3;
+    font-weight: $font-weight-medium;
+  }
+  span {
+    font-weight: $font-weight-bold;
+  }
+  button {
+    background: none;
+    border: none;
+    text-decoration: underline;
+  }
+}
+
+.calender {
+  width: 730px;
+  height: 500px;
+  background: #f9f9f9;
+  box-shadow: 2px 4px 9px rgba(0, 0, 0, 0.11);
+  border-radius: 15px;
+
+  h3 {
+    padding: 1rem;
+  }
+}

@@ -1,0 +1,42 @@
+@import '../../../styles/_varibles.scss';
+
+@mixin baseButton($width, $height, $background-color, $color) {
+  min-width: $width;
+  min-height: $height;
+  box-shadow: 0.5rem 0.688rem 1.563rem 0.063rem rgba(98, 98, 98, 0.13);
+  border-radius: 0.938rem;
+  border: none;
+  background-color: $background-color;
+  font-weight: 600;
+  color: $color;
+  letter-spacing: 0.05rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.default {
+  @include baseButton(14rem, 2.5rem, $color-primary, $color-white);
+}
+
+.primary {
+  @include baseButton(14rem, 2.5rem, $color-white, $color-grey800);
+  border: 0.063rem solid $color-grey400;
+}
+
+.secondary {
+  @include baseButton(9.125rem, 2.188rem, $color-primary, $color-white);
+  border-radius: 0.625rem;
+  font-weight: 500;
+}
+
+.tertiary {
+  @include baseButton(9.125rem, 2.188rem, $color-white, $color-grey800);
+  border-radius: 0.625rem;
+  font-weight: 500;
+  border: 0.063rem solid $color-grey400;
+}
+
+.transparent {
+  @include baseButton(14rem, 2.5rem, transparent, $color-grey800);
+  box-shadow: none;
+}

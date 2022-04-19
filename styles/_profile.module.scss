@@ -1,0 +1,98 @@
+@import 'varibles';
+
+.profileContainer {
+  min-height: calc(100vh - 17.125rem);
+  display: flex;
+}
+
+.userInfoContainer {
+  margin-left: 4.375rem;
+  width: 25rem;
+  min-height: 48.438rem;
+  box-shadow: 4px 5px 18px rgba(0, 0, 0, 0.12);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 3.75rem;
+}
+
+.topSection {
+  margin-bottom: 3.438rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  p {
+    margin: 0.5rem 0;
+  }
+}
+
+.middleSection {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.dateCard {
+  display: flex;
+  flex-direction: row;
+  margin: 0 0.5rem 1rem 0;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    padding-right: 0.5rem;
+  }
+}
+
+.bottomSection {
+  margin-top: 3.438rem;
+}
+
+.interestsCards {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  p {
+    margin: 0.5rem 0.625rem 0.5rem 0;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    background: #eef3ff;
+    box-shadow: 3px 3px 10px 1px rgba(98, 98, 98, 0.12);
+    border-radius: 10px;
+  }
+}
+
+.editButton {
+  margin-top: 4rem;
+}
+
+.wishlistContainer {
+  margin: 4.375rem 0 0 6rem;
+  button {
+    margin-top: 2rem;
+  }
+}
+
+.wishlistsWrapper {
+  margin-top: 3rem;
+}
+
+.wishlist {
+  box-shadow: 4px 7px 17px 1px rgba(98, 98, 98, 0.14);
+  border-radius: 10px;
+  width: 47rem;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+
+  div {
+    display: flex;
+    padding: 0.3rem 0;
+
+    h4 {
+      padding: 0.5rem;
+    }
+  }
+}
