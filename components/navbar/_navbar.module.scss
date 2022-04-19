@@ -68,23 +68,32 @@
 }
 
 .menuButton {
-  position: relative;
-  width: 50px;
-  height: 6px;
-  background-color: $color-primary;
-  border-radius: 5px;
-  transition: all 0.5s ease-in-out;
+  display: none;
+
+  @include respond(tablet) {
+    position: relative;
+    width: 50px;
+    height: 6px;
+    background-color: $color-primary;
+    border-radius: 5px;
+    transition: all 0.5s ease-in-out;
+  }
 }
 
 .menuButton::before,
 .menuButton::after {
-  content: '';
-  position: absolute;
-  width: 50px;
-  height: 6px;
-  background: $color-primary;
-  border-radius: 5px;
-  transition: all 0.5s ease-in-out;
+  display: none;
+
+  @include respond(tablet) {
+    content: '';
+    display: flex;
+    position: absolute;
+    width: 50px;
+    height: 6px;
+    background: $color-primary;
+    border-radius: 5px;
+    transition: all 0.5s ease-in-out;
+  }
 }
 
 .menuButton::before {
