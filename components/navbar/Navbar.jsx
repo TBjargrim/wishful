@@ -1,3 +1,4 @@
+import React, { useContext } from 'react';
 import { useState } from 'react';
 import NextImage from 'next/image';
 import Link from 'next/link';
@@ -11,7 +12,7 @@ const Navbar = () => {
   const handleClick = () => {
     setOpenMenu((open) => !open);
   };
-  console.log(openMenu);
+
   return (
     <>
       <section className={`${styles.navbarContainer} ${burgerMenuClass}`}>
@@ -45,6 +46,7 @@ const Navbar = () => {
                     <a aria-label="link to friendspage">Vänner</a>
                   </Link>
                 </li>
+                <li onClick={() => app.auth().signOut()}>Logga ut</li>
               </ul>
               <NextImage
                 src="/avatar_1.svg"
@@ -80,6 +82,9 @@ const Navbar = () => {
               <Link href="/vanner">
                 <a aria-label="link to friendspage">Vänner</a>
               </Link>
+            </li>
+            <li onClick={() => app.auth().signOut()}>
+              <a aria-label="logga ut">Logga ut</a>
             </li>
           </ul>
         </div>
