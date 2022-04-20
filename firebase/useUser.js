@@ -1,50 +1,58 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import firebase from 'firebase/compat/app';
+import { getAuth } from 'firebase/auth';
 import 'firebase/auth';
+import initFirebase from './config';
+import {
+  removeUserCookie,
+  setUserCookie,
+  getUserCookie,
+  getUserFromCookie,
+} from './userCookies';
+import { mapUserData } from './mapUserData';
 
-import firebaseConfig from './config';
-
-export const mapUserData = async (user) => {
-  const { uid, email } = user;
-  const token = await user.getIdToken(true);
-  return {
-    id: uid,
-    email,
-    token,
-  };
-};
+initFirebase();
 
 const useUser = () => {
   const [user, setUser] = useState();
   const router = useRouter();
+  const auth = getAuth();
 
   const logout = async () => {
-    return firebaseConfig
-      .auth()
-      .signOut()
-      .then(() => {
-        router.push('/');
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+    try {
+      await auth.signOut();
+      /*    removeUserCookie(); */
+      router.push('/');
+    } catch (e) {
+      console.log(e.message);
+    }
   };
 
   useEffect(() => {
-    const cancelAuthListener = firebase
-      .auth()
-      .onIdTokenChanged(async (userToken) => {
-        if (userToken) {
-          const userData = await mapUserData(userToken);
+    // Firebase updates the id token every hour, this
+    // makes sure the react state and the cookie are
+    // both kept up to date
+    const cancelAuthListener = auth.onIdTokenChanged((user) => {
+      if (user) {
+        const userData = mapUserData(user);
+        setUserCookie(userData);
+        setUser(userData);
+      } else {
+        removeUserCookie();
+        setUser();
+      }
+    });
 
-          setUser(userData);
-        } else {
-          setUser();
-        }
-      });
+    /*     const userFromCookie = getUserFromCookie();
+    if (!userFromCookie) {
+      router.push('/');
+      return;
+    }
+    setUser(userFromCookie);
 
-    return () => cancelAuthListener;
+    return () => {
+      cancelAuthListener();
+    }; */
   }, []);
 
   return { user, logout };

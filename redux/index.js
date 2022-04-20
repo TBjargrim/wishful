@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+/* import { createStore, applyMiddleware, compose } from 'redux';
 import { createWrapper } from 'next-redux-wrapper';
 import { reduxFirestore, getFirestore } from 'redux-firestore';
 import { getFirebase } from 'react-redux-firebase';
@@ -25,3 +25,4 @@ export const newStore = () => {
 };
 
 export const wrapper = createWrapper(newStore, { debug: true });
+ */

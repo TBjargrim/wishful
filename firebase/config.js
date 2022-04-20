@@ -1,13 +1,20 @@
+import firebase from 'firebase/compat/app';
 import 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
+  apiKey: 'AIzaSyBGKKJbM_hm9yIXwRbqvTZOXsiy-_HNqtM',
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
   databaseURL: process.env.FIREBASE_DATA_URL,
-  projectId: process.env.FIREBASE_PROJECT_ID,
+  projectId: 'wishlist-cd524',
   storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.FIREBASE_APP_ID,
 };
 
-export default firebaseConfig;
+const initFirebase = () => {
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+};
+
+export default initFirebase;

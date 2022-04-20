@@ -1,14 +1,17 @@
 import Icon from '../components/shared/Icon';
 import Button from '../components/shared/button/Button';
 import Link from 'next/link';
-
 import styles from '../styles/_landing.module.scss';
+import WriteToCloudFirestore from '../components/firestore/Write';
+import ReadToCloudFirestore from '../components/firestore/Read';
 
 const LandingPage = () => {
   return (
     <div className={styles.landingWrapper}>
       <div className={styles.topSection}>
         <div className={styles.leftColumn}>
+          <WriteToCloudFirestore />
+          <ReadToCloudFirestore />
           <h2>Kom aldrig mer tomhänt till ett kalas med hjälp av </h2>
           <Icon src="/logo_1.svg" altText="logo" width="200" height="70" />
           <p>

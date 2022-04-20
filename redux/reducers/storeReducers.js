@@ -1,4 +1,4 @@
-import { HYDRATE } from 'next-redux-wrapper';
+/* import { HYDRATE } from 'next-redux-wrapper';
 const initialState = {
   products: [
     { id: '1', name: 'chew toy', price: 55 },
@@ -15,3 +15,4 @@ const reducer = (state = initialState, action) => {
   return state;
 };
 export default reducer;
+ */
