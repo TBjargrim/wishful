@@ -1,0 +1,25 @@
+
+.firebaseui-container{
+
+  width: 500px;
+}
+
+.mdl-card {
+    background:red;
+    width: 500px;
+}
+
+.firebaseui-title{
+    display: none;
+}
+
+.firebaseui-form-actions{
+
+
+}
+
+
+.mdl-button--raised.mdl-button--colored {
+
+    width:100px;
+}

@@ -1,4 +1,4 @@
-import cookies from 'js-cookie';
+/* import cookies from 'js-cookie';
 
 export const getUserFromCookie = () => {
   const cookie = cookies.get('auth');
@@ -6,7 +6,7 @@ export const getUserFromCookie = () => {
     return;
   }
   console.log('Sparad user från cookie' + cookie);
-  return JSON.parse(cookie);
+  return cookie;
 };
 
 export const setUserCookie = (user) => {
@@ -15,4 +15,4 @@ export const setUserCookie = (user) => {
   });
 };
 
-export const removeUserCookie = () => cookies.remove('auth');
+export const removeUserCookie = () => cookies.remove('auth'); */

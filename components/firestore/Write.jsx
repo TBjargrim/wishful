@@ -1,9 +1,11 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import { useUser } from '../../firebase/useUser';
+import Button from '../shared/button/Button';
 
-const WriteToCloudFirestore = () => {
+const WriteToCloudFirestore = ({ type, children }) => {
   const { user } = useUser();
+  console.log(user);
 
   const sendData = () => {
     try {
@@ -21,7 +23,15 @@ const WriteToCloudFirestore = () => {
     }
   };
 
-  return <button onClick={sendData}>Send Data To Cloud firestore</button>;
+  return (
+    <>
+      {user && (
+        <Button type={type} onClick={sendData}>
+          {children}
+        </Button>
+      )}
+    </>
+  );
 };
 
 export default WriteToCloudFirestore;

@@ -1,16 +1,22 @@
-
 import { Provider } from 'react-redux';
 import { wrapper, newStore } from '../redux/index.js';
 import { createFirestoreInstance } from 'redux-firestore';
 import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
+import { useRouter } from 'next/router';
 
 import Navbar from '../components/navbar/Navbar';
 import Footer from '../components/footer/Footer';
-import {useUser} from '../firebase/useUser'
+import { useUser } from '../firebase/useUser';
 import '../styles/globals.scss';
+import '../styles/firebaseui-styling.global.css';
+import SignIn from './logga-in.js';
+import { useEffect } from 'react';
 
 function MyApp({ Component, pageProps }) {
-  const { user, logout } = useUser();
+  const { user } = useUser();
+
+  const router = useRouter();
+  console.log(user);
   /*   const rrfConfig = { userProfile: 'users' }; // react-redux-firebase config
 
   if (!firebase.apps.length) {
@@ -26,6 +32,11 @@ function MyApp({ Component, pageProps }) {
     createFirestoreInstance,
   };
 */
+  /*   useEffect(() => {
+    if (!user) {
+      router.push('/');
+    }
+  }, [router.pathname]); */
 
   return (
     <>

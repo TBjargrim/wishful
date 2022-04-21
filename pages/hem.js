@@ -1,7 +1,8 @@
 import styles from '../styles/_homepage.module.scss';
 import NextImage from 'next/image';
 
-const Hemsidan = () => {
+const Hem = () => {
+  
   return (
     <div>
       <div className={styles.homepageContainer}>
@@ -119,4 +120,4 @@ const Hemsidan = () => {
   );
 };
 
-export default Hemsidan;
+export default Hem;

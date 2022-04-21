@@ -21,7 +21,7 @@ const useUser = () => {
   const logout = async () => {
     try {
       await auth.signOut();
-      /*    removeUserCookie(); */
+      removeUserCookie();
       router.push('/');
     } catch (e) {
       console.log(e.message);
@@ -35,10 +35,10 @@ const useUser = () => {
     const cancelAuthListener = auth.onIdTokenChanged((user) => {
       if (user) {
         const userData = mapUserData(user);
-        setUserCookie(userData);
+        /*     setUserCookie(userData); */
         setUser(userData);
       } else {
-        removeUserCookie();
+        /*       removeUserCookie(); */
         setUser();
       }
     });

@@ -21,7 +21,7 @@ const Navbar = () => {
         <section className={`${styles.navbarContainer} ${burgerMenuClass}`}>
           {!openMenu && (
             <>
-              <Link href="/hemsida">
+              <Link href="/hem">
                 <a aria-label="link to homepage">
                   <NextImage
                     src="/logo_2.svg"
@@ -35,7 +35,7 @@ const Navbar = () => {
               <div>
                 <ul className={styles.navbarList}>
                   <li>
-                    <Link href="/hemsida">
+                    <Link href="/hem">
                       <a aria-label="link to homepage">Hem</a>
                     </Link>
                   </li>
@@ -72,7 +72,7 @@ const Navbar = () => {
           <div className={styles.mobileList}>
             <ul>
               <li onClick={() => setOpenMenu(!openMenu)}>
-                <Link href="/hemsida">
+                <Link href="/hem">
                   <a aria-label="link to homepage">Hem</a>
                 </Link>
               </li>

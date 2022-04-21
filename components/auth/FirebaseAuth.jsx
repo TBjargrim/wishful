@@ -19,7 +19,7 @@ const FirebaseAuthConfig = {
       requireDisplayName: true,
     },
   ],
-  signInSuccessUrl: '/hemsida',
+  signInSuccessUrl: '/hem',
   credentialHelper: 'none',
   callbacks: {
     signInSuccessWithAuthResult: async ({ user }, redirectUrl) => {
