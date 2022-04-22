@@ -1,21 +1,24 @@
 import { useRouter } from 'next/router';
 import Navbar from '../components/navbar/Navbar';
-import NavbarIcon from '../components/navbar/NavbarIcon';
 import Footer from '../components/footer/Footer';
+import { useUser } from '../firebase/useUser';
 import '../styles/globals.scss';
+import '../styles/firebaseui-styling.global.css';
+import { useEffect } from 'react';
 
 function MyApp({ Component, pageProps }) {
+  const { user } = useUser();
   const router = useRouter();
 
-  const showHeader =
-    router.pathname === '/' ||
-    router.pathname === '/logga-in' ||
-    router.pathname === '/skapa-konto'
-      ? false
-      : true;
+  useEffect(() => {
+    if (!user) {
+      router.push('/');
+    }
+  }, [router.pathname]);
+
   return (
     <>
-      {showHeader ? <Navbar /> : <NavbarIcon />}
+      <Navbar />
       <Component {...pageProps} />
       <Footer />
     </>

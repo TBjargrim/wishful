@@ -1,3 +1,4 @@
+
 import Button from '../components/shared/button/Button';
 import styles from '../styles/_signin.module.scss';
 import Link from 'next/link';
@@ -6,6 +7,9 @@ const SignIn = () => {
   return (
     <section className={styles.signinWrapper}>
       <h2>Logga in</h2>
+      <div className={styles.firebaseLogin}>
+  
+      </div>
       <form className={styles.form}>
         <label htmlFor="name">Email</label>
         <input id="name" type="email" />
