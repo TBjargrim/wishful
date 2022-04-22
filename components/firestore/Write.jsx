@@ -7,29 +7,25 @@ const WriteToCloudFirestore = ({ type, children }) => {
   const { user } = useUser();
   console.log(user);
 
-  const sendData = () => {
+  const sendData = (e) => {
+    e.preventDefault();
+
     try {
-      firebase
-        .firestore()
-        .collection('my_information')
-        .doc(user.id)
-        .set({
-          name: 'Therese',
-        })
-        .then(alert('Success'));
+      firebase.firestore().collection('users').doc(user.id).set({
+        name: user.name,
+        email: user.email,
+        uid: user.id,
+      });
     } catch (error) {
       console.log(error);
-      alert(error);
     }
   };
 
   return (
     <>
-      {user && (
-        <Button type={type} onClick={sendData}>
-          {children}
-        </Button>
-      )}
+      <button type={type} onClick={sendData}>
+        {children}
+      </button>
     </>
   );
 };

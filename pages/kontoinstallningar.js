@@ -4,13 +4,31 @@ import Icon from '../components/shared/Icon';
 import styles from '../styles/_accountSettings.module.scss';
 import Link from 'next/link';
 import WriteToCloudFirestore from '../components/firestore/Write';
+import { useRouter } from 'next/router';
+
 const Settings = () => {
   const [profileImage, setProfileImage] = useState('');
   const [birthdate, setBirthdate] = useState();
   const [myInterests, setMyInterests] = useState([]);
   const [description, setDescription] = useState('');
 
-  
+  const [collectedInformation, setCollectedInformation] = useState({});
+
+  const router = useRouter();
+
+  const redirect = (path) => {
+    setCollectedInformation({
+      ...collectedInformation,
+      profileImage,
+      birthdate,
+      myInterests,
+      description,
+    });
+    router.push(path);
+  };
+
+  console.log(collectedInformation);
+
   return (
     <div className={styles.settingWrapper}>
       <h3>Fyll i din profil</h3>
@@ -81,14 +99,10 @@ const Settings = () => {
           </div>
         </div>
 
-        <div className={styles.button}>
-          {/*           <Link href={'/min-profil'} passHref>
-            <a> */}
+        <div className={styles.button} onClick={() => redirect('/min-profil')}>
           <WriteToCloudFirestore type="secondary">
             Bekräfta
           </WriteToCloudFirestore>
-          {/*             </a>
-          </Link> */}
         </div>
       </form>
 

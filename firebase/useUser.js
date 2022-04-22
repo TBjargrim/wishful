@@ -49,10 +49,10 @@ const useUser = () => {
       return;
     }
     setUser(userFromCookie);
-
+*/
     return () => {
       cancelAuthListener();
-    }; */
+    };
   }, []);
 
   return { user, logout };
