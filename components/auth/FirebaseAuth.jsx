@@ -1,11 +1,7 @@
 import initFirebase from '../../firebase/config';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import firebase from 'firebase/compat/app';
 import { getAuth, EmailAuthProvider } from 'firebase/auth';
 import { useEffect, useState } from 'react';
-
-import { setUserCookie } from '../../firebase/userCookies';
-import { mapUserData } from '../../firebase/mapUserData';
 
 initFirebase();
 
@@ -21,12 +17,6 @@ const FirebaseAuthConfig = {
   ],
   signInSuccessUrl: '/hem',
   credentialHelper: 'none',
-  callbacks: {
-    signInSuccessWithAuthResult: async ({ user }, redirectUrl) => {
-      const userData = mapUserData(user);
-      setUserCookie(userData);
-    },
-  },
 };
 
 const FirebaseAuth = () => {

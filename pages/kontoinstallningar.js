@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from '../components/shared/button/Button';
 import Icon from '../components/shared/Icon';
 import styles from '../styles/_accountSettings.module.scss';
@@ -17,6 +17,10 @@ const Settings = () => {
   const router = useRouter();
 
   const redirect = (path) => {
+    router.push(path);
+  };
+
+  useEffect(() => {
     setCollectedInformation({
       ...collectedInformation,
       profileImage,
@@ -24,9 +28,7 @@ const Settings = () => {
       myInterests,
       description,
     });
-    router.push(path);
-  };
-
+  }, [profileImage, birthdate, myInterests, description]);
   console.log(collectedInformation);
 
   return (
@@ -100,7 +102,10 @@ const Settings = () => {
         </div>
 
         <div className={styles.button} onClick={() => redirect('/min-profil')}>
-          <WriteToCloudFirestore type="secondary">
+          <WriteToCloudFirestore
+            type="secondary"
+            collectedInformation={collectedInformation}
+          >
             Bekräfta
           </WriteToCloudFirestore>
         </div>
