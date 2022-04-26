@@ -12,12 +12,11 @@ const useUser = () => {
   const [user, setUser] = useState();
   const router = useRouter();
   const auth = getAuth();
-  /*   const dispatch = useDispatch(); */
+  const dispatch = useDispatch();
 
   const logout = async () => {
     try {
       await auth.signOut();
-
       router.push('/');
     } catch (e) {
       console.log(e.message);
@@ -28,7 +27,7 @@ const useUser = () => {
     const cancelAuthListener = auth.onIdTokenChanged((user) => {
       if (user) {
         const userData = mapUserData(user);
-        /*         dispatch(userSlice.actions.saveUser(userData)); */
+       dispatch(update(user));
         setUser(userData);
       } else {
         setUser();
