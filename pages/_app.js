@@ -17,7 +17,7 @@ function MyApp({ Component, pageProps }) {
       router.push('/');
     }
   }, [router.pathname]);
-
+  console.log(user);
   return (
     <>
       <Provider store={store}>
