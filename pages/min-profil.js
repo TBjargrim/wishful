@@ -3,8 +3,11 @@ import Button from '../components/shared/button/Button';
 import Link from 'next/link';
 import NextImage from 'next/image';
 import Icon from '../components/shared/Icon';
+import { useSelector } from 'react-redux';
 
 const Profile = () => {
+  const user = useSelector((state) => state.user);
+
   return (
     <div className={styles.profileContainer}>
       <div className={styles.userInfoContainer}>
@@ -28,7 +31,7 @@ const Profile = () => {
               />
             </div>
             <div>
-              <h5>2 september</h5>
+              <h5>{user.birthdate}</h5>
               <p>Födelsedag</p>
             </div>
           </div>
@@ -92,7 +95,6 @@ const Profile = () => {
           </a>
         </div>
         <div className={styles.wishlistsWrapper}>
-         
           <div className={styles.wishlist}>
             <div>
               <div>
@@ -137,9 +139,7 @@ const Profile = () => {
             </div>
             <Icon src="/arrowIcon.svg" altText="Icon" />
           </div>
-
         </div>
-
       </div>
     </div>
   );

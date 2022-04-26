@@ -1,10 +1,12 @@
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { Provider } from 'react-redux';
 import Navbar from '../components/navbar/Navbar';
 import Footer from '../components/footer/Footer';
+import { store } from '../redux/store';
 import { useUser } from '../firebase/useUser';
 import '../styles/globals.scss';
 import '../styles/firebaseui-styling.global.css';
-import { useEffect } from 'react';
 
 function MyApp({ Component, pageProps }) {
   const { user } = useUser();
@@ -18,9 +20,11 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
-      <Navbar />
-      <Component {...pageProps} />
-      <Footer />
+      <Provider store={store}>
+        <Navbar />
+        <Component {...pageProps} />
+        <Footer />
+      </Provider>
     </>
   );
 }

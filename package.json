@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.1",
     "firebase": "^9.6.11",
     "firebase-admin": "^10.0.2",
     "js-cookie": "^3.0.1",

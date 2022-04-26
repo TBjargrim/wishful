@@ -5,8 +5,11 @@ import styles from '../styles/_accountSettings.module.scss';
 import Link from 'next/link';
 import WriteToCloudFirestore from '../components/firestore/Write';
 import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import { userSlice } from '../redux/reducers/userSlice';
 
 const Settings = () => {
+  const dispatch = useDispatch();
   const [profileImage, setProfileImage] = useState('');
   const [birthdate, setBirthdate] = useState();
   const [myInterests, setMyInterests] = useState([]);
@@ -28,8 +31,8 @@ const Settings = () => {
       myInterests,
       description,
     });
+    dispatch(userSlice.actions.saveUser(collectedInformation));
   }, [profileImage, birthdate, myInterests, description]);
-  console.log(collectedInformation);
 
   return (
     <div className={styles.settingWrapper}>
