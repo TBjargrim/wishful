@@ -7,6 +7,9 @@ import { useSelector } from 'react-redux';
 
 const Profile = () => {
   const user = useSelector((state) => state.user);
+  console.log(user);
+
+  const {profileImage, birthdate, myInterests} = user;
 
   return (
     <div className={styles.profileContainer}>
@@ -31,7 +34,7 @@ const Profile = () => {
               />
             </div>
             <div>
-              <h5>{user.birthdate}</h5>
+                 <h5>{birthdate}</h5> 
               <p>Födelsedag</p>
             </div>
           </div>
@@ -69,7 +72,7 @@ const Profile = () => {
           <div className={styles.bottomSection}>
             <h3>Mina intressen</h3>
             <div className={styles.interestsCards}>
-              <p>Laga mat</p>
+              <p>{myInterests}</p>
               <p>Sy</p>
               <p>Simma</p>
               <p>Mingla</p>

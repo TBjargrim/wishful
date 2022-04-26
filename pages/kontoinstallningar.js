@@ -6,7 +6,7 @@ import Link from 'next/link';
 import WriteToCloudFirestore from '../components/firestore/Write';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
-import { userSlice } from '../redux/reducers/userSlice';
+import { update } from '../redux/reducers/userSlice';
 
 const Settings = () => {
   const dispatch = useDispatch();
@@ -20,6 +20,7 @@ const Settings = () => {
   const router = useRouter();
 
   const redirect = (path) => {
+
     router.push(path);
   };
 
@@ -31,7 +32,7 @@ const Settings = () => {
       myInterests,
       description,
     });
-    dispatch(userSlice.actions.saveUser(collectedInformation));
+    dispatch(update(collectedInformation)); 
   }, [profileImage, birthdate, myInterests, description]);
 
   return (

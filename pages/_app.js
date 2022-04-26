@@ -4,13 +4,18 @@ import { Provider } from 'react-redux';
 import Navbar from '../components/navbar/Navbar';
 import Footer from '../components/footer/Footer';
 import { store } from '../redux/store';
+
 import { useUser } from '../firebase/useUser';
 import '../styles/globals.scss';
 import '../styles/firebaseui-styling.global.css';
 
 function MyApp({ Component, pageProps }) {
+
   const { user } = useUser();
   const router = useRouter();
+
+ 
+
 
   useEffect(() => {
     if (!user) {
@@ -19,13 +24,11 @@ function MyApp({ Component, pageProps }) {
   }, [router.pathname]);
   console.log(user);
   return (
-    <>
       <Provider store={store}>
         <Navbar />
         <Component {...pageProps} />
         <Footer />
       </Provider>
-    </>
   );
 }
 
