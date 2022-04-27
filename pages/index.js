@@ -12,8 +12,6 @@ const LandingPage = () => {
   const dispatch = useDispatch();
   const { user } = useUser();
 
-  console.log(user)
-  
   useEffect(() => {
     if (user) {
       dispatch(update(user));

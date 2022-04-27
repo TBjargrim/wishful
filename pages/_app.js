@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Provider } from 'react-redux';
 import Navbar from '../components/navbar/Navbar';
@@ -10,26 +10,23 @@ import '../styles/globals.scss';
 import '../styles/firebaseui-styling.global.css';
 
 function MyApp({ Component, pageProps }) {
-
   const { user } = useUser();
   const router = useRouter();
-
- 
-
 
   useEffect(() => {
     if (!user) {
       router.push('/');
     }
   }, [router.pathname]);
-  console.log(user);
+
   return (
-      <Provider store={store}>
-        <Navbar />
-        <Component {...pageProps} />
-        <Footer />
-      </Provider>
+    <Provider store={store}>
+      <Navbar />
+      <Component {...pageProps} user={user} />
+      <Footer />
+    </Provider>
   );
 }
 
 export default MyApp;
+

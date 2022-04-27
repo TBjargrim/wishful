@@ -1,27 +1,45 @@
+import { useContext, useEffect } from 'react';
 import styles from '../styles/_profile.module.scss';
 import Button from '../components/shared/button/Button';
 import Link from 'next/link';
 import NextImage from 'next/image';
 import Icon from '../components/shared/Icon';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { update } from '../redux/reducers/userSlice';
 
-const Profile = () => {
-  const user = useSelector((state) => state.user);
-  console.log(user);
-
-  const {profileImage, birthdate, myInterests} = user;
+const Profile = ({ user }) => {
+  const dispatch = useDispatch();
+  dispatch(update({ ...user }));
+  const userInformation = useSelector((state) => state.user);
+  console.log(userInformation);
+  const { name, email, profileImage, birthdate, myInterests, description } =
+    userInformation;
 
   return (
     <div className={styles.profileContainer}>
       <div className={styles.userInfoContainer}>
         <div className={styles.topSection}>
-          <NextImage src="/avatar_1.svg" alt="logo" width="150" height="150" />
-          <h5>Janne Svensson</h5>
-          <p>
-            Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-            sint. Velit officia consequat duis enim velit mollit. Exercitation
-            veniam consequat sunt nostrud amet.
-          </p>
+          {profileImage ? (
+            <NextImage src={profileImage} alt="logo" width="150" height="150" />
+          ) : (
+            <NextImage
+              src="/avatar_1.svg"
+              alt="logo"
+              width="150"
+              height="150"
+            />
+          )}
+
+          <h5>{name}</h5>
+          {description ? (
+            <>
+              <p>{email}</p>
+              <br />
+              <p>{description}</p>
+            </>
+          ) : (
+            <p>{email}</p>
+          )}
         </div>
         <div className={styles.middleSection}>
           <div className={styles.dateCard}>
@@ -34,7 +52,7 @@ const Profile = () => {
               />
             </div>
             <div>
-                 <h5>{birthdate}</h5> 
+              <h5>{birthdate}</h5>
               <p>Födelsedag</p>
             </div>
           </div>
@@ -71,13 +89,11 @@ const Profile = () => {
 
           <div className={styles.bottomSection}>
             <h3>Mina intressen</h3>
-            <div className={styles.interestsCards}>
-              <p>{myInterests}</p>
-              <p>Sy</p>
-              <p>Simma</p>
-              <p>Mingla</p>
-              <p>Spela spel</p>
-            </div>
+            {/*             {myInterests && (
+              <div className={styles.interestsCards}>
+                <p>{myInterests}</p>
+              </div>
+            )} */}
           </div>
         </div>
 

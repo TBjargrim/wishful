@@ -20,7 +20,6 @@ const Settings = () => {
   const router = useRouter();
 
   const redirect = (path) => {
-
     router.push(path);
   };
 
@@ -32,7 +31,7 @@ const Settings = () => {
       myInterests,
       description,
     });
-    dispatch(update(collectedInformation)); 
+    dispatch(update(collectedInformation));
   }, [profileImage, birthdate, myInterests, description]);
 
   return (
