@@ -3,7 +3,7 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { getAuth, EmailAuthProvider } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 
-initFirebase();
+/* initFirebase(); */
 
 const auth = getAuth();
 
