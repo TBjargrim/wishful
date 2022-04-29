@@ -4,22 +4,25 @@ import Button from '../components/shared/button/Button';
 import Link from 'next/link';
 import NextImage from 'next/image';
 import Icon from '../components/shared/Icon';
-import { useSelector, useDispatch } from 'react-redux';
-import { update } from '../redux/reducers/userSlice';
+import { useSelector } from 'react-redux';
+import { useUser } from '../firebase/useUser';
+/* import ReadToCloudFirestore from '../components/firestore/Read'; */
 
-const Profile = ({ user }) => {
-  const dispatch = useDispatch();
-  dispatch(update({ ...user }));
-  const userInformation = useSelector((state) => state.user);
-  console.log(userInformation);
+const Profile = () => {
+  /*   const userInformation = useSelector((state) => state.user);
+  
   const { name, email, profileImage, birthdate, myInterests, description } =
-    userInformation;
+    userInformation; */
+
+  const { user, setUser } = useUser();
+  // console.log(user);
 
   return (
     <div className={styles.profileContainer}>
       <div className={styles.userInfoContainer}>
+        {/*    <ReadToCloudFirestore /> */}
         <div className={styles.topSection}>
-          {profileImage ? (
+          {/*           {profileImage ? (
             <NextImage src={profileImage} alt="logo" width="150" height="150" />
           ) : (
             <NextImage
@@ -29,17 +32,16 @@ const Profile = ({ user }) => {
               height="150"
             />
           )}
-
-          <h5>{name}</h5>
-          {description ? (
+ */}
+          <h5>name</h5>
+          {/* {description ? (
             <>
-              <p>{email}</p>
+              <p>email</p>
               <br />
-              <p>{description}</p>
+              <p>description</p>
             </>
-          ) : (
-            <p>{email}</p>
-          )}
+          ) : ( */}
+          <p>email</p>
         </div>
         <div className={styles.middleSection}>
           <div className={styles.dateCard}>
@@ -52,7 +54,7 @@ const Profile = ({ user }) => {
               />
             </div>
             <div>
-              <h5>{birthdate}</h5>
+              <h5>birthdat</h5>
               <p>Födelsedag</p>
             </div>
           </div>
@@ -89,7 +91,7 @@ const Profile = ({ user }) => {
 
           <div className={styles.bottomSection}>
             <h3>Mina intressen</h3>
-            {/*             {myInterests && (
+            {/* {myInterests && (
               <div className={styles.interestsCards}>
                 <p>{myInterests}</p>
               </div>

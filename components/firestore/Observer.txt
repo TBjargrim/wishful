@@ -1,0 +1,39 @@
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
+import { update } from '../../redux/reducers/userSlice';
+
+/* export const observer = (dispatch) =>
+  doc.onSnapshot(
+    (docSnapshot) => {
+      
+      console.log(`Received doc snapshot: ${docSnapshot}`);
+      dispatch(update(docSnapshot));
+    },
+    (err) => {
+      console.log(`Encountered error: ${err}`);
+    }
+  ); */
+
+var initState = true;
+const doc = firebase.firestore().collection('users').doc('user.id');
+
+export const observer = (dispatch) =>
+  doc.onSnapshot(
+    (docSnapshot) => {
+      console.log(`Received doc snapshot`);
+
+      if (initState) {
+        initState = false;
+        console.log(`test`);
+      } else {
+        if (!docSnapshot.docChanges().empty) {
+          docSnapshot.docChanges().forEach(function (change) {
+            dispatch(update(docSnapshot));
+          });
+        }
+      }
+    },
+    (err) => {
+      console.log(`Encountered error: ${err}`);
+    }
+  );

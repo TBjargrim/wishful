@@ -4,8 +4,8 @@ import { getAuth } from 'firebase/auth';
 import 'firebase/auth';
 import initFirebase from './config';
 import { mapUserData } from './mapUserData';
-
-initFirebase();
+import { readData } from '../components/firestore/Read';
+/* initFirebase(); */
 
 const useUser = () => {
   const [user, setUser] = useState();
@@ -24,6 +24,7 @@ const useUser = () => {
   useEffect(() => {
     const cancelAuthListener = auth.onIdTokenChanged((user) => {
       if (user) {
+        /*       const userDetails = readData(user); */
         const userData = mapUserData(user);
         setUser(userData);
       } else {
