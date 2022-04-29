@@ -5,7 +5,7 @@ import 'firebase/auth';
 import initFirebase from './config';
 import { mapUserData } from './mapUserData';
 import { readData } from '../components/firestore/Read';
-/* initFirebase(); */
+ initFirebase(); 
 
 const useUser = () => {
   const [user, setUser] = useState();

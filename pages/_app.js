@@ -19,7 +19,7 @@ function MyApp({ Component, pageProps }) {
   /*   useEffect(() => {
     readData(user);
   }, []); */
-  console.log(user);
+  // console.log(user);
   useEffect(() => {
     if (!user) {
       router.push('/');

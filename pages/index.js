@@ -1,7 +1,5 @@
 import { useEffect } from 'react';
 import Icon from '../components/shared/Icon';
-import Button from '../components/shared/button/Button';
-import Link from 'next/link';
 import styles from '../styles/_landing.module.scss';
 import FirebaseAuth from '../components/auth/FirebaseAuth';
 import { useDispatch } from 'react-redux';
@@ -22,33 +20,26 @@ const LandingPage = () => {
     <div className={styles.landingWrapper}>
       <div className={styles.topSection}>
         <div className={styles.leftColumn}>
-          <h2>Kom aldrig mer tomhänt till ett kalas med hjälp av </h2>
-          <Icon src="/logo_1.svg" altText="logo" width="200" height="70" />
+          <div>
+            <Icon
+              src="/landingImage.svg"
+              altText="Wrapped gifts"
+              width="200"
+              height="200"
+            />
+          </div>
+          <h2>
+            Kom aldrig mer tomhänt till ett kalas med hjälp av
+            <span> Wishful</span>
+          </h2>
           <p>
             Har du nånsin kommit tomhänt till ett kalas för att du glömt köpa
-            present i tid? <span>Vi kan hjälpa dig!</span>
+            present i tid? Vi kan hjälpa dig!
           </p>
-          <div className={styles.buttonSection}>
-            {/*            <Link href={'/skapa-konto'} passHref>
-              <a>
-                <Button> Skapa konto</Button>
-              </a>
-            </Link> */}
-            <FirebaseAuth />
-            {/*             <Link href={'/logga-in'} passHref>
-              <a>
-                <Button type="primary">Logga in</Button>
-              </a>
-            </Link> */}
-          </div>
         </div>
-        <div>
-          <Icon
-            src="/landingImage.svg"
-            altText="Wrapped gifts"
-            width="400"
-            height="400"
-          />
+
+        <div className={styles.rightColumn}>
+          <FirebaseAuth />
         </div>
       </div>
 
@@ -58,8 +49,8 @@ const LandingPage = () => {
             <Icon
               src="/alarmClock.svg"
               altText="logo"
-              width="150"
-              height="65"
+              width="120"
+              height="52"
             />
           </div>
           <h5>Få påminnelser</h5>
@@ -71,8 +62,8 @@ const LandingPage = () => {
             <Icon
               src="/wrappedGift.svg"
               altText="logo"
-              width="150"
-              height="60"
+              width="120"
+              height="50"
             />
           </div>
           <h5>Var förberedd</h5>
@@ -81,7 +72,7 @@ const LandingPage = () => {
 
         <div className={styles.card}>
           <div className={styles.icon}>
-            <Icon src="/notes.svg" altText="logo" width="150" height="62" />
+            <Icon src="/notes.svg" altText="logo" width="120" height="50" />
           </div>
           <h5>Skapa önskelistor</h5>
           <p>Visa dina nära och kära vad du önskar dig</p>

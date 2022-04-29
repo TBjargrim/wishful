@@ -8,17 +8,18 @@ import { useRouter } from 'next/router';
 import AnimateHeight from 'react-animate-height';
 
 const Settings = () => {
+  const router = useRouter();
+
   const [height, setHeight] = useState(0);
   const [profileImage, setProfileImage] = useState('');
   const [birthdate, setBirthdate] = useState();
   const [myInterests, setMyInterests] = useState([]);
   const [description, setDescription] = useState('');
-  const [optionalDates, setOptionalDates] = useState([]);
-  const [optionalDate, setOptionalDate] = useState({});
+  const [addedDates, setAddedDates] = useState([]);
   const [selected, setSelected] = useState('');
+  const [newDate, setNewDate] = useState();
+  const [showDate, setShowDate] = useState(false);
   const [collectedInformation, setCollectedInformation] = useState({});
-
-  const router = useRouter();
 
   const redirect = (path) => {
     router.push(path);
@@ -31,8 +32,9 @@ const Settings = () => {
       birthdate,
       myInterests,
       description,
+      addedDates,
     });
-  }, [profileImage, birthdate, myInterests, description]);
+  }, [profileImage, birthdate, myInterests, description, addedDates]);
 
   const onValueChange = (e) => {
     setSelected(e.target.value);
@@ -40,10 +42,30 @@ const Settings = () => {
 
   const addSelectedDate = (e) => {
     e.preventDefault();
-    if (selected || optionalDate.date) {
-      setOptionalDates({ ...optionalDate });
+    setShowDate(true);
+    if (selected || newDate.date) {
+      setAddedDates({ selected, ...newDate });
     }
   };
+
+  let labelMonths = [
+    'Jan',
+    'Feb',
+    'Mars',
+    'April',
+    'Maj',
+    'Juni',
+    'Juli',
+    'Aug',
+    'Sept',
+    'Okt',
+    'Nov',
+    'Dec',
+  ];
+  let testDate = 19930207;
+
+  console.log(collectedInformation);
+
   return (
     <div className={styles.settingWrapper}>
       <h3>Fyll i din profil</h3>
@@ -57,13 +79,21 @@ const Settings = () => {
             </div>
 
             <label htmlFor="date">Lägg till länk till profilbild</label>
-
             <input
               id="profileURL"
               type="text"
               value={profileImage}
-              placeholder="ex. url www.nånting.se"
+              placeholder="ex. www.nånting.se"
               onChange={(e) => setProfileImage(e.target.value)}
+            />
+
+            <label htmlFor="interests">Mina intressen</label>
+            <input
+              id="interests"
+              type="text"
+              placeholder="ex. Matlagning, Trädgårdsarbete"
+              value={myInterests}
+              onChange={(e) => setMyInterests(e.target.value)}
             />
 
             <label htmlFor="date">Födelsedatum</label>
@@ -75,59 +105,90 @@ const Settings = () => {
               onChange={(e) => setBirthdate(e.target.value)}
             />
 
-            {optionalDates && <p>Added date goes here</p>}
-            <div>
-              <h3 onClick={() => setHeight(height === 0 ? 'auto' : 0)}>
-                Lägg till ett datum +
-              </h3>
-              <AnimateHeight id="panel" duration={500} height={height}>
-                <div>
-                  <h5>Välj kategori</h5>
-                  <div className="radio-buttons">
-                    <label>Bröllopsdag</label>
-                    <input
-                      type="radio"
-                      value="Bröllopsdag"
-                      name="kategori"
-                      onChange={onValueChange}
-                    />
-                    <label>Årsdag</label>
-                    <input
-                      type="radio"
-                      value="Årsdag"
-                      name="kategori"
-                      onChange={onValueChange}
-                    />
-                    <label>Övrigt</label>
-                    <input
-                      type="radio"
-                      value="Övrigt"
-                      name="kategori"
-                      onChange={onValueChange}
-                    />
-                  </div>
-                </div>
-                <label htmlFor="date">Datum för {selected}</label>
+            {showDate ? (
+              <>
+                <label htmlFor="date">{selected}</label>
                 <input
                   id="date"
                   type="num"
-                  placeholder="ex. 220101"
-                  onChange={(e) =>
-                    setOptionalDate({ ...optionalDate, date: e.target.value })
-                  }
+                  value={addedDates.date}
+                  placeholder="ex. 890101"
+                  onChange={(e) => setBirthdate(e.target.value)}
                 />
-                <button onClick={addSelectedDate}>Lägg till</button>
+              </>
+            ) : null}
+
+            <div className={styles.addNewDateWrapper}>
+              <h4 onClick={() => setHeight(height === 0 ? 'auto' : 0)}>
+                Lägg till ett datum +
+              </h4>
+
+              <AnimateHeight id="panel" duration={500} height={height}>
+                <div className={styles.newDateContainer}>
+                  <div className={styles.categorieWrapper}>
+                    <h5>Välj kategori</h5>
+                    <div className={styles.radioButtons}>
+                      <div>
+                        <input
+                          type="radio"
+                          value="Bröllopsdag"
+                          name="kategori"
+                          onChange={onValueChange}
+                        />
+                        <label>Bröllopsdag</label>
+                      </div>
+                      <div>
+                        <input
+                          type="radio"
+                          value="Årsdag"
+                          name="kategori"
+                          onChange={onValueChange}
+                        />
+                        <label>Årsdag</label>
+                      </div>
+                      <div>
+                        <input
+                          type="radio"
+                          value="Övrigt"
+                          name="kategori"
+                          onChange={onValueChange}
+                        />
+                        <label>Övrigt</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={styles.dateWrapper}>
+                    <label htmlFor="date">Datum</label>
+                    <input
+                      id="date"
+                      type="num"
+                      placeholder="ex. 220101"
+                      onChange={(e) =>
+                        setNewDate({ ...newDate, date: e.target.value })
+                      }
+                    />
+                    <button onClick={addSelectedDate}>Lägg till</button>
+                  </div>
+                </div>
               </AnimateHeight>
             </div>
-            <label htmlFor="interests">Mina intressen</label>
-            <input
-              id="interests"
-              type="text"
-              placeholder="ex. Matlagning, Trädgårdsarbete"
-              value={myInterests}
-              onChange={(e) => setMyInterests(e.target.value)}
-            />
+          </div>
 
+          <div className={styles.fields}>
+            <div className={styles.descriptionWrapper}>
+              <label htmlFor="descriptionText">
+                Skriv en beskrivning om dig själv:
+              </label>
+              <textarea
+                id="decriptionText"
+                name="description"
+                placeholder="Beskrivning ..."
+                type="text"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
             <div className={styles.passwordFields}>
               <div className={styles.field}>
                 <label htmlFor="password">Lösenord</label>
@@ -142,20 +203,6 @@ const Settings = () => {
                 />
               </div>
             </div>
-          </div>
-
-          <div className={styles.fields}>
-            <label htmlFor="descriptionText">
-              Skriv en beskrivning om dig själv:
-            </label>
-            <textarea
-              id="decriptionText"
-              name="description"
-              placeholder="Beskrivning ..."
-              type="text"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
           </div>
         </div>
 

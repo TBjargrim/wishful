@@ -1,47 +1,17 @@
-import { useContext, useEffect } from 'react';
 import styles from '../styles/_profile.module.scss';
 import Button from '../components/shared/button/Button';
 import Link from 'next/link';
 import NextImage from 'next/image';
 import Icon from '../components/shared/Icon';
-import { useSelector } from 'react-redux';
-import { useUser } from '../firebase/useUser';
-/* import ReadToCloudFirestore from '../components/firestore/Read'; */
 
 const Profile = () => {
-  /*   const userInformation = useSelector((state) => state.user);
-  
-  const { name, email, profileImage, birthdate, myInterests, description } =
-    userInformation; */
-
-  const { user, setUser } = useUser();
-  // console.log(user);
-
   return (
     <div className={styles.profileContainer}>
       <div className={styles.userInfoContainer}>
-        {/*    <ReadToCloudFirestore /> */}
         <div className={styles.topSection}>
-          {/*           {profileImage ? (
-            <NextImage src={profileImage} alt="logo" width="150" height="150" />
-          ) : (
-            <NextImage
-              src="/avatar_1.svg"
-              alt="logo"
-              width="150"
-              height="150"
-            />
-          )}
- */}
-          <h5>name</h5>
-          {/* {description ? (
-            <>
-              <p>email</p>
-              <br />
-              <p>description</p>
-            </>
-          ) : ( */}
-          <p>email</p>
+          <NextImage src="/avatar_1.svg" alt="logo" width="150" height="150" />
+          <h5>Therese</h5>
+          <p>Beskrivning om mig!</p>
         </div>
         <div className={styles.middleSection}>
           <div className={styles.dateCard}>
@@ -54,7 +24,7 @@ const Profile = () => {
               />
             </div>
             <div>
-              <h5>birthdat</h5>
+              <h5>7 Februari</h5>
               <p>Födelsedag</p>
             </div>
           </div>
@@ -91,11 +61,10 @@ const Profile = () => {
 
           <div className={styles.bottomSection}>
             <h3>Mina intressen</h3>
-            {/* {myInterests && (
-              <div className={styles.interestsCards}>
-                <p>{myInterests}</p>
-              </div>
-            )} */}
+
+            <div className={styles.interestsCards}>
+              <p>Baka</p>
+            </div>
           </div>
         </div>
 
