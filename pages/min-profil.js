@@ -1,21 +1,44 @@
+import { useEffect, useState } from 'react';
 import styles from '../styles/_profile.module.scss';
 import Button from '../components/shared/button/Button';
 import Link from 'next/link';
 import NextImage from 'next/image';
 import Icon from '../components/shared/Icon';
+import { colRefUserDetails } from '../firebase/config';
+import { getDocs } from 'firebase/firestore';
 
 const Profile = () => {
+  const [allInformation, setAllInformation] = useState();
+
+  useEffect(() => {
+    getDocs(colRefUserDetails)
+      .then((snapshot) => {
+        let userDetails = [];
+        snapshot.docs.forEach((doc) => {
+          userDetails.push({ ...doc.data(), id: doc.id });
+        });
+        setAllInformation(userDetails);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
+  console.log(allInformation);
   return (
     <div className={styles.profileContainer}>
       <div className={styles.userInfoContainer}>
         <div className={styles.topSection}>
           <NextImage src="/avatar_1.svg" alt="logo" width="150" height="150" />
-          <h5>Janne Svensson</h5>
-          <p>
-            Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-            sint. Velit officia consequat duis enim velit mollit. Exercitation
-            veniam consequat sunt nostrud amet.
-          </p>
+
+          {allInformation &&
+            allInformation.map(
+              ({ collectedInformation: { description }, name }) => (
+                <>
+                  <h5>{name}</h5>
+                  <p>{description}</p>
+                </>
+              )
+            )}
         </div>
         <div className={styles.middleSection}>
           <div className={styles.dateCard}>
@@ -92,7 +115,6 @@ const Profile = () => {
           </a>
         </div>
         <div className={styles.wishlistsWrapper}>
-         
           <div className={styles.wishlist}>
             <div>
               <div>
@@ -137,9 +159,7 @@ const Profile = () => {
             </div>
             <Icon src="/arrowIcon.svg" altText="Icon" />
           </div>
-
         </div>
-
       </div>
     </div>
   );

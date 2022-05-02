@@ -1,15 +1,17 @@
 import firebase from 'firebase/compat/app';
-import 'firebase/firestore';
+import 'firebase/compat/firestore';
 import { useUser } from '../../firebase/useUser';
+import { useCollection } from 'react-firebase-hooks/firestore';
 
 const ReadToCloudFirestore = () => {
-  const { user } = useUser();
-  const readData = () => {
+  const { authUser } = useUser();
+  const readData = (user) => {
+    console.log(user);
     try {
       firebase
         .firestore()
         .collection('my_information')
-        .doc(user.id)
+        .doc(authUser.uid)
         .onSnapshot(function (doc) {
           console.log(doc.data());
         });
