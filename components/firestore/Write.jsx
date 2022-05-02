@@ -1,6 +1,7 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import { useUser } from '../../firebase/useUser';
+
 import { db } from '../../firebase/config';
 
 const WriteToCloudFirestore = ({ type, children, collectedInformation }) => {
@@ -21,6 +22,17 @@ const WriteToCloudFirestore = ({ type, children, collectedInformation }) => {
         myInterests,
         description,
       });
+      dispatch(
+        update({
+          name: user.name,
+          email: user.email,
+          uid: user.id,
+          profileImage,
+          birthdate,
+          myInterests,
+          description,
+        })
+      );
     } catch (error) {
       console.log(error);
     }

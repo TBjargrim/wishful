@@ -1,4 +1,6 @@
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { Provider } from 'react-redux';
 import Navbar from '../components/navbar/Navbar';
 import Footer from '../components/footer/Footer';
 
@@ -8,7 +10,6 @@ import { getAuth } from 'firebase/auth';
 
 import '../styles/globals.scss';
 import '../styles/firebaseui-styling.global.css';
-import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { db } from '../firebase/config';
@@ -36,6 +37,10 @@ function MyApp({ Component, pageProps }) {
     }
   };
 
+  /*   useEffect(() => {
+    readData(user);
+  }, []); */
+  // console.log(user);
   useEffect(() => {
     if (loading) {
       return;
@@ -56,3 +61,34 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp;
+
+/* MyApp.getInitialProps = async function () {
+  const db = firebase.firestore();
+  let data = [];
+  const querySnapshot = await db.collection('data').get();
+  querySnapshot.forEach((doc) => {
+    data.push(doc.data());
+  });
+
+  return {
+    data,
+  };
+}; */
+
+/* MyApp.getInitialProps = async (ctx) => {
+  firebase.initializeApp(firebaseConfig);
+
+  let usersRef = firebase.firestore().collection('users');
+  let snapshot = await usersRef.get();
+  if (snapshot.empty) {
+    console.log('No matching documents.');
+    return;
+  }
+  let data = [];
+  snapshot.forEach((doc) => {
+    console.log(doc.id, '=>', doc.data());
+    data.push(doc.data());
+  });
+  return { props: data };
+};
+ */

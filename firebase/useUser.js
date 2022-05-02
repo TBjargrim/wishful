@@ -10,7 +10,6 @@ const useUser = () => {
   const logout = async () => {
     try {
       await auth.signOut();
-
       router.push('/');
     } catch (e) {
       console.log(e.message);

@@ -6,16 +6,20 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { colRefUserDetails, db } from '../firebase/config';
 import { setDoc, doc, updateDoc, getDocs } from 'firebase/firestore';
+import AnimateHeight from 'react-animate-height';
 
 const Settings = ({ user }) => {
+  const router = useRouter();
+  const [height, setHeight] = useState(0);
   const [profileImage, setProfileImage] = useState('');
   const [birthdate, setBirthdate] = useState();
   const [myInterests, setMyInterests] = useState([]);
   const [description, setDescription] = useState('');
-
+  const [addedDates, setAddedDates] = useState([]);
+  const [selected, setSelected] = useState('');
+  const [newDate, setNewDate] = useState();
+  const [showDate, setShowDate] = useState(false);
   const [collectedInformation, setCollectedInformation] = useState({});
-
-  const router = useRouter();
 
   const redirect = (path) => {
     router.push(path);
@@ -66,8 +70,75 @@ const Settings = ({ user }) => {
       birthdate,
       myInterests,
       description,
+      addedDates,
     });
-  }, [profileImage, birthdate, myInterests, description]);
+  }, [profileImage, birthdate, myInterests, description, addedDates]);
+
+  const onValueChange = (e) => {
+    setSelected(e.target.value);
+  };
+
+  const addSelectedDate = (e) => {
+    e.preventDefault();
+    setShowDate(true);
+    if (selected || newDate.date) {
+      setAddedDates({ selected, ...newDate });
+    }
+  };
+
+  let testDateString = '2015-10-14';
+
+  function getTheDay(date) {
+    return date.slice(8, 10);
+  }
+
+  function getMonth(date) {
+    let months = [
+      'Januari',
+      'Februari',
+      'Mars',
+      'April',
+      'Maj',
+      'Juni',
+      'Juli',
+      'Augusti',
+      'September',
+      'Oktober',
+      'November',
+      'December',
+    ];
+
+    let splitDate = date.split('-');
+    let getMonth = splitDate[1];
+
+    if (getMonth.slice(0, 1) == 0) {
+      let noZero = getMonth.slice(1, 2);
+      let getOneLessNumber = (noZero -= 1);
+      return months[getOneLessNumber];
+    } else if (getMonth.slice(0, 1) == 1) {
+      let getOneLessNumber = (getMonth -= 1);
+      return months[getOneLessNumber];
+    } else {
+      return 'not a date!';
+    }
+  }
+
+  function changedDate(date) {
+    return getTheDay(date) + ' ' + getMonth(date);
+  }
+
+  // console.log(changedDate(birthdate));
+
+  // console.log(birthdate)
+
+  // const testDate = '1993-02-07';
+  // console.log(testDate.split('-'))
+
+  // const event = new Date(Date.UTC(2022, 10, 1));
+  // let options = {  year: 'numeric', month: 'long', day: 'numeric' };
+  // console.log(event.toLocaleString('sv-SE'));
+
+  console.log(collectedInformation);
 
   return (
     <div className={styles.settingWrapper}>
@@ -86,17 +157,8 @@ const Settings = ({ user }) => {
               id="profileURL"
               type="text"
               value={profileImage}
-              placeholder="ex. url www.nånting.se"
+              placeholder="ex. www.nånting.se"
               onChange={(e) => setProfileImage(e.target.value)}
-            />
-
-            <label htmlFor="date">Födelsedatum</label>
-            <input
-              id="date"
-              type="num"
-              value={birthdate}
-              placeholder="ex. 890101"
-              onChange={(e) => setBirthdate(e.target.value)}
             />
 
             <label htmlFor="interests">Mina intressen</label>
@@ -108,6 +170,99 @@ const Settings = ({ user }) => {
               onChange={(e) => setMyInterests(e.target.value)}
             />
 
+            <label htmlFor="date">Födelsedatum</label>
+            <input
+              id="date"
+              type="num"
+              value={birthdate}
+              placeholder="ex. 890101"
+              onChange={(e) => setBirthdate(e.target.value)}
+            />
+
+            {showDate ? (
+              <>
+                <label htmlFor="date">{selected}</label>
+                <input
+                  id="date"
+                  type="num"
+                  value={addedDates.date}
+                  placeholder="ex. 890101"
+                  onChange={(e) => setBirthdate(e.target.value)}
+                />
+              </>
+            ) : null}
+
+            <div className={styles.addNewDateWrapper}>
+              <h4 onClick={() => setHeight(height === 0 ? 'auto' : 0)}>
+                Lägg till ett datum +
+              </h4>
+
+              <AnimateHeight id="panel" duration={500} height={height}>
+                <div className={styles.newDateContainer}>
+                  <div className={styles.categorieWrapper}>
+                    <h5>Välj kategori</h5>
+                    <div className={styles.radioButtons}>
+                      <div>
+                        <input
+                          type="radio"
+                          value="Bröllopsdag"
+                          name="kategori"
+                          onChange={onValueChange}
+                        />
+                        <label>Bröllopsdag</label>
+                      </div>
+                      <div>
+                        <input
+                          type="radio"
+                          value="Årsdag"
+                          name="kategori"
+                          onChange={onValueChange}
+                        />
+                        <label>Årsdag</label>
+                      </div>
+                      <div>
+                        <input
+                          type="radio"
+                          value="Övrigt"
+                          name="kategori"
+                          onChange={onValueChange}
+                        />
+                        <label>Övrigt</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={styles.dateWrapper}>
+                    <label htmlFor="date">Datum</label>
+                    <input
+                      id="date"
+                      type="num"
+                      placeholder="ex. 220101"
+                      onChange={(e) =>
+                        setNewDate({ ...newDate, date: e.target.value })
+                      }
+                    />
+                    <button onClick={addSelectedDate}>Lägg till</button>
+                  </div>
+                </div>
+              </AnimateHeight>
+            </div>
+          </div>
+
+          <div className={styles.fields}>
+            <div className={styles.descriptionWrapper}>
+              <label htmlFor="descriptionText">
+                Skriv en beskrivning om dig själv:
+              </label>
+              <textarea
+                id="decriptionText"
+                name="description"
+                placeholder="Beskrivning ..."
+                type="text"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
             <div className={styles.passwordFields}>
               <div className={styles.field}>
                 <label htmlFor="password">Lösenord</label>
@@ -122,20 +277,6 @@ const Settings = ({ user }) => {
                 />
               </div>
             </div>
-          </div>
-
-          <div className={styles.fields}>
-            <label htmlFor="descriptionText">
-              Skriv en beskrivning om dig själv:
-            </label>
-            <textarea
-              id="decriptionText"
-              name="description"
-              placeholder="Beskrivning ..."
-              type="text"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
           </div>
         </div>
 
