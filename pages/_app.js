@@ -5,7 +5,7 @@ import Navbar from '../components/navbar/Navbar';
 import Footer from '../components/footer/Footer';
 
 import 'firebase/compat/firestore';
-import { addDoc, collection, query, where, getDocs } from 'firebase/firestore';
+import { addDoc,setDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 import '../styles/globals.scss';
@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps }) {
       const docs = await getDocs(q);
 
       if (docs.docs.length === 0) {
-        await setDoc(collection(db, 'users', user.uid), {
+        await addDoc(collection(db, 'users'), {
           uid: user.uid,
           name: user.displayName,
           email: user.email,

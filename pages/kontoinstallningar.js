@@ -12,7 +12,7 @@ const Settings = ({ user }) => {
   const router = useRouter();
   const [height, setHeight] = useState(0);
   const [profileImage, setProfileImage] = useState('');
-  const [birthdate, setBirthdate] = useState();
+  const [birthdate, setBirthdate] = useState('');
   const [myInterests, setMyInterests] = useState([]);
   const [description, setDescription] = useState('');
   const [addedDates, setAddedDates] = useState([]);
@@ -35,9 +35,11 @@ const Settings = ({ user }) => {
         userDetails.push({ ...doc.data(), id: doc.id });
       });
 
+
       if (userDetails.length !== 0) {
-        userDetails.map((details) => {
-          if (details.uid) {
+        userDetails.map((details) => { 
+          console.log(details.uid)
+          if (details.uid === user.uid) {
             updateDoc(docRef, {
               collectedInformation,
               uid: user.uid,
