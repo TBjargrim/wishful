@@ -1,25 +1,19 @@
 import firebase from 'firebase/compat/app';
-import 'firebase/firestore';
-import { useUser } from '../../firebase/useUser';
+import 'firebase/compat/firestore';
 
-const ReadToCloudFirestore = () => {
-  const { user } = useUser();
-  const readData = () => {
-    try {
-      firebase
-        .firestore()
-        .collection('my_information')
-        .doc(user.id)
-        .onSnapshot(function (doc) {
-          console.log(doc.data());
-        });
-    } catch (error) {
-      console.log(error);
-      alert(error);
-    }
-  };
-
-  return <button onClick={readData}>Read Data From Cloud firestore</button>;
+export const readData = (user) => {
+  /*   let userData = {}; */
+  try {
+    firebase
+      .firestore()
+      .collection('users')
+      .doc(user.id)
+      .onSnapshot(function (doc) {
+        console.log(doc.data());
+        /*  userData = Object.assign(userData, doc.data()); */
+      });
+  } catch (error) {
+    console.log(error);
+  }
+  /*   return userData; */
 };
-
-export default ReadToCloudFirestore;

@@ -10,12 +10,8 @@ const Profile = () => {
       <div className={styles.userInfoContainer}>
         <div className={styles.topSection}>
           <NextImage src="/avatar_1.svg" alt="logo" width="150" height="150" />
-          <h5>Janne Svensson</h5>
-          <p>
-            Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-            sint. Velit officia consequat duis enim velit mollit. Exercitation
-            veniam consequat sunt nostrud amet.
-          </p>
+          <h5>Therese</h5>
+          <p>Beskrivning om mig!</p>
         </div>
         <div className={styles.middleSection}>
           <div className={styles.dateCard}>
@@ -28,7 +24,7 @@ const Profile = () => {
               />
             </div>
             <div>
-              <h5>2 september</h5>
+              <h5>7 Februari</h5>
               <p>Födelsedag</p>
             </div>
           </div>
@@ -65,12 +61,9 @@ const Profile = () => {
 
           <div className={styles.bottomSection}>
             <h3>Mina intressen</h3>
+
             <div className={styles.interestsCards}>
-              <p>Laga mat</p>
-              <p>Sy</p>
-              <p>Simma</p>
-              <p>Mingla</p>
-              <p>Spela spel</p>
+              <p>Baka</p>
             </div>
           </div>
         </div>
@@ -92,7 +85,6 @@ const Profile = () => {
           </a>
         </div>
         <div className={styles.wishlistsWrapper}>
-         
           <div className={styles.wishlist}>
             <div>
               <div>
@@ -137,9 +129,7 @@ const Profile = () => {
             </div>
             <Icon src="/arrowIcon.svg" altText="Icon" />
           </div>
-
         </div>
-
       </div>
     </div>
   );

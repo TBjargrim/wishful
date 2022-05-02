@@ -5,12 +5,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 3rem;
+  padding-bottom: 4rem;
 }
 
 .topSection {
   display: flex;
-  margin: 3rem;
+  margin: 1rem;
   align-items: center;
 }
 
@@ -19,15 +19,25 @@
   max-width: 39rem;
 
   h2 {
-    font-size: 3rem;
+    font-size: 2.3rem;
     color: $color-grey900;
     font-weight: 600;
+  }
+  span {
+    color: $color-primary;
+    font-style: italic;
+    font-weight: $font-weight-regular;
   }
 
   p {
     font-size: $fs-p1;
     color: $color-grey900;
+    margin-top: 1rem;
   }
+}
+
+.rightColumn {
+  width: 300px;
 }
 
 .buttonSection {
@@ -39,18 +49,18 @@
 }
 
 .cardsSection {
-  margin: 1rem;
+  margin-top: 7rem;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: rgba(217, 248, 255, 0.9);
+  background: rgba(217, 248, 255, 0.5);
   box-shadow: 8px 11px 25px 1px rgba(98, 98, 98, 0.13);
   border-radius: 10px;
 }
 
 .card {
-  height: 10rem;
+  height: 8rem;
   width: 14rem;
   display: flex;
   align-items: center;
@@ -60,6 +70,7 @@
   padding: 0.5rem;
 
   h5 {
+    font-size: 0.9rem;
     margin-bottom: 0.313rem;
     text-transform: uppercase;
     color: $color-grey900;
@@ -67,7 +78,7 @@
 
   p {
     color: $color-grey900;
-    font-size: 1rem;
+    font-size: $fs-p3;
     padding: 0 1.3rem;
   }
 }

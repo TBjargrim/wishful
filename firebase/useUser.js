@@ -4,8 +4,8 @@ import { getAuth } from 'firebase/auth';
 import 'firebase/auth';
 import initFirebase from './config';
 import { mapUserData } from './mapUserData';
-
-initFirebase();
+import { readData } from '../components/firestore/Read';
+ initFirebase(); 
 
 const useUser = () => {
   const [user, setUser] = useState();
@@ -15,7 +15,6 @@ const useUser = () => {
   const logout = async () => {
     try {
       await auth.signOut();
-
       router.push('/');
     } catch (e) {
       console.log(e.message);
@@ -25,8 +24,8 @@ const useUser = () => {
   useEffect(() => {
     const cancelAuthListener = auth.onIdTokenChanged((user) => {
       if (user) {
+        /*       const userDetails = readData(user); */
         const userData = mapUserData(user);
-
         setUser(userData);
       } else {
         setUser();

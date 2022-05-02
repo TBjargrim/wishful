@@ -4,8 +4,6 @@ export const mapUserData = (user) => {
   return {
     id: uid,
     email,
-    token: xa,
     name: displayName,
-    profilePic: photoUrl,
   };
 };
