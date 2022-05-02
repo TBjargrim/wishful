@@ -5,6 +5,7 @@ import styles from '../styles/_accountSettings.module.scss';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { colRefUserDetails, db } from '../firebase/config';
+import { changedDate } from '../components/helperFunctions';
 import { setDoc, doc, updateDoc, getDocs } from 'firebase/firestore';
 import AnimateHeight from 'react-animate-height';
 
@@ -13,7 +14,7 @@ const Settings = ({ user }) => {
   const [height, setHeight] = useState(0);
   const [profileImage, setProfileImage] = useState('');
   const [birthdate, setBirthdate] = useState('');
-  const [myInterests, setMyInterests] = useState([]);
+  const [myInterests, setMyInterests] = useState('');
   const [description, setDescription] = useState('');
   const [addedDates, setAddedDates] = useState([]);
   const [selected, setSelected] = useState('');
@@ -25,6 +26,21 @@ const Settings = ({ user }) => {
     router.push(path);
     changes();
   };
+  console.log(newDate);
+  useEffect(() => {
+    const arrInterests = myInterests.split(',');
+
+    const updatedBirthdate = changedDate(birthdate);
+
+    setCollectedInformation({
+      ...collectedInformation,
+      profileImage,
+      updatedBirthdate,
+      arrInterests,
+      description,
+      addedDates,
+    });
+  }, [profileImage, birthdate, myInterests, description, addedDates]);
 
   const changes = async () => {
     const docRef = doc(db, 'usersDetails', user.uid);
@@ -35,13 +51,11 @@ const Settings = ({ user }) => {
         userDetails.push({ ...doc.data(), id: doc.id });
       });
 
-
       if (userDetails.length !== 0) {
-        userDetails.map((details) => { 
-          console.log(details.uid)
+        userDetails.map((details) => {
           if (details.uid === user.uid) {
             updateDoc(docRef, {
-              collectedInformation,
+              ...collectedInformation,
               uid: user.uid,
               name: user.displayName,
             });
@@ -65,17 +79,6 @@ const Settings = ({ user }) => {
     /*      .then(); */
   };
 
-  useEffect(() => {
-    setCollectedInformation({
-      ...collectedInformation,
-      profileImage,
-      birthdate,
-      myInterests,
-      description,
-      addedDates,
-    });
-  }, [profileImage, birthdate, myInterests, description, addedDates]);
-
   const onValueChange = (e) => {
     setSelected(e.target.value);
   };
@@ -87,58 +90,6 @@ const Settings = ({ user }) => {
       setAddedDates({ selected, ...newDate });
     }
   };
-
-  let testDateString = '2015-10-14';
-
-  function getTheDay(date) {
-    return date.slice(8, 10);
-  }
-
-  function getMonth(date) {
-    let months = [
-      'Januari',
-      'Februari',
-      'Mars',
-      'April',
-      'Maj',
-      'Juni',
-      'Juli',
-      'Augusti',
-      'September',
-      'Oktober',
-      'November',
-      'December',
-    ];
-
-    let splitDate = date.split('-');
-    let getMonth = splitDate[1];
-
-    if (getMonth.slice(0, 1) == 0) {
-      let noZero = getMonth.slice(1, 2);
-      let getOneLessNumber = (noZero -= 1);
-      return months[getOneLessNumber];
-    } else if (getMonth.slice(0, 1) == 1) {
-      let getOneLessNumber = (getMonth -= 1);
-      return months[getOneLessNumber];
-    } else {
-      return 'not a date!';
-    }
-  }
-
-  function changedDate(date) {
-    return getTheDay(date) + ' ' + getMonth(date);
-  }
-
-  // console.log(changedDate(birthdate));
-
-  // console.log(birthdate)
-
-  // const testDate = '1993-02-07';
-  // console.log(testDate.split('-'))
-
-  // const event = new Date(Date.UTC(2022, 10, 1));
-  // let options = {  year: 'numeric', month: 'long', day: 'numeric' };
-  // console.log(event.toLocaleString('sv-SE'));
 
   console.log(collectedInformation);
 
