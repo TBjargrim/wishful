@@ -1,24 +1,22 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import { useUser } from '../../firebase/useUser';
-import Button from '../shared/button/Button';
-import { useDispatch } from 'react-redux';
-import { update } from '../../redux/reducers/userSlice';
+
+import { db } from '../../firebase/config';
 
 const WriteToCloudFirestore = ({ type, children, collectedInformation }) => {
-  const { user } = useUser();
-  const dispatch = useDispatch();
-
+  const { authUser } = useUser();
   const { profileImage, birthdate, myInterests, description } =
     collectedInformation;
 
   const sendData = (e) => {
     e.preventDefault();
+
     try {
-      firebase.firestore().collection('users').doc(user.id).set({
-        name: user.name,
-        email: user.email,
-        uid: user.id,
+      db.firestore().collection('users').doc(authUser.id).set({
+        name: authUser.displayName,
+        email: authUser.email,
+        id: authUser.id,
         birthdate,
         profileImage,
         myInterests,

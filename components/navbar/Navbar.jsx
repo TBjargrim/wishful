@@ -7,7 +7,7 @@ import { useUser } from '../../firebase/useUser';
 
 const Navbar = () => {
   const [openMenu, setOpenMenu] = useState(false);
-  const { user, logout } = useUser();
+  const { authUser, logout } = useUser();
 
   const burgerMenuClass = openMenu ? `${styles.open}` : '';
 
@@ -15,7 +15,7 @@ const Navbar = () => {
     setOpenMenu((open) => !open);
   };
 
-  if (user) {
+  if (authUser) {
     return (
       <>
         <section className={`${styles.navbarContainer} ${burgerMenuClass}`}>

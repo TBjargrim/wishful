@@ -3,13 +3,13 @@ import Button from '../components/shared/button/Button';
 import Icon from '../components/shared/Icon';
 import styles from '../styles/_accountSettings.module.scss';
 import Link from 'next/link';
-import WriteToCloudFirestore from '../components/firestore/Write';
 import { useRouter } from 'next/router';
+import { colRefUserDetails, db } from '../firebase/config';
+import { setDoc, doc, updateDoc, getDocs } from 'firebase/firestore';
 import AnimateHeight from 'react-animate-height';
 
-const Settings = () => {
+const Settings = ({ user }) => {
   const router = useRouter();
-
   const [height, setHeight] = useState(0);
   const [profileImage, setProfileImage] = useState('');
   const [birthdate, setBirthdate] = useState();
@@ -23,6 +23,44 @@ const Settings = () => {
 
   const redirect = (path) => {
     router.push(path);
+    changes();
+  };
+
+  const changes = async () => {
+    const docRef = doc(db, 'usersDetails', user.uid);
+
+    getDocs(colRefUserDetails).then((snapshot) => {
+      let userDetails = [];
+      snapshot.docs.forEach((doc) => {
+        userDetails.push({ ...doc.data(), id: doc.id });
+      });
+
+      if (userDetails.length !== 0) {
+        userDetails.map((details) => {
+          if (details.uid) {
+            updateDoc(docRef, {
+              collectedInformation,
+              uid: user.uid,
+              name: user.displayName,
+            });
+          } else {
+            setDoc(docRef, {
+              collectedInformation,
+              uid: user.uid,
+              name: user.displayName,
+            });
+          }
+        });
+      } else {
+        setDoc(docRef, {
+          collectedInformation,
+          uid: user.uid,
+          name: user.displayName,
+        });
+      }
+    });
+
+    /*      .then(); */
   };
 
   useEffect(() => {
@@ -85,15 +123,13 @@ const Settings = () => {
     }
   }
 
-function changedDate (date) {
-return getTheDay(date) + ' ' + getMonth(date);
-
-}
-
+  function changedDate(date) {
+    return getTheDay(date) + ' ' + getMonth(date);
+  }
 
   // console.log(changedDate(birthdate));
 
-// console.log(birthdate)
+  // console.log(birthdate)
 
   // const testDate = '1993-02-07';
   // console.log(testDate.split('-'))
@@ -245,12 +281,12 @@ return getTheDay(date) + ' ' + getMonth(date);
         </div>
 
         <div className={styles.button} onClick={() => redirect('/min-profil')}>
-          <WriteToCloudFirestore
+          {/*           <WriteToCloudFirestore
             type="secondary"
             collectedInformation={collectedInformation}
-          >
-            Bekräfta
-          </WriteToCloudFirestore>
+          > */}
+          Bekräfta
+          {/*      </WriteToCloudFirestore> */}
         </div>
       </form>
 

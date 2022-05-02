@@ -1,11 +1,8 @@
 import initFirebase from '../../firebase/config';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import { getAuth, EmailAuthProvider } from 'firebase/auth';
+import { EmailAuthProvider } from 'firebase/auth';
 import { useEffect, useState } from 'react';
-
-initFirebase();
-
-const auth = getAuth();
+import { auth } from '../../firebase/config';
 
 const FirebaseAuthConfig = {
   signInFlow: 'pop-up',

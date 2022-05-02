@@ -1,16 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { getAuth } from 'firebase/auth';
-import 'firebase/auth';
-import initFirebase from './config';
 import { mapUserData } from './mapUserData';
-import { readData } from '../components/firestore/Read';
- initFirebase(); 
+import { auth } from './config';
 
 const useUser = () => {
-  const [user, setUser] = useState();
+  const [authUser, setAuthUser] = useState();
   const router = useRouter();
-  const auth = getAuth();
 
   const logout = async () => {
     try {
@@ -22,13 +17,12 @@ const useUser = () => {
   };
 
   useEffect(() => {
-    const cancelAuthListener = auth.onIdTokenChanged((user) => {
-      if (user) {
-        /*       const userDetails = readData(user); */
-        const userData = mapUserData(user);
-        setUser(userData);
+    const cancelAuthListener = auth.onIdTokenChanged((authUser) => {
+      if (authUser) {
+        const userData = mapUserData(authUser);
+        setAuthUser(userData);
       } else {
-        setUser();
+        setAuthUser();
       }
     });
     return () => {
@@ -36,7 +30,7 @@ const useUser = () => {
     };
   }, []);
 
-  return { user, logout };
+  return { authUser, logout };
 };
 
 export { useUser };
