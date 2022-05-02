@@ -1,21 +1,8 @@
-import { useEffect } from 'react';
 import Icon from '../components/shared/Icon';
 import styles from '../styles/_landing.module.scss';
 import FirebaseAuth from '../components/auth/FirebaseAuth';
-import { useDispatch } from 'react-redux';
-import { useUser } from '../firebase/useUser';
-import { update } from '../redux/reducers/userSlice';
 
 const LandingPage = () => {
-  const dispatch = useDispatch();
-  const { user } = useUser();
-
-  useEffect(() => {
-    if (user) {
-      dispatch(update(user));
-    }
-  }, []);
-
   return (
     <div className={styles.landingWrapper}>
       <div className={styles.topSection}>
