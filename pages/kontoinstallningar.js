@@ -91,8 +91,6 @@ const Settings = ({ user }) => {
     }
   };
 
-  console.log(collectedInformation);
-
   return (
     <div className={styles.settingWrapper}>
       <h3>Fyll i din profil</h3>

@@ -4,25 +4,11 @@ import Button from '../components/shared/button/Button';
 import Link from 'next/link';
 import NextImage from 'next/image';
 import Icon from '../components/shared/Icon';
-import { colRefUserDetails, db } from '../firebase/config';
-import { getDocs, doc, onSnapshot } from 'firebase/firestore';
+import { db } from '../firebase/config';
+import { doc, onSnapshot } from 'firebase/firestore';
 
 const Profile = ({ user }) => {
   const [myInfo, setMyInfo] = useState();
-
-  /*   useEffect(() => {
-    getDocs(colRefUserDetails)
-      .then((snapshot) => {
-        let userDetails = [];
-        snapshot.docs.forEach((doc) => {
-          userDetails.push({ ...doc.data(), id: doc.id });
-        });
-        setPersonalInformation(userDetails);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  }, []); */
 
   useEffect(() => {
     if (user) {
@@ -48,7 +34,7 @@ const Profile = ({ user }) => {
         </div>
 
         <div>
-          {myInfo !== undefined && (
+          {myInfo && (
             <div className={styles.middleSection}>
               <div className={styles.dateCard}>
                 <div>
