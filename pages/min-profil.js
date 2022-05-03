@@ -25,12 +25,12 @@ const Profile = ({ user }) => {
       <div className={styles.userInfoContainer}>
         <div className={styles.topSection}>
           <NextImage src="/avatar_1.svg" alt="logo" width="150" height="150" />
-          {myInfo && (
+          {/* {myInfo && (
             <>
               <h5>{myInfo.name}</h5>
               <p>{myInfo.collectedInformation.description}</p>
             </>
-          )}
+          )} */}
         </div>
 
         <div>
@@ -85,12 +85,12 @@ const Profile = ({ user }) => {
 
           <div className={styles.bottomSection}>
             <h3>Mina intressen</h3>
-            {myInfo &&
+            {/* {myInfo &&
               myInfo.collectedInformation.arrInterests.map((interest) => (
                 <div className={styles.interestsCards}>
                   <p>{interest}</p>
                 </div>
-              ))}
+              ))} */}
           </div>
         </div>
 

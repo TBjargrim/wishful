@@ -1,8 +1,52 @@
 import styles from '../styles/_homepage.module.scss';
 import NextImage from 'next/image';
 
+import format from 'date-fns/format';
+import getDay from 'date-fns/getDay';
+import parse from 'date-fns/parse';
+import startOfWeek from 'date-fns/startOfWeek';
+import React, { useState } from 'react';
+import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 const Hem = () => {
-  
+  const [date, setDate] = useState(new Date());
+
+  const locales = {
+    'en-US': require('date-fns/locale/en-US'),
+  };
+
+  const localizer = dateFnsLocalizer({
+    format,
+    parse,
+    startOfWeek,
+    getDay,
+    locales,
+  });
+
+  const events = [
+    {
+      title: 'Sandras födelsedag',
+      // allDay: true,
+      start: new Date(2022, 4, 3),
+      end: new Date(2022, 4, 3),
+    },
+    {
+      title: 'Kalles födelsedag',
+      // allDay: true,
+      start: new Date(2022, 4, 3),
+      end: new Date(2022, 4, 3),
+    },
+    {
+      title: 'Therese och Bens bröllopsdag',
+      // allDay: true,
+      start: new Date(2022, 4, 12),
+      end: new Date(2022, 4, 12),
+    },
+  ];
+
   return (
     <div>
       <div className={styles.homepageContainer}>
@@ -112,7 +156,15 @@ const Hem = () => {
           </div>
 
           <div className={styles.calender}>
-            <h3>Kalender</h3>
+            {/* <h3>Kalender</h3> */}
+            {/* <Calendar onChange={setDate} value={date}/> */}
+
+            <Calendar
+              localizer={localizer}
+              events={events}
+              startAccessor="start"
+              endAccessor="end"
+            />
           </div>
         </div>
       </div>
