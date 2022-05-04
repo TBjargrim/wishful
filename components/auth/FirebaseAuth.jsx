@@ -12,7 +12,7 @@ const FirebaseAuthConfig = {
       requireDisplayName: true,
     },
   ],
-  signInSuccessUrl: '/hem',
+  signInSuccessUrl: '/min-profil',
   credentialHelper: 'none',
 };
 

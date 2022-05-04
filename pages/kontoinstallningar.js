@@ -6,43 +6,50 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { colRefUserDetails, db } from '../firebase/config';
 import { changedDate } from '../components/helperFunctions';
-import { setDoc, doc, updateDoc, getDocs } from 'firebase/firestore';
+import {
+  setDoc,
+  doc,
+  updateDoc,
+  getDocs,
+  connectFirestoreEmulator,
+} from 'firebase/firestore';
+import { useLocalStorage } from '../components/useLocalStorage';
 import AnimateHeight from 'react-animate-height';
 
 const Settings = ({ user }) => {
   const router = useRouter();
   const [height, setHeight] = useState(0);
-  const [profileImage, setProfileImage] = useState('');
-  const [birthdate, setBirthdate] = useState('');
-  const [myInterests, setMyInterests] = useState('');
-  const [description, setDescription] = useState('');
+  const [addedDate, setAddedDate] = useState({});
   const [addedDates, setAddedDates] = useState([]);
-  const [selected, setSelected] = useState('');
-  const [newDate, setNewDate] = useState();
-  const [showDate, setShowDate] = useState(false);
-  const [collectedInformation, setCollectedInformation] = useState({});
 
-  const redirect = (path) => {
-    router.push(path);
+  const [collectedInformation, setCollectedInformation] = useLocalStorage(
+    'collectedInformation',
+    {
+      profileImage: '',
+      birthdate: '',
+      myInterests: '',
+      description: '',
+      updatedBirthdate: '',
+      addedDates,
+    }
+  );
+
+  const handleSubmit = (e, path) => {
+    e.preventDefault();
+
     changes();
-  };
-  console.log(newDate);
-  useEffect(() => {
-    const arrInterests = myInterests.split(',');
 
-    const updatedBirthdate = changedDate(birthdate);
+    /*     const arrInterests = collectedInformation.myInterests.split(',');
+
+    const updatedBirthdate = changedDate(collectedInformation.birthdate);
 
     setCollectedInformation({
       ...collectedInformation,
-      profileImage,
-      updatedBirthdate,
       arrInterests,
-      description,
+      updatedBirthdate,
       addedDates,
-    });
-  }, [profileImage, birthdate, myInterests, description, addedDates]);
+    }); */
 
-  const changes = async () => {
     const docRef = doc(db, 'usersDetails', user.uid);
 
     getDocs(colRefUserDetails).then((snapshot) => {
@@ -56,39 +63,92 @@ const Settings = ({ user }) => {
           if (details.uid === user.uid) {
             updateDoc(docRef, {
               ...collectedInformation,
-              uid: user.uid,
-              name: user.displayName,
             });
           } else {
             setDoc(docRef, {
-              collectedInformation,
-              uid: user.uid,
-              name: user.displayName,
+              ...collectedInformation,
             });
           }
         });
       } else {
         setDoc(docRef, {
-          collectedInformation,
-          uid: user.uid,
-          name: user.displayName,
+          ...collectedInformation,
         });
       }
     });
 
     /*      .then(); */
+
+    router.push(path);
+  };
+
+  const handleChange = (e) => {
+    setCollectedInformation({
+      ...collectedInformation,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const changes = async () => {
+    localStorage.setItem(
+      'collectedInformation',
+      JSON.stringify(collectedInformation)
+    );
   };
 
   const onValueChange = (e) => {
-    setSelected(e.target.value);
+    const birthdayIcon = '/birthday-circle.svg';
+    const weddingDayIcon = '/wedding-circle.svg';
+    const yearDayIcon = '/confetti-circle.svg';
+
+    setAddedDate({
+      ...addedDate,
+      selected: e.target.value,
+      icon: birthdayIcon,
+      title: user.displayName,
+    });
+
+    if (e.target.value === 'Bröllopsdag') {
+      setAddedDate({
+        ...addedDate,
+        selected: e.target.value,
+        icon: weddingDayIcon,
+        title: user.displayName,
+      });
+    } else if (e.target.value === 'Årsdag') {
+      setAddedDate({
+        ...addedDate,
+        selected: e.target.value,
+        icon: yearDayIcon,
+        title: user.displayName,
+      });
+    }
+  };
+
+  const addedDateChange = (e) => {
+    setAddedDate({
+      ...addedDate,
+      date: e.target.value,
+    });
   };
 
   const addSelectedDate = (e) => {
     e.preventDefault();
-    setShowDate(true);
-    if (selected || newDate.date) {
-      setAddedDates({ selected, ...newDate });
-    }
+    /* 
+    const updatedDate = changedDate(addedDate.date);
+
+    setAddedDate({ ...addedDate, updatedDate }); */
+
+    setAddedDates([...addedDates, addedDate]);
+  };
+
+  const handleRemove = (e, addDate) => {
+    e.preventDefault();
+    const updatedDates = addedDates.filter((date) => {
+      console.log(date.selected);
+      date.selected != addDate.selected;
+    });
+    setAddedDates(updatedDates);
   };
 
   return (
@@ -96,52 +156,62 @@ const Settings = ({ user }) => {
       <h3>Fyll i din profil</h3>
       <p>Den här informationen kommer vara synlig på din sida</p>
 
-      <form>
+      <form onSubmit={(e) => handleSubmit(e, '/min-profil')}>
         <div className={styles.topSection}>
           <div className={styles.fields}>
             <div className={styles.icon}>
               <Icon src="/avatar_1.svg" alt="logo" width="70" height="70" />
             </div>
-
-            <label htmlFor="date">Lägg till länk till profilbild</label>
-            <input
-              id="profileURL"
-              type="text"
-              value={profileImage}
-              placeholder="ex. www.nånting.se"
-              onChange={(e) => setProfileImage(e.target.value)}
-            />
-
-            <label htmlFor="interests">Mina intressen</label>
-            <input
-              id="interests"
-              type="text"
-              placeholder="ex. Matlagning, Trädgårdsarbete"
-              value={myInterests}
-              onChange={(e) => setMyInterests(e.target.value)}
-            />
-
-            <label htmlFor="date">Födelsedatum</label>
-            <input
-              id="date"
-              type="num"
-              value={birthdate}
-              placeholder="ex. 890101"
-              onChange={(e) => setBirthdate(e.target.value)}
-            />
-
-            {showDate ? (
+            {collectedInformation && (
               <>
-                <label htmlFor="date">{selected}</label>
+                <label htmlFor="profileImage">
+                  Lägg till länk till profilbild
+                </label>
                 <input
-                  id="date"
-                  type="num"
-                  value={addedDates.date}
-                  placeholder="ex. 890101"
-                  onChange={(e) => setBirthdate(e.target.value)}
+                  name="profileImage"
+                  id="profileImage"
+                  type="text"
+                  value={collectedInformation.profileImage}
+                  placeholder="ex. www.nånting.se"
+                  onChange={(e) => handleChange(e)}
                 />
               </>
-            ) : null}
+            )}
+            {collectedInformation && (
+              <>
+                <label htmlFor="interests">Mina intressen</label>
+                <input
+                  name="myInterests"
+                  id="interests"
+                  type="text"
+                  placeholder="ex. Matlagning, Trädgårdsarbete"
+                  value={collectedInformation.myInterests}
+                  onChange={(e) => handleChange(e)}
+                />
+              </>
+            )}
+            {collectedInformation && (
+              <>
+                <label htmlFor="birthday">Födelsedatum</label>
+                <input
+                  name="birthdate"
+                  id="birthday"
+                  type="text"
+                  value={collectedInformation.birthdate}
+                  placeholder="ex. 890101"
+                  onChange={(e) => handleChange(e)}
+                />
+              </>
+            )}
+
+            {/*            {addedDates &&
+              collectedInformation.addedDates.map((addDate) => (
+                <>
+                  <p>{addDate.selected}</p>
+                  <p>{addDate.date}</p>
+                  <button onClick={(e) => handleRemove(e, addDate)}>x</button>
+                </>
+              ))} */}
 
             <div className={styles.addNewDateWrapper}>
               <h4 onClick={() => setHeight(height === 0 ? 'auto' : 0)}>
@@ -189,11 +259,12 @@ const Settings = ({ user }) => {
                       id="date"
                       type="num"
                       placeholder="ex. 220101"
-                      onChange={(e) =>
-                        setNewDate({ ...newDate, date: e.target.value })
-                      }
+                      value={addedDate.newDate}
+                      onChange={addedDateChange}
                     />
-                    <button onClick={addSelectedDate}>Lägg till</button>
+                    <button onClick={(e) => addSelectedDate(e)}>
+                      Lägg till
+                    </button>
                   </div>
                 </div>
               </AnimateHeight>
@@ -201,44 +272,49 @@ const Settings = ({ user }) => {
           </div>
 
           <div className={styles.fields}>
-            <div className={styles.descriptionWrapper}>
-              <label htmlFor="descriptionText">
-                Skriv en beskrivning om dig själv:
-              </label>
-              <textarea
-                id="decriptionText"
-                name="description"
-                placeholder="Beskrivning ..."
-                type="text"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </div>
-            <div className={styles.passwordFields}>
-              <div className={styles.field}>
-                <label htmlFor="password">Lösenord</label>
-                <input id="password" type="password" placeholder="********" />
-              </div>
-              <div className={styles.field}>
-                <label htmlFor="updatePassword">Upprepa lösenord</label>
-                <input
-                  id="updatePassword"
-                  type="password"
-                  placeholder="********"
-                />
-              </div>
-            </div>
+            {collectedInformation && (
+              <>
+                <div className={styles.descriptionWrapper}>
+                  <label htmlFor="description">
+                    Skriv en beskrivning om dig själv:
+                  </label>
+                  <textarea
+                    id="description"
+                    name="description"
+                    placeholder="Beskrivning ..."
+                    type="text"
+                    value={collectedInformation.description}
+                    onChange={(e) => handleChange(e)}
+                  />
+                </div>
+              </>
+            )}
+            {collectedInformation && (
+              <>
+                <div className={styles.passwordFields}>
+                  <div className={styles.field}>
+                    <label htmlFor="password">Lösenord</label>
+                    <input
+                      id="password"
+                      type="password"
+                      placeholder="********"
+                    />
+                  </div>
+                  <div className={styles.field}>
+                    <label htmlFor="updatePassword">Upprepa lösenord</label>
+                    <input
+                      id="updatePassword"
+                      type="password"
+                      placeholder="********"
+                    />
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
-        <div className={styles.button} onClick={() => redirect('/min-profil')}>
-          {/*           <WriteToCloudFirestore
-            type="secondary"
-            collectedInformation={collectedInformation}
-          > */}
-          Bekräfta
-          {/*      </WriteToCloudFirestore> */}
-        </div>
+        <button className={styles.button}>Bekräfta</button>
       </form>
 
       <Link href={'/min-profil'} passHref>

@@ -8,14 +8,23 @@ import { db } from '../firebase/config';
 import { doc, onSnapshot } from 'firebase/firestore';
 
 const Profile = ({ user }) => {
-  const [myInfo, setMyInfo] = useState();
+  const [myInfo, setMyInfo] = useState({});
 
   useEffect(() => {
     if (user) {
       const docRef = doc(db, 'usersDetails', user.uid);
 
       onSnapshot(docRef, (doc) => {
-        setMyInfo({ ...doc.data() });
+        if (doc.data() !== undefined) {
+          setMyInfo({ ...doc.data() });
+          console.log('data from firestore');
+        } else {
+          const savedObj = JSON.parse(
+            localStorage.getItem('collectedInformation')
+          );
+          setMyInfo(savedObj);
+          console.log('data from localStorage');
+        }
       });
     }
   }, [user]);
@@ -25,16 +34,17 @@ const Profile = ({ user }) => {
       <div className={styles.userInfoContainer}>
         <div className={styles.topSection}>
           <NextImage src="/avatar_1.svg" alt="logo" width="150" height="150" />
-          {myInfo && (
+          {user && (
             <>
-              <h5>{myInfo.name}</h5>
-              <p>{myInfo.collectedInformation.description}</p>
+              <h5>{user.displayName}</h5>
+              <p>{user.email}</p>
+              {myInfo && <p>{myInfo.description}</p>}
             </>
           )}
         </div>
 
         <div>
-          {myInfo && (
+          {myInfo.birthdate !== '' ? (
             <div className={styles.middleSection}>
               <div className={styles.dateCard}>
                 <div>
@@ -46,47 +56,36 @@ const Profile = ({ user }) => {
                   />
                 </div>
                 <div>
-                  <h5>{myInfo.collectedInformation.updatedBirthdate}</h5>
+                  <h5>{myInfo.birthdate}</h5>
                   <p>Födelsedag</p>
                 </div>
               </div>
             </div>
+          ) : (
+            <></>
           )}
-
-          <div className={styles.dateCard}>
-            <div>
-              <NextImage
-                src="/confetti-circle.svg"
-                alt="logo"
-                width="35"
-                height="35"
-              />
-            </div>
-            <div>
-              <h5>14 maj</h5>
-              <p>Årsdag</p>
-            </div>
-          </div>
-
-          <div className={styles.dateCard}>
-            <div>
-              <NextImage
-                src="/wedding-circle.svg"
-                alt="logo"
-                width="35"
-                height="35"
-              />
-            </div>
-            <div>
-              <h5>7 juni</h5>
-              <p>Bröllopsdag</p>
-            </div>
-          </div>
-
+          {/* 
+          {myInfo.addedDates !== null &&
+            myInfo.addedDates.map((dates) => (
+              <div className={styles.dateCard}>
+                <div>
+                  <NextImage
+                    src={dates.icon}
+                    alt="logo"
+                    width="35"
+                    height="35"
+                  />
+                </div>
+                <div>
+                  <h5>{dates.date}</h5>
+                  <p>{dates.selected}</p>
+                </div>
+              </div>
+            ))} */}
           <div className={styles.bottomSection}>
             <h3>Mina intressen</h3>
-            {myInfo &&
-              myInfo.collectedInformation.arrInterests.map((interest) => (
+            {myInfo.arrInterests &&
+              myInfo.arrInterests.map((interest) => (
                 <div className={styles.interestsCards}>
                   <p>{interest}</p>
                 </div>
