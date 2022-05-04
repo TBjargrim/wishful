@@ -1,5 +1,5 @@
 @import 'varibles';
-@import 'react-big-calendar/lib/sass/styles';
+// @import 'react-big-calendar/lib/sass/styles';
 
 .homepageContainer {
   min-height: calc(100vh - 17.125rem);
@@ -118,15 +118,4 @@
 .calender {
   width: 50rem;
   height: 30rem;
-  background: #f9f9f9;
-  box-shadow: 2px 4px 9px rgba(0, 0, 0, 0.11);
-  border-radius: 15px;
-
-  h3 {
-    padding: 1rem;
-  }
-
-
 }
-
-
