@@ -18,13 +18,13 @@ const Profile = ({ user }) => {
       onSnapshot(docRef, (doc) => {
         if (doc.data() !== undefined) {
           setMyInfo({ ...doc.data() });
-          console.log('data from firestore');
+          /*        console.log('data from firestore onMount'); */
         } else {
           const savedObj = JSON.parse(
             localStorage.getItem('collectedInformation')
           );
           setMyInfo(savedObj);
-          console.log('data from localStorage');
+          /*       console.log('data from localStorage onMount'); */
         }
       });
     }
@@ -37,13 +37,13 @@ const Profile = ({ user }) => {
       onSnapshot(docRef, (doc) => {
         if (doc.data() !== undefined) {
           setMyInfo({ ...doc.data() });
-          console.log('data from firestore');
+          /*       console.log('data from firestore user update'); */
         } else {
           const savedObj = JSON.parse(
             localStorage.getItem('collectedInformation')
           );
           setMyInfo(savedObj);
-          console.log('data from localStorage');
+          /*    console.log('data from localStorage user update'); */
         }
       });
     }
@@ -56,7 +56,7 @@ const Profile = ({ user }) => {
       setInterests(arrInterests);
     }
   }, [myInfo]);
-  console.log(interests);
+
   return (
     <div className={styles.profileContainer}>
       <div className={styles.userInfoContainer}>
@@ -85,7 +85,7 @@ const Profile = ({ user }) => {
                   />
                 </div>
                 <div>
-                  <h5>{myInfo.birthdate}</h5>
+                  <h5>{myInfo.updatedBirthdate}</h5>
                   <p>Födelsedag</p>
                 </div>
               </div>
@@ -105,7 +105,7 @@ const Profile = ({ user }) => {
                   />
                 </div>
                 <div>
-                  <h5>{dates.date}</h5>
+                  <h5>{dates.updatedDate}</h5>
                   <p>{dates.selected}</p>
                 </div>
               </div>
