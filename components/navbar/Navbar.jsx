@@ -4,6 +4,7 @@ import NextImage from 'next/image';
 import Link from 'next/link';
 import styles from './_navbar.module.scss';
 import { useUser } from '../../firebase/useUser';
+import DropdownMenu from '../dropDownMenu/DropDownMenu';
 
 const Navbar = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -49,14 +50,8 @@ const Navbar = () => {
                       <a aria-label="link to friendspage">Vänner</a>
                     </Link>
                   </li>
-                  <li onClick={() => logout()}>Logga ut</li>
                 </ul>
-                <NextImage
-                  src="/avatar_1.svg"
-                  alt="avatar"
-                  width="64"
-                  height="64"
-                />
+                <DropdownMenu />
               </div>
             </>
           )}
