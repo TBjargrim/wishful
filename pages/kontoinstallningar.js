@@ -28,7 +28,6 @@ const Settings = ({ user, addedDates, setAddedDates }) => {
       birthdate: '',
       myInterests: '',
       description: '',
-      updatedBirthdate: '',
       addedDates,
     }
   );
@@ -46,10 +45,20 @@ const Settings = ({ user, addedDates, setAddedDates }) => {
     }
   }, [user]);
 
+  useEffect(() => {
+    setCollectedInformation({ ...collectedInformation, addedDates });
+    saveLocalStorage();
+  }, [addedDates]);
+
   const handleSubmit = (e, path) => {
     e.preventDefault();
 
-    setCollectedInformation({ ...collectedInformation, addedDates });
+    let updatedBirthdate = changedDate(collectedInformation.birthdate);
+    setCollectedInformation({
+      ...collectedInformation,
+      updatedBirthdate: updatedBirthdate,
+    });
+
     saveLocalStorage();
 
     const docRef = doc(db, 'usersDetails', user.uid);
@@ -85,12 +94,22 @@ const Settings = ({ user, addedDates, setAddedDates }) => {
   };
 
   const handleChange = (e) => {
-    setCollectedInformation({
-      ...collectedInformation,
-      [e.target.name]: e.target.value,
-    });
-  };
+    if (e.target.name === 'birthdate') {
+      const updatedBirthdate = changedDate(e.target.value);
 
+      setCollectedInformation({
+        ...collectedInformation,
+        [e.target.name]: e.target.value,
+        updatedBirthdate: updatedBirthdate,
+      });
+    } else {
+      setCollectedInformation({
+        ...collectedInformation,
+        [e.target.name]: e.target.value,
+      });
+    }
+  };
+  console.log(collectedInformation);
   const saveLocalStorage = async () => {
     localStorage.setItem(
       'collectedInformation',
@@ -134,7 +153,12 @@ const Settings = ({ user, addedDates, setAddedDates }) => {
   const addSelectedDate = (e) => {
     e.preventDefault();
 
-    setAddedDates([...addedDates, addedDate]);
+    const updatedDate = changedDate(addedDate.date);
+
+    setAddedDates([
+      ...addedDates,
+      (addedDate = { ...addedDate, updatedDate: updatedDate }),
+    ]);
   };
 
   const handleRemove = (e, i) => {
@@ -142,7 +166,7 @@ const Settings = ({ user, addedDates, setAddedDates }) => {
     const newDates = [...addedDates.slice(0, i), ...addedDates.slice(i + 1)];
     setAddedDates(newDates);
   };
-  console.log(addedDates);
+
   return (
     <div className={styles.settingWrapper}>
       <h3>Fyll i din profil</h3>
