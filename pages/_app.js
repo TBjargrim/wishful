@@ -1,11 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Provider } from 'react-redux';
 import Navbar from '../components/navbar/Navbar';
 import Footer from '../components/footer/Footer';
 
 import 'firebase/compat/firestore';
-import { addDoc,setDoc, collection, query, where, getDocs } from 'firebase/firestore';
+import {
+  doc,
+  onSnapshot,
+  addDoc,
+  setDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 import '../styles/globals.scss';
@@ -17,6 +26,7 @@ import { db } from '../firebase/config';
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const auth = getAuth();
+  const [addedDates, setAddedDates] = useState([]);
   const [user, loading, error] = useAuthState(auth);
 
   const createUserInformation = async () => {
@@ -37,16 +47,35 @@ function MyApp({ Component, pageProps }) {
     }
   };
 
-  /*   useEffect(() => {
-    readData(user);
-  }, []); */
-  // console.log(user);
+  useEffect(() => {
+    if (user) {
+      const docRef = doc(db, 'usersDetails', user.uid);
+
+      onSnapshot(docRef, (doc) => {
+        if (doc.data() !== undefined) {
+          localStorage.setItem(
+            'collectedInformation',
+            JSON.stringify(doc.data())
+          );
+        } else {
+          setDoc(docRef, {
+            profileImage: '',
+            birthdate: '',
+            myInterests: '',
+            description: '',
+            updatedBirthdate: '',
+            addedDates,
+          });
+        }
+      });
+    }
+  }, [user]);
+
   useEffect(() => {
     if (loading) {
       return;
     }
     if (user) {
-      router.push('/min-profil');
       createUserInformation();
     }
   }, [user, loading]);
@@ -54,7 +83,12 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Navbar />
-      <Component {...pageProps} user={user} />
+      <Component
+        {...pageProps}
+        user={user}
+        setAddedDates={setAddedDates}
+        addedDates={addedDates}
+      />
       <Footer />
     </>
   );

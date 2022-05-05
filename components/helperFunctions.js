@@ -22,7 +22,6 @@ export function changedDate(date) {
 
     let splitDate = date.split('-');
     let getMonth = splitDate[1];
-    console.log(getMonth);
     if (getMonth && getMonth.slice(0, 1) == 0) {
       let noZero = getMonth.slice(1, 2);
       let getOneLessNumber = (noZero -= 1);

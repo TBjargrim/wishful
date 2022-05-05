@@ -10,6 +10,7 @@ const useUser = () => {
   const logout = async () => {
     try {
       await auth.signOut();
+      localStorage.clear();
       router.push('/');
     } catch (e) {
       console.log(e.message);
