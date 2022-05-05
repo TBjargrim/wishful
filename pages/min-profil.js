@@ -10,7 +10,7 @@ import { doc, onSnapshot } from 'firebase/firestore';
 const Profile = ({ user }) => {
   const [myInfo, setMyInfo] = useState({});
   const [interests, setInterests] = useState([]);
-  
+
   useEffect(() => {
     if (user) {
       const docRef = doc(db, 'usersDetails', user.uid);
@@ -62,6 +62,7 @@ const Profile = ({ user }) => {
       <div className={styles.userInfoContainer}>
         <div className={styles.topSection}>
           <NextImage src="/avatar_1.svg" alt="logo" width="150" height="150" />
+
           {user && (
             <>
               <h5>{user.displayName}</h5>
