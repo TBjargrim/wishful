@@ -11,16 +11,15 @@ import {
   doc,
   updateDoc,
   getDocs,
-  connectFirestoreEmulator,
+  onSnapshot,
 } from 'firebase/firestore';
 import { useLocalStorage } from '../components/useLocalStorage';
 import AnimateHeight from 'react-animate-height';
 
-const Settings = ({ user }) => {
+const Settings = ({ user, addedDates, setAddedDates }) => {
   const router = useRouter();
   const [height, setHeight] = useState(0);
   const [addedDate, setAddedDate] = useState({});
-  const [addedDates, setAddedDates] = useState([]);
 
   const [collectedInformation, setCollectedInformation] = useLocalStorage(
     'collectedInformation',
@@ -34,21 +33,24 @@ const Settings = ({ user }) => {
     }
   );
 
+  useEffect(() => {
+    if (user) {
+      const docRef = doc(db, 'usersDetails', user.uid);
+      onSnapshot(docRef, (doc) => {
+        const data = doc.data();
+        if (data.addedDates) {
+          const savedDates = data.addedDates;
+          setAddedDates(savedDates);
+        }
+      });
+    }
+  }, [user]);
+
   const handleSubmit = (e, path) => {
     e.preventDefault();
 
-    changes();
-
-    /*     const arrInterests = collectedInformation.myInterests.split(',');
-
-    const updatedBirthdate = changedDate(collectedInformation.birthdate);
-
-    setCollectedInformation({
-      ...collectedInformation,
-      arrInterests,
-      updatedBirthdate,
-      addedDates,
-    }); */
+    setCollectedInformation({ ...collectedInformation, addedDates });
+    saveLocalStorage();
 
     const docRef = doc(db, 'usersDetails', user.uid);
 
@@ -89,7 +91,7 @@ const Settings = ({ user }) => {
     });
   };
 
-  const changes = async () => {
+  const saveLocalStorage = async () => {
     localStorage.setItem(
       'collectedInformation',
       JSON.stringify(collectedInformation)
@@ -105,7 +107,6 @@ const Settings = ({ user }) => {
       ...addedDate,
       selected: e.target.value,
       icon: birthdayIcon,
-      title: user.displayName,
     });
 
     if (e.target.value === 'Bröllopsdag') {
@@ -113,14 +114,12 @@ const Settings = ({ user }) => {
         ...addedDate,
         selected: e.target.value,
         icon: weddingDayIcon,
-        title: user.displayName,
       });
     } else if (e.target.value === 'Årsdag') {
       setAddedDate({
         ...addedDate,
         selected: e.target.value,
         icon: yearDayIcon,
-        title: user.displayName,
       });
     }
   };
@@ -134,23 +133,16 @@ const Settings = ({ user }) => {
 
   const addSelectedDate = (e) => {
     e.preventDefault();
-    /* 
-    const updatedDate = changedDate(addedDate.date);
-
-    setAddedDate({ ...addedDate, updatedDate }); */
 
     setAddedDates([...addedDates, addedDate]);
   };
 
-  const handleRemove = (e, addDate) => {
+  const handleRemove = (e, i) => {
     e.preventDefault();
-    const updatedDates = addedDates.filter((date) => {
-      console.log(date.selected);
-      date.selected != addDate.selected;
-    });
-    setAddedDates(updatedDates);
+    const newDates = [...addedDates.slice(0, i), ...addedDates.slice(i + 1)];
+    setAddedDates(newDates);
   };
-
+  console.log(addedDates);
   return (
     <div className={styles.settingWrapper}>
       <h3>Fyll i din profil</h3>
@@ -204,14 +196,22 @@ const Settings = ({ user }) => {
               </>
             )}
 
-            {/*            {addedDates &&
-              collectedInformation.addedDates.map((addDate) => (
-                <>
-                  <p>{addDate.selected}</p>
-                  <p>{addDate.date}</p>
-                  <button onClick={(e) => handleRemove(e, addDate)}>x</button>
-                </>
-              ))} */}
+            {addedDates.length >= 0 &&
+              addedDates.map((addDate, i) => (
+                <div key={i} className={styles.newDateWrapper}>
+                  <div className={styles.dateWrapper}>
+                    <label htmlFor={addDate.selected}>{addDate.selected}</label>
+                    <input
+                      placeholder="ex. 890101"
+                      id={addDate.selected}
+                      type="text"
+                      value={addDate.date}
+                      onChange={(e) => handleChange(e)}
+                    />
+                  </div>
+                  <button onClick={(e) => handleRemove(e, i)}>x</button>
+                </div>
+              ))}
 
             <div className={styles.addNewDateWrapper}>
               <h4 onClick={() => setHeight(height === 0 ? 'auto' : 0)}>
@@ -254,12 +254,14 @@ const Settings = ({ user }) => {
                   </div>
 
                   <div className={styles.dateWrapper}>
-                    <label htmlFor="date">Datum</label>
+                    <label className={styles.dateLabel} htmlFor="date">
+                      Datum
+                    </label>
                     <input
                       id="date"
                       type="num"
                       placeholder="ex. 220101"
-                      value={addedDate.newDate}
+                      value={addedDate.date}
                       onChange={addedDateChange}
                     />
                     <button onClick={(e) => addSelectedDate(e)}>
@@ -318,7 +320,7 @@ const Settings = ({ user }) => {
       </form>
 
       <Link href={'/min-profil'} passHref>
-        <a>
+        <a className={styles.closeButton}>
           <Button type="transparent">Stäng</Button>
         </a>
       </Link>

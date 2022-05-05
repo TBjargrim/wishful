@@ -9,6 +9,26 @@ import { doc, onSnapshot } from 'firebase/firestore';
 
 const Profile = ({ user }) => {
   const [myInfo, setMyInfo] = useState({});
+  const [interests, setInterests] = useState([]);
+  
+  useEffect(() => {
+    if (user) {
+      const docRef = doc(db, 'usersDetails', user.uid);
+
+      onSnapshot(docRef, (doc) => {
+        if (doc.data() !== undefined) {
+          setMyInfo({ ...doc.data() });
+          console.log('data from firestore');
+        } else {
+          const savedObj = JSON.parse(
+            localStorage.getItem('collectedInformation')
+          );
+          setMyInfo(savedObj);
+          console.log('data from localStorage');
+        }
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -29,6 +49,14 @@ const Profile = ({ user }) => {
     }
   }, [user]);
 
+  useEffect(() => {
+    if (myInfo.myInterests !== undefined) {
+      const interests = myInfo.myInterests;
+      const arrInterests = interests.split(',');
+      setInterests(arrInterests);
+    }
+  }, [myInfo]);
+  console.log(interests);
   return (
     <div className={styles.profileContainer}>
       <div className={styles.userInfoContainer}>
@@ -64,8 +92,7 @@ const Profile = ({ user }) => {
           ) : (
             <></>
           )}
-          {/* 
-          {myInfo.addedDates !== null &&
+          {myInfo.addedDates &&
             myInfo.addedDates.map((dates) => (
               <div className={styles.dateCard}>
                 <div>
@@ -81,11 +108,12 @@ const Profile = ({ user }) => {
                   <p>{dates.selected}</p>
                 </div>
               </div>
-            ))} */}
+            ))}
+
           <div className={styles.bottomSection}>
             <h3>Mina intressen</h3>
-            {myInfo.arrInterests &&
-              myInfo.arrInterests.map((interest) => (
+            {interests &&
+              interests.map((interest) => (
                 <div className={styles.interestsCards}>
                   <p>{interest}</p>
                 </div>
