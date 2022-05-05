@@ -54,7 +54,7 @@
   display: flex;
   flex-wrap: wrap;
   margin-top: 1rem;
-  
+
   p {
     margin: 0.5rem 0.625rem 0.5rem 0;
     padding: 0.5rem 1rem;
@@ -96,5 +96,89 @@
     h4 {
       padding: 0.5rem;
     }
+  }
+}
+
+.newListWrapper {
+  margin: 1rem 0;
+  width: 8.25rem;
+  height: 2.188rem;
+  background: #ff6e83;
+  box-shadow: 8px 11px 25px 1px rgba(98, 98, 98, 0.13);
+  border-radius: 10px;
+  h5 {
+    font-size: 1rem;
+    font-weight: $font-weight-regular;
+    color: white;
+    padding: 0.5rem;
+  }
+}
+
+.newListForm {
+  margin-top: 2rem;
+  box-shadow: 4px 7px 17px 1px rgba(98, 98, 98, 0.14);
+  border-radius: 0px 0px 10px 10px;
+  button {
+    border: 1px solid #c1c1c1;
+    box-shadow: 8px 11px 25px 1px rgba(98, 98, 98, 0.13);
+    border-radius: 10px;
+    width: 6.375rem;
+    height: 2.375rem;
+  }
+}
+
+.listHeader {
+  display: flex;
+  padding: 0 2rem;
+  h3 {
+    margin-left: 1rem;
+  }
+}
+
+.inputWrapper {
+  display: flex;
+  margin: 1.5rem 2rem 0 2rem;
+}
+
+.nameInput {
+  display: flex;
+  flex-direction: column;
+  margin-right: 3rem;
+  input {
+    box-shadow: 3px 3px 10px 1px rgba(98, 98, 98, 0.12);
+    border-radius: 10px;
+    border: transparent;
+    height: 2rem;
+    width: 17rem;
+    padding: 0.8rem;
+    margin-top: 0.5rem;
+  }
+}
+
+.categorieWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-left: 8rem;
+}
+
+.radioButtonsWrapper {
+  margin-top: 0.5rem;
+}
+
+.radioButton {
+  label {
+    padding-left: 1rem;
+  }
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 2rem;
+  padding-bottom: 1rem;
+  button {
+    background: $color-primary;
+    color: white;
+    border: transparent;
   }
 }

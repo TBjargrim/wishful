@@ -6,10 +6,32 @@ import NextImage from 'next/image';
 import Icon from '../components/shared/Icon';
 import { db } from '../firebase/config';
 import { doc, onSnapshot } from 'firebase/firestore';
+import AnimateHeight from 'react-animate-height';
 
 const Profile = ({ user }) => {
   const [myInfo, setMyInfo] = useState({});
   const [interests, setInterests] = useState([]);
+  const [height, setHeight] = useState(0);
+  const [newWishlist, setNewWishlist] = useState({
+    listName: '',
+    categorie: '',
+    icon: '',
+  });
+
+  const lists = [
+    {
+      listName: 'Födelsedag',
+      categorie: 'Birthday',
+      icon: '/birthday-circle.svg',
+    },
+    {
+      listName: 'Bröllopsdag',
+      categorie: 'Weddingday',
+      icon: '/wedding-circle.svg',
+    },
+  ];
+
+  const [allWishlists, setAllWishlists] = useState(lists);
 
   useEffect(() => {
     if (user) {
@@ -18,13 +40,13 @@ const Profile = ({ user }) => {
       onSnapshot(docRef, (doc) => {
         if (doc.data() !== undefined) {
           setMyInfo({ ...doc.data() });
-          console.log('data from firestore');
+          // console.log('data from firestore');
         } else {
           const savedObj = JSON.parse(
             localStorage.getItem('collectedInformation')
           );
           setMyInfo(savedObj);
-          console.log('data from localStorage');
+          // console.log('data from localStorage');
         }
       });
     }
@@ -37,13 +59,13 @@ const Profile = ({ user }) => {
       onSnapshot(docRef, (doc) => {
         if (doc.data() !== undefined) {
           setMyInfo({ ...doc.data() });
-          console.log('data from firestore');
+          // console.log('data from firestore');
         } else {
           const savedObj = JSON.parse(
             localStorage.getItem('collectedInformation')
           );
           setMyInfo(savedObj);
-          console.log('data from localStorage');
+          // console.log('data from localStorage');
         }
       });
     }
@@ -56,7 +78,55 @@ const Profile = ({ user }) => {
       setInterests(arrInterests);
     }
   }, [myInfo]);
-  console.log(interests);
+
+  const handleAddWishlist = (e) => {
+    e.preventDefault();
+    setAllWishlists([...allWishlists, newWishlist]);
+  };
+
+  const onValueChange = (e) => {
+    const birthdayIcon = '/birthday-circle.svg';
+    const weddingDayIcon = '/wedding-circle.svg';
+    const anniversaryIcon = '/flowers-circle.svg';
+    const christmasIcon = '/christmas-circle.svg';
+    const otherIcon = '/confetti-circle.svg';
+
+    if (e.target.id === 'Birthday') {
+      setNewWishlist({
+        ...newWishlist,
+        categorie: e.target.id,
+        icon: birthdayIcon,
+      });
+    }
+    if (e.target.id === 'Wedding') {
+      setNewWishlist({
+        ...newWishlist,
+        categorie: e.target.id,
+        icon: weddingDayIcon,
+      });
+    }
+    if (e.target.id === 'Anniversary') {
+      setNewWishlist({
+        ...newWishlist,
+        categorie: e.target.id,
+        icon: anniversaryIcon,
+      });
+    }
+    if (e.target.id === 'Christmas') {
+      setNewWishlist({
+        ...newWishlist,
+        categorie: e.target.id,
+        icon: christmasIcon,
+      });
+    } else if (e.target.id === 'Other') {
+      setNewWishlist({
+        ...newWishlist,
+        categorie: e.target.id,
+        icon: otherIcon,
+      });
+    }
+  };
+
   return (
     <div className={styles.profileContainer}>
       <div className={styles.userInfoContainer}>
@@ -134,55 +204,127 @@ const Profile = ({ user }) => {
       <div className={styles.wishlistContainer}>
         <div>
           <h3>Mina önskelistor</h3>
-          <a>
-            <Button type="default">Skapa ny lista +</Button>
-          </a>
+          <div className={styles.newListWrapper}>
+            <h5
+              type="default"
+              onClick={() => setHeight(height === 0 ? 'auto' : 0)}
+            >
+              Skapa ny lista +
+            </h5>
+          </div>
+          <AnimateHeight id="panel" duration={500} height={height}>
+            <form className={styles.newListForm}>
+              <div className={styles.listHeader}>
+                <NextImage
+                  src="/empty-circle.svg"
+                  alt="logo"
+                  width="35"
+                  height="35"
+                />
+                <h3>Ny lista ...</h3>
+              </div>
+              <div className={styles.inputWrapper}>
+                <div className={styles.nameInput}>
+                  <label>Namn på ny lista</label>
+                  <input
+                    id="listname"
+                    type="text"
+                    name="listName"
+                    value={newWishlist.listName}
+                    placeholder="ex. önskelista"
+                    onChange={(e) =>
+                      setNewWishlist({
+                        ...newWishlist,
+                        listName: e.target.value,
+                      })
+                    }
+                  ></input>
+                </div>
+
+                <div className={styles.categorieWrapper}>
+                  <label>Välj kategori</label>
+                  <div className={styles.radioButtonsWrapper}>
+                    <div className={styles.radioButton}>
+                      <input
+                        id="Birthday"
+                        type="radio"
+                        name="categorie"
+                        value={newWishlist.categorie}
+                        onChange={(e) => onValueChange(e)}
+                      />
+                      <label>Födelsedag</label>
+                    </div>
+
+                    <div className={styles.radioButton}>
+                      <input
+                        id="Weddingday"
+                        type="radio"
+                        name="categorie"
+                        value={newWishlist.categorie}
+                        onChange={(e) => onValueChange(e)}
+                      />
+                      <label>Bröllopsdag</label>
+                    </div>
+
+                    <div className={styles.radioButton}>
+                      <input
+                        id="Anniversary"
+                        type="radio"
+                        name="categorie"
+                        value={newWishlist.categorie}
+                        onChange={(e) => onValueChange(e)}
+                      />
+                      <label>Årsdag</label>
+                    </div>
+
+                    <div className={styles.radioButton}>
+                      <input
+                        id="Christmas"
+                        type="radio"
+                        name="categorie"
+                        value={newWishlist.categorie}
+                        onChange={(e) => onValueChange(e)}
+                      />
+                      <label>Jul</label>
+                    </div>
+
+                    <div className={styles.radioButton}>
+                      <input
+                        id="Other"
+                        type="radio"
+                        name="categorie"
+                        value={newWishlist.categorie}
+                        onChange={(e) => onValueChange(e)}
+                      />
+                      <label>Övrigt</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.buttonWrapper}>
+                <button onClick={(e) => handleAddWishlist(e)}>Klar</button>
+              </div>
+            </form>
+          </AnimateHeight>
         </div>
+
         <div className={styles.wishlistsWrapper}>
-          <div className={styles.wishlist}>
-            <div>
+          {allWishlists.map((list) => (
+            <div className={styles.wishlist}>
               <div>
-                <NextImage
-                  src="/birthday-circle.svg"
-                  alt="logo"
-                  width="35"
-                  height="35"
-                />
+                <div>
+                  <NextImage
+                    src={list.icon}
+                    alt="logo"
+                    width="35"
+                    height="35"
+                  />
+                </div>
+                <h4>{list.listName}</h4>
               </div>
-              <h4>Födelsedag</h4>
+              <Icon src="/arrowIcon.svg" altText="Icon" />
             </div>
-            <Icon src="/arrowIcon.svg" altText="Icon" />
-          </div>
-
-          <div className={styles.wishlist}>
-            <div>
-              <div>
-                <NextImage
-                  src="/wedding-circle.svg"
-                  alt="logo"
-                  width="35"
-                  height="35"
-                />
-              </div>
-              <h4>Bröllopsdag</h4>
-            </div>
-            <Icon src="/arrowIcon.svg" altText="Icon" />
-          </div>
-
-          <div className={styles.wishlist}>
-            <div>
-              <div>
-                <NextImage
-                  src="/christmas-circle.svg"
-                  alt="logo"
-                  width="35"
-                  height="35"
-                />
-              </div>
-              <h4>Jul</h4>
-            </div>
-            <Icon src="/arrowIcon.svg" altText="Icon" />
-          </div>
+          ))}
         </div>
       </div>
     </div>
