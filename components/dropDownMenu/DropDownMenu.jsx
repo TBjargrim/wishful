@@ -1,11 +1,14 @@
 import { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
 import NextImage from 'next/image';
 import styles from './_dropDownMenu.module.scss';
-import { logout } from '../../firebase/useUser';
+import { useUser } from '../../firebase/useUser';
 
 const DropdownMenu = () => {
   const dropdownRef = useRef(null);
   const [isActive, setIsActive] = useState(false);
+  const { logout } = useUser();
+
   const handleOpenMenu = () => setIsActive(!isActive);
 
   console.log(isActive);
@@ -39,10 +42,12 @@ const DropdownMenu = () => {
       <nav ref={dropdownRef} className={`${styles.menu} ${setActiveClass}`}>
         <ul>
           <li>
-            <a href="/kontoinstallningar">Kontoinställningar</a>
+            <Link href="/kontoinstallningar">
+              <a aria-label="link to homepage">Kontoinställningar</a>
+            </Link>
           </li>
           <li onClick={() => logout()}>
-            <a href="/">Logga ut</a>
+            <a>Logga ut</a>
           </li>
         </ul>
       </nav>
