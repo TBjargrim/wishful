@@ -11,8 +11,6 @@ const DropdownMenu = () => {
 
   const handleOpenMenu = () => setIsActive(!isActive);
 
-  console.log(isActive);
-
   useEffect(() => {
     const pageClickEvent = (e) => {
       if (

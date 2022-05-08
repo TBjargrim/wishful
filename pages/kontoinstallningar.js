@@ -109,7 +109,7 @@ const Settings = ({ user, addedDates, setAddedDates }) => {
       });
     }
   };
-  console.log(collectedInformation);
+
   const saveLocalStorage = async () => {
     localStorage.setItem(
       'collectedInformation',
