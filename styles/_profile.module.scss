@@ -78,39 +78,63 @@
 
 .wishlistsWrapper {
   margin-top: 3rem;
+  
 }
 
 .wishlist {
   box-shadow: 4px 7px 17px 1px rgba(98, 98, 98, 0.14);
+  // border: 2px solid green;
   border-radius: 10px;
   width: 47rem;
-  display: flex;
+  // display: flex;
+  // flex-direction: column;
   justify-content: space-between;
   padding: 0 1rem;
   margin-bottom: 1rem;
 
   div {
-    display: flex;
+    // display: flex;
     padding: 0.3rem 0;
-
+    
     h4 {
       padding: 0.5rem;
     }
   }
 }
+.iconTitleWrapper {
+  margin-top: 1rem;
+  display: flex;
+}
+
+.wrapper {
+  // border: 2px solid blue;
+  // display: flex;
+  // flex-direction: column;
+  input {
+    height: 2rem;
+  }
+}
+
+.addedItems {
+  margin: 0.5rem;
+  // border: 2px solid red;
+  display: flex;
+  flex-direction: column;
+}
 
 .newListWrapper {
-  margin: 1rem 0;
-  width: 8.25rem;
-  height: 2.188rem;
-  background: #ff6e83;
-  box-shadow: 8px 11px 25px 1px rgba(98, 98, 98, 0.13);
-  border-radius: 10px;
-  h5 {
+  button {
     font-size: 1rem;
     font-weight: $font-weight-regular;
     color: white;
-    padding: 0.5rem;
+    box-shadow: 8px 11px 25px 1px rgba(98, 98, 98, 0.13);
+    border-radius: 10px;
+    background: $color-primary;
+    width: 8.25rem;
+    height: 2.188rem;
+    border: transparent;
+    margin-top: 1rem;
+    cursor: pointer;
   }
 }
 

@@ -12,22 +12,31 @@ const Profile = ({ user }) => {
   const [myInfo, setMyInfo] = useState({});
   const [interests, setInterests] = useState([]);
   const [height, setHeight] = useState(0);
+  const [listheight, setListHeight] = useState(0);
   const [newWishlist, setNewWishlist] = useState({
+    id:'',
     listName: '',
     categorie: '',
-    icon: '',
+    icon: '/birthday-circle.svg',
+    items: [],
   });
+  const [showInput, setShowInput] = useState(false)
+  const [saveInput, setSaveInput] = useState('');
 
   const lists = [
     {
+      id:'1',
       listName: 'Födelsedag',
       categorie: 'Birthday',
       icon: '/birthday-circle.svg',
+      items: ['Stickad tröja', 'Cykel'],
     },
     {
+      id:'2',
       listName: 'Bröllopsdag',
       categorie: 'Weddingday',
       icon: '/wedding-circle.svg',
+      items: ['Vinglas', 'Kastrull', 'Spel'],
     },
   ];
 
@@ -127,6 +136,45 @@ const Profile = ({ user }) => {
     }
   };
 
+const handleAddItemToList = (e) => {
+  e.preventDefault();
+  setSaveInput(e.target.value);
+  console.log(saveInput)
+} 
+
+const addNewItem =  index => e => {
+  e.preventDefault();
+  
+  // let foundList = allWishlists.find(item => item.listName)
+  let foundLists = [...allWishlists]
+  // console.log(foundLists[index].categorie)
+  foundLists[index] = {
+      id: foundLists[index].id,
+      listName: foundLists[index].listName,
+      categorie: foundLists[index].categorie,
+      icon: foundLists[index].icon,
+      items: [...foundLists[index].items, saveInput]
+    }
+setAllWishlists(foundLists)
+console.log(allWishlists)
+  }
+
+
+  // let allLists = allWishlists.filter(list => list != listName)
+
+  // const newAddedList = {
+  //   id: foundList.id,
+  //   listName: foundList.listName,
+  //   categorie: foundList.categorie,
+  //   icon: foundList.icon,
+  //   listItems: [...foundList.items, saveInput]
+  // }
+  // setNewWishlist(newAddedList)
+  // setAllWishlists([...allWishlists, newAddedList]);
+  // console.log(allWishlists)
+// }
+
+
   return (
     <div className={styles.profileContainer}>
       <div className={styles.userInfoContainer}>
@@ -205,12 +253,12 @@ const Profile = ({ user }) => {
         <div>
           <h3>Mina önskelistor</h3>
           <div className={styles.newListWrapper}>
-            <h5
+            <button
               type="default"
               onClick={() => setHeight(height === 0 ? 'auto' : 0)}
             >
               Skapa ny lista +
-            </h5>
+            </button>
           </div>
           <AnimateHeight id="panel" duration={500} height={height}>
             <form className={styles.newListForm}>
@@ -309,20 +357,42 @@ const Profile = ({ user }) => {
         </div>
 
         <div className={styles.wishlistsWrapper}>
-          {allWishlists.map((list) => (
-            <div className={styles.wishlist}>
-              <div>
-                <div>
-                  <NextImage
-                    src={list.icon}
-                    alt="logo"
-                    width="35"
-                    height="35"
-                  />
-                </div>
-                <h4>{list.listName}</h4>
+          {allWishlists.map(({ icon, listName, items  },index) => (
+            <div
+              // key={index}
+              className={styles.wishlist}
+              
+            >
+              <div className={styles.iconTitleWrapper}>
+                <NextImage src={icon} alt="logo" width="35" height="35" />
+
+                <h4 onClick={() => setListHeight(listheight === 0 ? 'auto' : 0)}>{listName}</h4>
               </div>
+              {/* <div className={styles.arrowWrapper}>
               <Icon src="/arrowIcon.svg" altText="Icon" />
+              </div> */}
+              <div className={styles.wrapper}>
+                <AnimateHeight id="panel" duration={500} height={listheight}>
+                  <div className={styles.addedItems}>
+                    {items && items.map((item) => (
+                      <p key={item}>{item}</p>
+                    ))}
+                  </div>
+                  <form>
+                  <input
+                    id="listItem"
+                    type="text"
+                    name="listItem"
+                    // value={newWishlist.items}
+                    placeholder="skriv här"
+                    // onChange={}
+                    onChange={handleAddItemToList}
+                    />
+                  <button onClick={addNewItem(index)}>lägg till +</button>
+                  </form>
+                  
+                </AnimateHeight>
+              </div>
             </div>
           ))}
         </div>
