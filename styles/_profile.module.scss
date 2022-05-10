@@ -1,21 +1,39 @@
 @import 'varibles';
+@import 'mixins.scss';
 
 .profileContainer {
   min-height: calc(100vh - 17.125rem);
   display: flex;
+  @include respond(tablet) {
+    flex-direction: column;
+  }
 }
 
 .userInfoContainer {
-  margin-left: 4.375rem;
-  margin-bottom: 2.5rem;
+  margin: 2rem 0 3rem 4.375rem;
   width: 25rem;
-  min-height: 48.438rem;
+  height: 48.438rem;
   box-shadow: 4px 5px 18px rgba(0, 0, 0, 0.12);
   border-radius: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 3.75rem;
+
+  @include respond(tablet) {
+    width: 90%;
+    height: 25rem;
+    margin-left: 2rem;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  @include respond(mobile) {
+    width: 85%;
+    height: auto;
+    flex-direction: column;
+    
+  }
+
 }
 
 .topSection {
@@ -27,11 +45,21 @@
   p {
     margin: 0.5rem 0;
   }
+
+  @include respond(tablet) {
+    align-items: left;
+  }
+
 }
 
 .middleSection {
   display: flex;
   flex-wrap: wrap;
+
+  @include respond(mobile) {
+    padding: 0 1rem;
+  }
+
 }
 
 .dateCard {
@@ -48,13 +76,18 @@
 
 .bottomSection {
   margin-top: 3.438rem;
+  width: 20rem;
+
+  @include respond(mobile) {
+    padding: 0 1rem;
+  }
 }
 
 .interestsCards {
   display: flex;
   flex-wrap: wrap;
   margin-top: 1rem;
-
+  
   p {
     margin: 0.5rem 0.625rem 0.5rem 0;
     padding: 0.5rem 1rem;
@@ -63,17 +96,25 @@
     box-shadow: 3px 3px 10px 1px rgba(98, 98, 98, 0.12);
     border-radius: 10px;
   }
+
 }
 
 .editButton {
-  margin-top: 4rem;
+  margin: 4rem auto 0 2.5rem;
+
+  @include respond(mobile) {
+    padding: 0 1rem;
+    margin-bottom: 1rem;
+  }
 }
 
 .wishlistContainer {
-  margin: 4.375rem 0 0 6rem;
-  button {
-    margin-top: 2rem;
+  margin: 4.375rem 0 3rem 6rem;
+
+  @include respond(tablet) {
+   margin: 1rem 0 5rem 4rem;
   }
+
 }
 
 .wishlistsWrapper {
@@ -95,6 +136,11 @@
       padding: 0.5rem;
     }
   }
+
+  @include respond(tablet) {
+    width: 90%;
+   }
+
 }
 .iconTitleWrapper {
   margin-top: 1rem;
@@ -147,6 +193,7 @@
     margin-top: 1rem;
     cursor: pointer;
   }
+
 }
 
 .newListForm {
@@ -154,6 +201,8 @@
   box-shadow: 4px 7px 17px 1px rgba(98, 98, 98, 0.14);
   border-radius: 0px 0px 10px 10px;
   width: 47rem;
+  display: flex;
+  flex-direction: column;
   button {
     border: 1px solid #c1c1c1;
     box-shadow: 8px 11px 25px 1px rgba(98, 98, 98, 0.13);
@@ -161,6 +210,11 @@
     width: 6.375rem;
     height: 2.375rem;
   }
+
+  @include respond(tablet) {
+   width: 90%;
+  }
+
 }
 
 .listHeader {
@@ -169,6 +223,16 @@
   h3 {
     margin-left: 1rem;
   }
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+
+  @include respond(tablet) {
+    flex-direction: row;
+   }
+
 }
 
 .inputWrapper {
@@ -189,12 +253,23 @@
     padding: 0.8rem;
     margin-top: 0.5rem;
   }
+
+  @include respond(tablet) {
+    input {
+      width: 12rem;
+    }
+   }
 }
 
 .categorieWrapper {
   display: flex;
   flex-direction: column;
   margin-left: 8rem;
+
+  @include respond(tablet) {
+    margin-left: 2rem;
+    margin-bottom: 2rem;
+   }
 }
 
 .radioButtonsWrapper {
@@ -217,4 +292,9 @@
     color: white;
     border: transparent;
   }
+
+  @include respond(tablet) {
+    margin-left: 4rem;
+   }
+
 }

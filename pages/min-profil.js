@@ -3,7 +3,6 @@ import styles from '../styles/_profile.module.scss';
 import Button from '../components/shared/button/Button';
 import Link from 'next/link';
 import NextImage from 'next/image';
-import Icon from '../components/shared/Icon';
 import { db } from '../firebase/config';
 import { doc, onSnapshot } from 'firebase/firestore';
 import AnimateHeight from 'react-animate-height';
@@ -110,13 +109,11 @@ const Profile = ({ user }) => {
       onSnapshot(docRef, (doc) => {
         if (doc.data() !== undefined) {
           setMyInfo({ ...doc.data() });
-          // console.log('data from firestore');
         } else {
           const savedObj = JSON.parse(
             localStorage.getItem('collectedInformation')
           );
           setMyInfo(savedObj);
-          // console.log('data from localStorage');
         }
       });
     }
@@ -129,13 +126,11 @@ const Profile = ({ user }) => {
       onSnapshot(docRef, (doc) => {
         if (doc.data() !== undefined) {
           setMyInfo({ ...doc.data() });
-          // console.log('data from firestore');
         } else {
           const savedObj = JSON.parse(
             localStorage.getItem('collectedInformation')
           );
           setMyInfo(savedObj);
-          // console.log('data from localStorage');
         }
       });
     }
@@ -205,24 +200,20 @@ const Profile = ({ user }) => {
 
           <div className={styles.bottomSection}>
             <h3>Mina intressen</h3>
-            {interests &&
-              interests.map((interest) => (
-                <div className={styles.interestsCards}>
-                  <p>{interest}</p>
-                </div>
-              ))}
+            <div className={styles.interestsCards}>
+              {interests && interests.map((interest) => <p>{interest}</p>)}
+            </div>
+          </div>
+
+          <div className={styles.editButton}>
+            <Link href={'/kontoinstallningar'} passHref>
+              <a>
+                <Button type="primary">Redigera info</Button>
+              </a>
+            </Link>
           </div>
         </div>
-
-        <div className={styles.editButton}>
-          <Link href={'/kontoinstallningar'} passHref>
-            <a>
-              <Button type="primary">Redigera info</Button>
-            </a>
-          </Link>
-        </div>
       </div>
-
       <div className={styles.wishlistContainer}>
         <div>
           <h3>Mina önskelistor</h3>
@@ -245,6 +236,7 @@ const Profile = ({ user }) => {
                 />
                 <h3>Ny lista ...</h3>
               </div>
+              <div className={styles.contentWrapper}>
               <div className={styles.inputWrapper}>
                 <div className={styles.nameInput}>
                   <label>Namn på ny lista</label>
@@ -326,6 +318,7 @@ const Profile = ({ user }) => {
               <div className={styles.buttonWrapper}>
                 <button onClick={(e) => handleAddWishlist(e)}>Klar</button>
               </div>
+              </div>
             </form>
           </AnimateHeight>
         </div>
@@ -335,13 +328,10 @@ const Profile = ({ user }) => {
             <div key={index} className={styles.wishlist}>
               <div className={styles.iconTitleWrapper}>
                 <NextImage src={icon} alt="logo" width="35" height="35" />
-
-                {/* <h4 onClick={() => setListHeight(listheight === 0 ? 'auto' : 0)}>{listName}</h4> */}
                 <h4 onClick={() => openList(id)}>{listName}</h4>
               </div>
               {open === id ? (
                 <div className={styles.wrapper}>
-                  {/* <AnimateHeight id="panel" duration={500} height={listheight}> */}
                   <ul className={styles.addedItems}>
                     {items && items.map((item) => <li key={item}>{item}</li>)}
                   </ul>
@@ -357,7 +347,6 @@ const Profile = ({ user }) => {
                       Lägg till i listan +
                     </button>
                   </form>
-                  {/* </AnimateHeight> */}
                 </div>
               ) : null}
             </div>
