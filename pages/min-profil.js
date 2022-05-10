@@ -14,33 +14,94 @@ const Profile = ({ user }) => {
   const [height, setHeight] = useState(0);
   const [listheight, setListHeight] = useState(0);
   const [newWishlist, setNewWishlist] = useState({
-    id:'',
+    id: '',
     listName: '',
     categorie: '',
     icon: '/birthday-circle.svg',
     items: [],
   });
-  const [showInput, setShowInput] = useState(false)
   const [saveInput, setSaveInput] = useState('');
+  const [open, setOpen] = useState(false);
+  const [allWishlists, setAllWishlists] = useState([]);
 
-  const lists = [
-    {
-      id:'1',
-      listName: 'Födelsedag',
-      categorie: 'Birthday',
-      icon: '/birthday-circle.svg',
-      items: ['Stickad tröja', 'Cykel'],
-    },
-    {
-      id:'2',
-      listName: 'Bröllopsdag',
-      categorie: 'Weddingday',
-      icon: '/wedding-circle.svg',
-      items: ['Vinglas', 'Kastrull', 'Spel'],
-    },
-  ];
+  const openList = (id) => {
+    if (open === id) {
+      return setOpen(true);
+    }
+    setOpen(id);
+  };
 
-  const [allWishlists, setAllWishlists] = useState(lists);
+  const handleAddWishlist = (e) => {
+    e.preventDefault();
+    setAllWishlists([...allWishlists, newWishlist]);
+  };
+
+  const onValueChange = (e) => {
+    const birthdayIcon = '/birthday-circle.svg';
+    const weddingDayIcon = '/wedding-circle.svg';
+    const anniversaryIcon = '/flowers-circle.svg';
+    const christmasIcon = '/christmas-circle.svg';
+    const otherIcon = '/confetti-circle.svg';
+
+    if (e.target.id === 'Birthday') {
+      setNewWishlist({
+        ...newWishlist,
+        categorie: e.target.id,
+        icon: birthdayIcon,
+        id: Date.now(),
+      });
+    }
+    if (e.target.id === 'Wedding') {
+      setNewWishlist({
+        ...newWishlist,
+        categorie: e.target.id,
+        icon: weddingDayIcon,
+        id: Date.now(),
+      });
+    }
+    if (e.target.id === 'Anniversary') {
+      setNewWishlist({
+        ...newWishlist,
+        categorie: e.target.id,
+        icon: anniversaryIcon,
+        id: Date.now(),
+      });
+    }
+    if (e.target.id === 'Christmas') {
+      setNewWishlist({
+        ...newWishlist,
+        categorie: e.target.id,
+        icon: christmasIcon,
+        id: Date.now(),
+      });
+    } else if (e.target.id === 'Other') {
+      setNewWishlist({
+        ...newWishlist,
+        categorie: e.target.id,
+        icon: otherIcon,
+        id: Date.now(),
+      });
+    }
+  };
+
+  const handleAddItemToList = (e) => {
+    e.preventDefault();
+    setSaveInput(e.target.value);
+    console.log(saveInput);
+  };
+
+  const addNewItem = (index) => (e) => {
+    e.preventDefault();
+    let foundLists = [...allWishlists];
+    foundLists[index] = {
+      id: foundLists[index].id,
+      listName: foundLists[index].listName,
+      categorie: foundLists[index].categorie,
+      icon: foundLists[index].icon,
+      items: [...foundLists[index].items, saveInput],
+    };
+    setAllWishlists(foundLists);
+  };
 
   useEffect(() => {
     if (user) {
@@ -87,93 +148,6 @@ const Profile = ({ user }) => {
       setInterests(arrInterests);
     }
   }, [myInfo]);
-
-  const handleAddWishlist = (e) => {
-    e.preventDefault();
-    setAllWishlists([...allWishlists, newWishlist]);
-  };
-
-  const onValueChange = (e) => {
-    const birthdayIcon = '/birthday-circle.svg';
-    const weddingDayIcon = '/wedding-circle.svg';
-    const anniversaryIcon = '/flowers-circle.svg';
-    const christmasIcon = '/christmas-circle.svg';
-    const otherIcon = '/confetti-circle.svg';
-
-    if (e.target.id === 'Birthday') {
-      setNewWishlist({
-        ...newWishlist,
-        categorie: e.target.id,
-        icon: birthdayIcon,
-      });
-    }
-    if (e.target.id === 'Wedding') {
-      setNewWishlist({
-        ...newWishlist,
-        categorie: e.target.id,
-        icon: weddingDayIcon,
-      });
-    }
-    if (e.target.id === 'Anniversary') {
-      setNewWishlist({
-        ...newWishlist,
-        categorie: e.target.id,
-        icon: anniversaryIcon,
-      });
-    }
-    if (e.target.id === 'Christmas') {
-      setNewWishlist({
-        ...newWishlist,
-        categorie: e.target.id,
-        icon: christmasIcon,
-      });
-    } else if (e.target.id === 'Other') {
-      setNewWishlist({
-        ...newWishlist,
-        categorie: e.target.id,
-        icon: otherIcon,
-      });
-    }
-  };
-
-const handleAddItemToList = (e) => {
-  e.preventDefault();
-  setSaveInput(e.target.value);
-  console.log(saveInput)
-} 
-
-const addNewItem =  index => e => {
-  e.preventDefault();
-  
-  // let foundList = allWishlists.find(item => item.listName)
-  let foundLists = [...allWishlists]
-  // console.log(foundLists[index].categorie)
-  foundLists[index] = {
-      id: foundLists[index].id,
-      listName: foundLists[index].listName,
-      categorie: foundLists[index].categorie,
-      icon: foundLists[index].icon,
-      items: [...foundLists[index].items, saveInput]
-    }
-setAllWishlists(foundLists)
-console.log(allWishlists)
-  }
-
-
-  // let allLists = allWishlists.filter(list => list != listName)
-
-  // const newAddedList = {
-  //   id: foundList.id,
-  //   listName: foundList.listName,
-  //   categorie: foundList.categorie,
-  //   icon: foundList.icon,
-  //   listItems: [...foundList.items, saveInput]
-  // }
-  // setNewWishlist(newAddedList)
-  // setAllWishlists([...allWishlists, newAddedList]);
-  // console.log(allWishlists)
-// }
-
 
   return (
     <div className={styles.profileContainer}>
@@ -305,7 +279,7 @@ console.log(allWishlists)
 
                     <div className={styles.radioButton}>
                       <input
-                        id="Weddingday"
+                        id="Wedding"
                         type="radio"
                         name="categorie"
                         value={newWishlist.categorie}
@@ -357,42 +331,35 @@ console.log(allWishlists)
         </div>
 
         <div className={styles.wishlistsWrapper}>
-          {allWishlists.map(({ icon, listName, items  },index) => (
-            <div
-              // key={index}
-              className={styles.wishlist}
-              
-            >
+          {allWishlists.map(({ icon, listName, items, id }, index) => (
+            <div key={index} className={styles.wishlist}>
               <div className={styles.iconTitleWrapper}>
                 <NextImage src={icon} alt="logo" width="35" height="35" />
 
-                <h4 onClick={() => setListHeight(listheight === 0 ? 'auto' : 0)}>{listName}</h4>
+                {/* <h4 onClick={() => setListHeight(listheight === 0 ? 'auto' : 0)}>{listName}</h4> */}
+                <h4 onClick={() => openList(id)}>{listName}</h4>
               </div>
-              {/* <div className={styles.arrowWrapper}>
-              <Icon src="/arrowIcon.svg" altText="Icon" />
-              </div> */}
-              <div className={styles.wrapper}>
-                <AnimateHeight id="panel" duration={500} height={listheight}>
-                  <div className={styles.addedItems}>
-                    {items && items.map((item) => (
-                      <p key={item}>{item}</p>
-                    ))}
-                  </div>
-                  <form>
-                  <input
-                    id="listItem"
-                    type="text"
-                    name="listItem"
-                    // value={newWishlist.items}
-                    placeholder="skriv här"
-                    // onChange={}
-                    onChange={handleAddItemToList}
+              {open === id ? (
+                <div className={styles.wrapper}>
+                  {/* <AnimateHeight id="panel" duration={500} height={listheight}> */}
+                  <ul className={styles.addedItems}>
+                    {items && items.map((item) => <li key={item}>{item}</li>)}
+                  </ul>
+                  <form className={styles.formContainer}>
+                    <input
+                      id="listItem"
+                      type="text"
+                      name="listItem"
+                      placeholder="Skriv vad du önskar dig"
+                      onChange={handleAddItemToList}
                     />
-                  <button onClick={addNewItem(index)}>lägg till +</button>
+                    <button onClick={addNewItem(index)}>
+                      Lägg till i listan +
+                    </button>
                   </form>
-                  
-                </AnimateHeight>
-              </div>
+                  {/* </AnimateHeight> */}
+                </div>
+              ) : null}
             </div>
           ))}
         </div>
