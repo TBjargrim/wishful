@@ -63,7 +63,6 @@ function MyApp({ Component, pageProps }) {
             birthdate: '',
             myInterests: '',
             description: '',
-            updatedBirthdate: '',
             addedDates,
           });
         }

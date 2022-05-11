@@ -117,23 +117,6 @@ const Profile = ({ user }) => {
         }
       });
     }
-  }, []);
-
-  useEffect(() => {
-    if (user) {
-      const docRef = doc(db, 'usersDetails', user.uid);
-
-      onSnapshot(docRef, (doc) => {
-        if (doc.data() !== undefined) {
-          setMyInfo({ ...doc.data() });
-        } else {
-          const savedObj = JSON.parse(
-            localStorage.getItem('collectedInformation')
-          );
-          setMyInfo(savedObj);
-        }
-      });
-    }
   }, [user]);
 
   useEffect(() => {
@@ -172,7 +155,7 @@ const Profile = ({ user }) => {
                   />
                 </div>
                 <div>
-                  <h5>{myInfo.birthdate}</h5>
+                  <h5>{myInfo.updatedBirthdate}</h5>
                   <p>Födelsedag</p>
                 </div>
               </div>
@@ -192,7 +175,7 @@ const Profile = ({ user }) => {
                   />
                 </div>
                 <div>
-                  <h5>{dates.date}</h5>
+                  <h5>{dates.updatedDate}</h5>
                   <p>{dates.selected}</p>
                 </div>
               </div>
