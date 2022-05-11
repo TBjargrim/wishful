@@ -28,9 +28,11 @@ function MyApp({ Component, pageProps }) {
   const auth = getAuth();
   const [addedDates, setAddedDates] = useState([]);
   const [user, loading, error] = useAuthState(auth);
-  const [usersFollow, setUsersFollow] = useLocalStorage('friends', []);
+  const [usersFollow, setUsersFollow] = useLocalStorage('friends', {
+    friend: {},
+  });
   const [interests, setInterests] = useState([]);
-  console.log(usersFollow);
+
   const createUserInformation = async () => {
     try {
       const q = query(collection(db, 'users'), where('uid', '==', user.uid));
@@ -73,9 +75,9 @@ function MyApp({ Component, pageProps }) {
 
       onSnapshot(docRefFriends, (doc) => {
         if (doc.data() !== undefined) {
-          localStorage.setItem('friends', JSON.stringify(doc.data()));
+          localStorage.setItem('friends', JSON.stringify({ ...doc.data() }));
         } else {
-          setDoc(docRefFriends, usersFollow);
+          setDoc(docRefFriends, { friend: {} });
         }
       });
     }
@@ -109,34 +111,3 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp;
-
-/* MyApp.getInitialProps = async function () {
-  const db = firebase.firestore();
-  let data = [];
-  const querySnapshot = await db.collection('data').get();
-  querySnapshot.forEach((doc) => {
-    data.push(doc.data());
-  });
-
-  return {
-    data,
-  };
-}; */
-
-/* MyApp.getInitialProps = async (ctx) => {
-  firebase.initializeApp(firebaseConfig);
-
-  let usersRef = firebase.firestore().collection('users');
-  let snapshot = await usersRef.get();
-  if (snapshot.empty) {
-    console.log('No matching documents.');
-    return;
-  }
-  let data = [];
-  snapshot.forEach((doc) => {
-    console.log(doc.id, '=>', doc.data());
-    data.push(doc.data());
-  });
-  return { props: data };
-};
- */

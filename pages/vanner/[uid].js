@@ -43,7 +43,11 @@ const User = ({
   }, [detailsUser]);
 
   useEffect(() => {
-    const userExcists = usersFollow.some((u) => u.friend.uid === uid);
+    var usersFollowArr = Object.keys(usersFollow).map((key) => {
+      return usersFollow[key];
+    });
+
+    const userExcists = usersFollowArr.some((u) => u.uid === uid);
 
     if (userExcists) {
       setIsFriend(true);
@@ -54,19 +58,29 @@ const User = ({
 
   const handleFollowUsers = () => {
     setIsFriend(true);
-    const userExcists = usersFollow.some((u) => u.friend.uid === uid);
+
+    let usersFollowArr = Object.keys(usersFollow).map((key) => {
+      return usersFollow[key];
+    });
+
+    const userExcists = usersFollowArr.some((u) => u.uid === uid);
 
     if (userExcists) {
-      setUsersFollow([...usersFollow]);
+      setUsersFollow({ ...usersFollow });
     } else {
-      setUsersFollow([...usersFollow, { friend: { name, uid } }]);
+      setUsersFollow({ ...usersFollow, friend: { name, uid } });
     }
   };
 
+  console.log(usersFollow);
   const handleUnFollowUsers = () => {
     setIsFriend(false);
-    const removeUser = usersFollow.filter((obj) => {
-      return obj.friend.uid !== uid;
+
+    var usersFollowArr = Object.keys(usersFollow).map((key) => {
+      return usersFollow[key];
+    });
+    const removeUser = usersFollowArr.filter((obj) => {
+      return obj.uid !== uid;
     });
 
     setUsersFollow(removeUser);
@@ -75,9 +89,7 @@ const User = ({
   useEffect(() => {
     if (user) {
       const docRef = doc(db, 'friends', user.uid);
-      updateDoc(docRef, {
-        friends: { ...usersFollow },
-      });
+      updateDoc(docRef, { ...usersFollow });
     }
   }, [usersFollow]);
 
@@ -164,9 +176,13 @@ const User = ({
           </div>
         </div>
         {isFriend ? (
-          <button onClick={handleUnFollowUsers}>Avfölj</button>
+          <button className={styles.unFollow} onClick={handleUnFollowUsers}>
+            Följer
+          </button>
         ) : (
-          <button onClick={handleFollowUsers}>Följ</button>
+          <button className={styles.follow} onClick={handleFollowUsers}>
+            Följ
+          </button>
         )}
       </div>
 

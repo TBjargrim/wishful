@@ -54,7 +54,7 @@
   display: flex;
   flex-wrap: wrap;
   margin-top: 1rem;
-  
+
   p {
     margin: 0.5rem 0.625rem 0.5rem 0;
     padding: 0.5rem 1rem;
@@ -97,4 +97,40 @@
       padding: 0.5rem;
     }
   }
+}
+
+.follow {
+  margin-top: 2rem;
+  padding: 0.125rem 0.625rem;
+  text-align: center;
+  min-width: 4rem;
+  min-height: 2rem;
+  box-shadow: 0.5rem 0.688rem 1.563rem 0.063rem rgba(98, 98, 98, 0.13);
+  border-radius: 0.938rem;
+  border: 1px solid $color-primary;
+  background-color: $color-white;
+  font-weight: 600;
+  color: $color-primary;
+  letter-spacing: 0.05rem;
+  font-size: $fs-p3;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.unFollow {
+  margin-top: 2rem;
+  padding: 0.125rem 0.625rem;
+  text-align: center;
+  min-width: 4rem;
+  min-height: 2rem;
+  box-shadow: 0.5rem 0.688rem 1.563rem 0.063rem rgba(98, 98, 98, 0.13);
+  border-radius: 0.938rem;
+  border: none;
+  background-color: $color-primary;
+  font-weight: 400;
+  color: $color-white;
+  letter-spacing: 0.05rem;
+  font-size: $fs-p3;
+  cursor: pointer;
+  text-transform: uppercase;
 }
