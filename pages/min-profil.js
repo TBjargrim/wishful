@@ -136,7 +136,7 @@ const Profile = ({ user }) => {
           {user && (
             <>
               <h5>{user.displayName}</h5>
-              <p>{user.email}</p>
+              {/* <p>{user.email}</p> */}
               {myInfo && <p>{myInfo.description}</p>}
             </>
           )}

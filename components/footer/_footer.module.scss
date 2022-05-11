@@ -22,6 +22,11 @@
     letter-spacing: 0.05rem;
     font-weight: $font-weight-regular;
   }
+
+  @include respond(mobile) {
+    height: 17rem;
+    flex-direction: column;
+  }
 }
 
 .leftColumn {
@@ -29,26 +34,58 @@
   position: relative;
   width: 30%;
   padding: 2.125rem 0 2.125rem 6rem;
+
+  @include respond(tablet) {
+    padding-left: 2rem;
+  }
+
+  @include respond(mobile) {
+    width: 100%;
+    padding: 2rem 0 2rem 2rem;
+  }
 }
 
 .rightColumn {
   position: relative;
   display: flex;
-  justify-content: space-around;
   width: 70%;
   padding: 2.125rem 6rem 2.125rem 0;
   justify-content: flex-end;
 
-  .leftName {
-    padding-right: 4rem;
+  h5 {
+    margin: 0;
+    padding-bottom: 0.5rem;
+  }
+
+  @include respond(tablet) {
+    padding: 2rem;
+    justify-content: space-around;
+    p {
+      display: none;
+    }
   }
 
   @include respond(mobile) {
     flex-direction: row;
+    width: 100%;
+    padding: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
     p {
       display: none;
     }
-    
+  }
+}
+
+.leftName {
+  padding-right: 4rem;
+
+  @include respond(tablet) {
+    padding-right: 1rem;
+  }
+
+  @include respond(mobile) {
+    padding-right: 1rem;
   }
 }
 
@@ -59,12 +96,32 @@
   p {
     margin-left: 0.5rem;
   }
+
+  @include respond(mobile) {
+  }
+}
+
+.iconWrapper {
+
+  @include respond(tablet) {
+    display: flex;
+    padding: 0;
+  }
+
+  @include respond(mobile) {
+    display: flex;
+    padding: 0;
+  }
 }
 
 .balloonsImageLeft {
   position: absolute;
   top: 0;
   right: -5rem;
+
+  @include respond(mobile) {
+    display: none;
+  }
 }
 
 .balloonsImageRight {
@@ -75,5 +132,4 @@
   @include respond(mobile) {
     display: none;
   }
-
 }
