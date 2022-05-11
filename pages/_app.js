@@ -20,7 +20,7 @@ import { getAuth } from 'firebase/auth';
 import '../styles/globals.scss';
 import '../styles/firebaseui-styling.global.css';
 import { useAuthState } from 'react-firebase-hooks/auth';
-
+import { useLocalStorage } from '../components/useLocalStorage';
 import { db } from '../firebase/config';
 
 function MyApp({ Component, pageProps }) {
@@ -28,7 +28,9 @@ function MyApp({ Component, pageProps }) {
   const auth = getAuth();
   const [addedDates, setAddedDates] = useState([]);
   const [user, loading, error] = useAuthState(auth);
-
+  const [usersFollow, setUsersFollow] = useLocalStorage('friends', []);
+  const [interests, setInterests] = useState([]);
+  console.log(usersFollow);
   const createUserInformation = async () => {
     try {
       const q = query(collection(db, 'users'), where('uid', '==', user.uid));
@@ -50,6 +52,7 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     if (user) {
       const docRef = doc(db, 'usersDetails', user.uid);
+      const docRefFriends = doc(db, 'friends', user.uid);
 
       onSnapshot(docRef, (doc) => {
         if (doc.data() !== undefined) {
@@ -65,6 +68,14 @@ function MyApp({ Component, pageProps }) {
             description: '',
             addedDates,
           });
+        }
+      });
+
+      onSnapshot(docRefFriends, (doc) => {
+        if (doc.data() !== undefined) {
+          localStorage.setItem('friends', JSON.stringify(doc.data()));
+        } else {
+          setDoc(docRefFriends, usersFollow);
         }
       });
     }
@@ -87,6 +98,10 @@ function MyApp({ Component, pageProps }) {
         user={user}
         setAddedDates={setAddedDates}
         addedDates={addedDates}
+        usersFollow={usersFollow}
+        setUsersFollow={setUsersFollow}
+        setInterests={setInterests}
+        interesets={interests}
       />
       <Footer />
     </>

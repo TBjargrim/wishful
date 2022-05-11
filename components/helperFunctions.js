@@ -45,3 +45,7 @@ export function changedDate(date) {
 // const event = new Date(Date.UTC(2022, 10, 1));
 // let options = {  year: 'numeric', month: 'long', day: 'numeric' };
 // console.log(event.toLocaleString('sv-SE'));
+
+export const saveLocalStorage = async (key, value) => {
+  localStorage.setItem(key, JSON.stringify(value));
+};

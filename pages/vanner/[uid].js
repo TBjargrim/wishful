@@ -1,11 +1,29 @@
+import { useEffect, useState } from 'react';
 import NextImage from 'next/image';
 import Icon from '../../components/shared/Icon';
 import styles from '../../styles/_profile.module.scss';
 import { db } from '../../firebase/config';
-import { collection, getDocs, query, doc, getDoc } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  query,
+  doc,
+  getDoc,
+  updateDoc,
+} from 'firebase/firestore';
+import { saveLocalStorage } from '../../components/helperFunctions';
 
-const dynamicFriend = ({ queryUser, detailsUser }) => {
-  const { name, email } = queryUser;
+const User = ({
+  usersFollow,
+  setUsersFollow,
+  user,
+  queryUser,
+  detailsUser,
+  interests,
+  setInterests,
+}) => {
+  const { name, email, uid } = queryUser;
+  const [isFriend, setIsFriend] = useState(false);
 
   const {
     addedDates,
@@ -16,6 +34,53 @@ const dynamicFriend = ({ queryUser, detailsUser }) => {
     profileImage,
   } = detailsUser[0];
 
+  useEffect(() => {
+    if (myInterests !== undefined) {
+      const interests = myInterests;
+      const arrInterests = interests.split(',');
+      setInterests(arrInterests);
+    }
+  }, [detailsUser]);
+
+  useEffect(() => {
+    const userExcists = usersFollow.some((u) => u.friend.uid === uid);
+
+    if (userExcists) {
+      setIsFriend(true);
+    } else {
+      setIsFriend(false);
+    }
+  }, []);
+
+  const handleFollowUsers = () => {
+    setIsFriend(true);
+    const userExcists = usersFollow.some((u) => u.friend.uid === uid);
+
+    if (userExcists) {
+      setUsersFollow([...usersFollow]);
+    } else {
+      setUsersFollow([...usersFollow, { friend: { name, uid } }]);
+    }
+  };
+
+  const handleUnFollowUsers = () => {
+    setIsFriend(false);
+    const removeUser = usersFollow.filter((obj) => {
+      return obj.friend.uid !== uid;
+    });
+
+    setUsersFollow(removeUser);
+  };
+
+  useEffect(() => {
+    if (user) {
+      const docRef = doc(db, 'friends', user.uid);
+      updateDoc(docRef, {
+        friends: { ...usersFollow },
+      });
+    }
+  }, [usersFollow]);
+
   return (
     <div className={styles.profileContainer}>
       <div className={styles.userInfoContainer}>
@@ -23,6 +88,7 @@ const dynamicFriend = ({ queryUser, detailsUser }) => {
           <NextImage src="/avatar_1.svg" alt="logo" width="150" height="150" />
           <h5>{name}</h5>
           <p>{email}</p>
+          <p>{description}</p>
         </div>
 
         <div>
@@ -63,9 +129,9 @@ const dynamicFriend = ({ queryUser, detailsUser }) => {
               </div>
             </>
           )}
-          {addedDates &&
-            addedDates.map((dates) => (
-              <div className={styles.dateCard}>
+          {addedDates !== undefined ? (
+            addedDates.map((dates, i) => (
+              <div key={i} className={styles.dateCard}>
                 <div>
                   <NextImage
                     src={dates.icon}
@@ -79,18 +145,29 @@ const dynamicFriend = ({ queryUser, detailsUser }) => {
                   <p>{dates.selected}</p>
                 </div>
               </div>
-            ))}
+            ))
+          ) : (
+            <> </>
+          )}
 
           <div className={styles.bottomSection}>
             <h3>Mina intressen</h3>
-            {myInterests ??
-              myInterests.map((interest) => (
+            {interests ? (
+              interests.map((interest) => (
                 <div className={styles.interestsCards}>
                   <p>{interest}</p>
                 </div>
-              ))}
+              ))
+            ) : (
+              <></>
+            )}
           </div>
         </div>
+        {isFriend ? (
+          <button onClick={handleUnFollowUsers}>Avfölj</button>
+        ) : (
+          <button onClick={handleFollowUsers}>Följ</button>
+        )}
       </div>
 
       <div className={styles.wishlistContainer}>
@@ -148,7 +225,7 @@ const dynamicFriend = ({ queryUser, detailsUser }) => {
   );
 };
 
-export default dynamicFriend;
+export default User;
 
 export async function getStaticPaths() {
   const users = [];

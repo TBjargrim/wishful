@@ -7,9 +7,8 @@ import Icon from '../components/shared/Icon';
 import { db } from '../firebase/config';
 import { doc, onSnapshot } from 'firebase/firestore';
 
-const Profile = ({ user }) => {
+const Profile = ({ user, interests, setInterests }) => {
   const [myInfo, setMyInfo] = useState({});
-  const [interests, setInterests] = useState([]);
 
   useEffect(() => {
     if (user) {
@@ -18,13 +17,11 @@ const Profile = ({ user }) => {
       onSnapshot(docRef, (doc) => {
         if (doc.data() !== undefined) {
           setMyInfo({ ...doc.data() });
-          /*        console.log('data from firestore onMount'); */
         } else {
           const savedObj = JSON.parse(
             localStorage.getItem('collectedInformation')
           );
           setMyInfo(savedObj);
-          /*       console.log('data from localStorage onMount'); */
         }
       });
     }
@@ -37,13 +34,11 @@ const Profile = ({ user }) => {
       onSnapshot(docRef, (doc) => {
         if (doc.data() !== undefined) {
           setMyInfo({ ...doc.data() });
-          /*       console.log('data from firestore user update'); */
         } else {
           const savedObj = JSON.parse(
             localStorage.getItem('collectedInformation')
           );
           setMyInfo(savedObj);
-          /*    console.log('data from localStorage user update'); */
         }
       });
     }
