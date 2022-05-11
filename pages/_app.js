@@ -55,6 +55,7 @@ function MyApp({ Component, pageProps }) {
     if (user) {
       const docRef = doc(db, 'usersDetails', user.uid);
       const docRefFriends = doc(db, 'friends', user.uid);
+      const docRefWishlist = doc(db, 'wishlist', user.uid);
 
       onSnapshot(docRef, (doc) => {
         if (doc.data() !== undefined) {
@@ -78,6 +79,14 @@ function MyApp({ Component, pageProps }) {
           localStorage.setItem('friends', JSON.stringify({ ...doc.data() }));
         } else {
           setDoc(docRefFriends, { friend: {} });
+        }
+      });
+
+      onSnapshot(docRefWishlist, (doc) => {
+        if (doc.data() !== undefined) {
+          localStorage.setItem('wishlist', JSON.stringify({ ...doc.data() }));
+        } else {
+          setDoc(docRefWishlist, { wishlist: [] });
         }
       });
     }

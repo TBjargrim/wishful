@@ -4,15 +4,13 @@ import Button from '../components/shared/button/Button';
 import Link from 'next/link';
 import NextImage from 'next/image';
 import { db } from '../firebase/config';
-import { doc, onSnapshot } from 'firebase/firestore';
+import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 import AnimateHeight from 'react-animate-height';
+import { useLocalStorage } from '../components/useLocalStorage';
 
 const Profile = ({ user, interests, setInterests }) => {
   const [myInfo, setMyInfo] = useState({});
-
-  const [interests, setInterests] = useState([]);
   const [height, setHeight] = useState(0);
-  const [listheight, setListHeight] = useState(0);
   const [newWishlist, setNewWishlist] = useState({
     id: '',
     listName: '',
@@ -30,19 +28,42 @@ const Profile = ({ user, interests, setInterests }) => {
     }
     setOpen(id);
   };
+  console.log(allWishlists);
+  useEffect(() => {
+    if (user) {
+      const docRef = doc(db, 'usersDetails', user.uid);
+      onSnapshot(docRef, (doc) => {
+        if (doc.data() !== undefined) {
+          setMyInfo({ ...doc.data() });
+        } else {
+          const savedObj = JSON.parse(
+            localStorage.getItem('collectedInformation')
+          );
+          setMyInfo(savedObj);
+        }
+      });
 
-  onSnapshot(docRef, (doc) => {
-    if (doc.data() !== undefined) {
-      setMyInfo({ ...doc.data() });
-    } else {
-      const savedObj = JSON.parse(localStorage.getItem('collectedInformation'));
-      setMyInfo(savedObj);
+      const docRefWishlist = doc(db, 'wishlist', user.uid);
+      onSnapshot(docRefWishlist, (doc) => {
+        setAllWishlists(doc.data());
+      });
     }
-  });
+  }, [user]);
 
   const handleAddWishlist = (e) => {
     e.preventDefault();
     setAllWishlists([...allWishlists, newWishlist]);
+
+    const docRefWishlist = doc(db, 'wishlist', user.uid);
+    /*   onSnapshot(docRefWishlist, (doc) => { */
+    /*       console.log(doc.data());
+      if (doc.data() !== 0) { */
+    // console.log('not undefined');
+    setDoc(docRefWishlist, { allWishlists });
+    /*  } else {
+        setDoc(docRefWishlist, { ...allWishlists });
+      } */
+    /*     }); */
   };
 
   const onValueChange = (e) => {
@@ -96,7 +117,6 @@ const Profile = ({ user, interests, setInterests }) => {
   const handleAddItemToList = (e) => {
     e.preventDefault();
     setSaveInput(e.target.value);
-    console.log(saveInput);
   };
 
   const addNewItem = (index) => (e) => {
@@ -130,13 +150,12 @@ const Profile = ({ user, interests, setInterests }) => {
   }, [user]);
 
   useEffect(() => {
-    if (myInfo.myInterests !== undefined) {
+    if (myInfo.myInterests) {
       const interests = myInfo.myInterests;
       const arrInterests = interests.split(',');
       setInterests(arrInterests);
     }
   }, [myInfo]);
-
   return (
     <div className={styles.profileContainer}>
       <div className={styles.userInfoContainer}>
@@ -317,33 +336,37 @@ const Profile = ({ user, interests, setInterests }) => {
         </div>
 
         <div className={styles.wishlistsWrapper}>
-          {allWishlists.map(({ icon, listName, items, id }, index) => (
-            <div key={index} className={styles.wishlist}>
-              <div className={styles.iconTitleWrapper}>
-                <NextImage src={icon} alt="logo" width="35" height="35" />
-                <h4 onClick={() => openList(id)}>{listName}</h4>
-              </div>
-              {open === id ? (
-                <div className={styles.wrapper}>
-                  <ul className={styles.addedItems}>
-                    {items && items.map((item) => <li key={item}>{item}</li>)}
-                  </ul>
-                  <form className={styles.formContainer}>
-                    <input
-                      id="listItem"
-                      type="text"
-                      name="listItem"
-                      placeholder="Skriv vad du önskar dig"
-                      onChange={handleAddItemToList}
-                    />
-                    <button onClick={addNewItem(index)}>
-                      Lägg till i listan +
-                    </button>
-                  </form>
+          {/*          {allWishlists &&
+            allWishlists.allWishlists.map(
+              ({ icon, listName, items, id }, index) => (
+                <div key={index} className={styles.wishlist}>
+                  <div className={styles.iconTitleWrapper}>
+                    <NextImage src={icon} alt="logo" width="35" height="35" />
+                    <h4 onClick={() => openList(id)}>{listName}</h4>
+                  </div>
+                  {open === id ? (
+                    <div className={styles.wrapper}>
+                      <ul className={styles.addedItems}>
+                        {items &&
+                          items.map((item) => <li key={item}>{item}</li>)}
+                      </ul>
+                      <form className={styles.formContainer}>
+                        <input
+                          id="listItem"
+                          type="text"
+                          name="listItem"
+                          placeholder="Skriv vad du önskar dig"
+                          onChange={handleAddItemToList}
+                        />
+                        <button onClick={addNewItem(index)}>
+                          Lägg till i listan +
+                        </button>
+                      </form>
+                    </div>
+                  ) : null}
                 </div>
-              ) : null}
-            </div>
-          ))}
+              )
+            )} */}
         </div>
       </div>
     </div>
