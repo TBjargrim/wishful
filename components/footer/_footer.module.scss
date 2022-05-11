@@ -1,4 +1,5 @@
 @import '../../styles/_varibles.scss';
+@import '../../styles/_mixins.scss';
 
 .footerContainer {
   display: flex;
@@ -41,6 +42,14 @@
   .leftName {
     padding-right: 4rem;
   }
+
+  @include respond(mobile) {
+    flex-direction: row;
+    p {
+      display: none;
+    }
+    
+  }
 }
 
 .contactInfo {
@@ -62,4 +71,9 @@
   position: absolute;
   top: -3rem;
   right: 0;
+
+  @include respond(mobile) {
+    display: none;
+  }
+
 }
