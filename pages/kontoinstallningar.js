@@ -5,7 +5,7 @@ import styles from '../styles/_accountSettings.module.scss';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { colRefUserDetails, db } from '../firebase/config';
-import { changedDate } from '../components/helperFunctions';
+import { changedDate, saveLocalStorage } from '../components/helperFunctions';
 import {
   setDoc,
   doc,
@@ -47,7 +47,7 @@ const Settings = ({ user, addedDates, setAddedDates }) => {
 
   useEffect(() => {
     setCollectedInformation({ ...collectedInformation, addedDates });
-    saveLocalStorage();
+    saveLocalStorage('collectedInformation', collectedInformation);
   }, [addedDates]);
 
   const handleSubmit = (e, path) => {
@@ -59,7 +59,7 @@ const Settings = ({ user, addedDates, setAddedDates }) => {
       updatedBirthdate: updatedBirthdate,
     });
 
-    saveLocalStorage();
+    saveLocalStorage('collectedInformation', collectedInformation);
 
     const docRef = doc(db, 'usersDetails', user.uid);
 
@@ -108,13 +108,6 @@ const Settings = ({ user, addedDates, setAddedDates }) => {
         [e.target.name]: e.target.value,
       });
     }
-  };
-  console.log(collectedInformation);
-  const saveLocalStorage = async () => {
-    localStorage.setItem(
-      'collectedInformation',
-      JSON.stringify(collectedInformation)
-    );
   };
 
   const onValueChange = (e) => {

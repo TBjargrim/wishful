@@ -20,7 +20,7 @@ import { getAuth } from 'firebase/auth';
 import '../styles/globals.scss';
 import '../styles/firebaseui-styling.global.css';
 import { useAuthState } from 'react-firebase-hooks/auth';
-
+import { useLocalStorage } from '../components/useLocalStorage';
 import { db } from '../firebase/config';
 
 function MyApp({ Component, pageProps }) {
@@ -28,6 +28,10 @@ function MyApp({ Component, pageProps }) {
   const auth = getAuth();
   const [addedDates, setAddedDates] = useState([]);
   const [user, loading, error] = useAuthState(auth);
+  const [usersFollow, setUsersFollow] = useLocalStorage('friends', {
+    friend: {},
+  });
+  const [interests, setInterests] = useState([]);
 
   const createUserInformation = async () => {
     try {
@@ -50,6 +54,7 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     if (user) {
       const docRef = doc(db, 'usersDetails', user.uid);
+      const docRefFriends = doc(db, 'friends', user.uid);
 
       onSnapshot(docRef, (doc) => {
         if (doc.data() !== undefined) {
@@ -65,6 +70,14 @@ function MyApp({ Component, pageProps }) {
             description: '',
             addedDates,
           });
+        }
+      });
+
+      onSnapshot(docRefFriends, (doc) => {
+        if (doc.data() !== undefined) {
+          localStorage.setItem('friends', JSON.stringify({ ...doc.data() }));
+        } else {
+          setDoc(docRefFriends, { friend: {} });
         }
       });
     }
@@ -87,6 +100,10 @@ function MyApp({ Component, pageProps }) {
         user={user}
         setAddedDates={setAddedDates}
         addedDates={addedDates}
+        usersFollow={usersFollow}
+        setUsersFollow={setUsersFollow}
+        setInterests={setInterests}
+        interesets={interests}
       />
       <Footer />
     </>
@@ -94,34 +111,3 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp;
-
-/* MyApp.getInitialProps = async function () {
-  const db = firebase.firestore();
-  let data = [];
-  const querySnapshot = await db.collection('data').get();
-  querySnapshot.forEach((doc) => {
-    data.push(doc.data());
-  });
-
-  return {
-    data,
-  };
-}; */
-
-/* MyApp.getInitialProps = async (ctx) => {
-  firebase.initializeApp(firebaseConfig);
-
-  let usersRef = firebase.firestore().collection('users');
-  let snapshot = await usersRef.get();
-  if (snapshot.empty) {
-    console.log('No matching documents.');
-    return;
-  }
-  let data = [];
-  snapshot.forEach((doc) => {
-    console.log(doc.id, '=>', doc.data());
-    data.push(doc.data());
-  });
-  return { props: data };
-};
- */

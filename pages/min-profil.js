@@ -7,8 +7,9 @@ import { db } from '../firebase/config';
 import { doc, onSnapshot } from 'firebase/firestore';
 import AnimateHeight from 'react-animate-height';
 
-const Profile = ({ user }) => {
+const Profile = ({ user, interests, setInterests }) => {
   const [myInfo, setMyInfo] = useState({});
+
   const [interests, setInterests] = useState([]);
   const [height, setHeight] = useState(0);
   const [listheight, setListHeight] = useState(0);
@@ -29,6 +30,15 @@ const Profile = ({ user }) => {
     }
     setOpen(id);
   };
+
+  onSnapshot(docRef, (doc) => {
+    if (doc.data() !== undefined) {
+      setMyInfo({ ...doc.data() });
+    } else {
+      const savedObj = JSON.parse(localStorage.getItem('collectedInformation'));
+      setMyInfo(savedObj);
+    }
+  });
 
   const handleAddWishlist = (e) => {
     e.preventDefault();
@@ -220,87 +230,87 @@ const Profile = ({ user }) => {
                 <h3>Ny lista ...</h3>
               </div>
               <div className={styles.contentWrapper}>
-              <div className={styles.inputWrapper}>
-                <div className={styles.nameInput}>
-                  <label>Namn på ny lista</label>
-                  <input
-                    id="listname"
-                    type="text"
-                    name="listName"
-                    value={newWishlist.listName}
-                    placeholder="ex. önskelista"
-                    onChange={(e) =>
-                      setNewWishlist({
-                        ...newWishlist,
-                        listName: e.target.value,
-                      })
-                    }
-                  ></input>
-                </div>
+                <div className={styles.inputWrapper}>
+                  <div className={styles.nameInput}>
+                    <label>Namn på ny lista</label>
+                    <input
+                      id="listname"
+                      type="text"
+                      name="listName"
+                      value={newWishlist.listName}
+                      placeholder="ex. önskelista"
+                      onChange={(e) =>
+                        setNewWishlist({
+                          ...newWishlist,
+                          listName: e.target.value,
+                        })
+                      }
+                    ></input>
+                  </div>
 
-                <div className={styles.categorieWrapper}>
-                  <label>Välj kategori</label>
-                  <div className={styles.radioButtonsWrapper}>
-                    <div className={styles.radioButton}>
-                      <input
-                        id="Birthday"
-                        type="radio"
-                        name="categorie"
-                        value={newWishlist.categorie}
-                        onChange={(e) => onValueChange(e)}
-                      />
-                      <label>Födelsedag</label>
-                    </div>
+                  <div className={styles.categorieWrapper}>
+                    <label>Välj kategori</label>
+                    <div className={styles.radioButtonsWrapper}>
+                      <div className={styles.radioButton}>
+                        <input
+                          id="Birthday"
+                          type="radio"
+                          name="categorie"
+                          value={newWishlist.categorie}
+                          onChange={(e) => onValueChange(e)}
+                        />
+                        <label>Födelsedag</label>
+                      </div>
 
-                    <div className={styles.radioButton}>
-                      <input
-                        id="Wedding"
-                        type="radio"
-                        name="categorie"
-                        value={newWishlist.categorie}
-                        onChange={(e) => onValueChange(e)}
-                      />
-                      <label>Bröllopsdag</label>
-                    </div>
+                      <div className={styles.radioButton}>
+                        <input
+                          id="Wedding"
+                          type="radio"
+                          name="categorie"
+                          value={newWishlist.categorie}
+                          onChange={(e) => onValueChange(e)}
+                        />
+                        <label>Bröllopsdag</label>
+                      </div>
 
-                    <div className={styles.radioButton}>
-                      <input
-                        id="Anniversary"
-                        type="radio"
-                        name="categorie"
-                        value={newWishlist.categorie}
-                        onChange={(e) => onValueChange(e)}
-                      />
-                      <label>Årsdag</label>
-                    </div>
+                      <div className={styles.radioButton}>
+                        <input
+                          id="Anniversary"
+                          type="radio"
+                          name="categorie"
+                          value={newWishlist.categorie}
+                          onChange={(e) => onValueChange(e)}
+                        />
+                        <label>Årsdag</label>
+                      </div>
 
-                    <div className={styles.radioButton}>
-                      <input
-                        id="Christmas"
-                        type="radio"
-                        name="categorie"
-                        value={newWishlist.categorie}
-                        onChange={(e) => onValueChange(e)}
-                      />
-                      <label>Jul</label>
-                    </div>
+                      <div className={styles.radioButton}>
+                        <input
+                          id="Christmas"
+                          type="radio"
+                          name="categorie"
+                          value={newWishlist.categorie}
+                          onChange={(e) => onValueChange(e)}
+                        />
+                        <label>Jul</label>
+                      </div>
 
-                    <div className={styles.radioButton}>
-                      <input
-                        id="Other"
-                        type="radio"
-                        name="categorie"
-                        value={newWishlist.categorie}
-                        onChange={(e) => onValueChange(e)}
-                      />
-                      <label>Övrigt</label>
+                      <div className={styles.radioButton}>
+                        <input
+                          id="Other"
+                          type="radio"
+                          name="categorie"
+                          value={newWishlist.categorie}
+                          onChange={(e) => onValueChange(e)}
+                        />
+                        <label>Övrigt</label>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className={styles.buttonWrapper}>
-                <button onClick={(e) => handleAddWishlist(e)}>Klar</button>
-              </div>
+                <div className={styles.buttonWrapper}>
+                  <button onClick={(e) => handleAddWishlist(e)}>Klar</button>
+                </div>
               </div>
             </form>
           </AnimateHeight>
