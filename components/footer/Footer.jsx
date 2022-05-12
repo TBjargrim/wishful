@@ -27,7 +27,7 @@ const Footer = () => {
       </div>
 
       <div className={styles.rightColumn}>
-        <div className={styles.leftName}>
+        <div className={styles.nameDetailsWrapper}>
           <h5>Sandra Persson</h5>
           <div className={styles.iconWrapper}>
             <div className={styles.contactInfo}>
@@ -47,7 +47,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div >
+        <div className={styles.nameDetailsWrapper}>
           <h5>Therese Bjärgrim</h5>
           <div className={styles.iconWrapper}>
             <div className={styles.contactInfo}>

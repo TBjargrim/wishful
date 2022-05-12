@@ -77,15 +77,15 @@
   }
 }
 
-.leftName {
-  padding-right: 4rem;
+.nameDetailsWrapper {
+  margin: 0 1rem;
 
   @include respond(tablet) {
-    padding-right: 1rem;
+    padding-top: 1rem;
   }
-
+  
   @include respond(mobile) {
-    padding-right: 1rem;
+    padding-top: 2rem;
   }
 }
 
@@ -102,7 +102,6 @@
 }
 
 .iconWrapper {
-
   @include respond(tablet) {
     display: flex;
     padding: 0;
