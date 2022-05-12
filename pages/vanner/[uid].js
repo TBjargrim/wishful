@@ -43,11 +43,11 @@ const User = ({
   }, [detailsUser]);
 
   useEffect(() => {
-    var usersFollowArr = Object.keys(usersFollow).map((key) => {
+    /*    var usersFollowArr = Object.keys(usersFollow).map((key) => {
       return usersFollow[key];
-    });
+    }); */
 
-    const userExcists = usersFollowArr.some((u) => u.uid === uid);
+    const userExcists = usersFollow.some((u) => u.uid === uid);
 
     if (userExcists) {
       setIsFriend(true);
@@ -59,27 +59,13 @@ const User = ({
   const handleFollowUsers = () => {
     setIsFriend(true);
 
-    let usersFollowArr = Object.keys(usersFollow).map((key) => {
-      return usersFollow[key];
-    });
-
-    const userExcists = usersFollowArr.some((u) => u.uid === uid);
-
-    if (userExcists) {
-      setUsersFollow({ ...usersFollow });
-    } else {
-      setUsersFollow({ ...usersFollow, friend: { name, uid } });
-    }
+    setUsersFollow([...usersFollow, { name, uid }]);
   };
 
   console.log(usersFollow);
   const handleUnFollowUsers = () => {
     setIsFriend(false);
-
-    var usersFollowArr = Object.keys(usersFollow).map((key) => {
-      return usersFollow[key];
-    });
-    const removeUser = usersFollowArr.filter((obj) => {
+    const removeUser = usersFollow.filter((obj) => {
       return obj.uid !== uid;
     });
 
@@ -89,7 +75,10 @@ const User = ({
   useEffect(() => {
     if (user) {
       const docRef = doc(db, 'friends', user.uid);
-      updateDoc(docRef, { ...usersFollow });
+
+      updateDoc(docRef, {
+        friends: [...usersFollow],
+      });
     }
   }, [usersFollow]);
 
