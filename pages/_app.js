@@ -21,7 +21,6 @@ import { getAuth } from 'firebase/auth';
 import '../styles/globals.scss';
 import '../styles/firebaseui-styling.global.css';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useLocalStorage } from '../components/useLocalStorage';
 import { db } from '../firebase/config';
 
 function MyApp({ Component, pageProps }) {
@@ -29,9 +28,7 @@ function MyApp({ Component, pageProps }) {
   const auth = getAuth();
   const [addedDates, setAddedDates] = useState([]);
   const [user, loading, error] = useAuthState(auth);
-  const [usersFollow, setUsersFollow] = useLocalStorage('friends', {
-    friend: {},
-  });
+  const [usersFollow, setUsersFollow] = useState([]);
   const [allWishlists, setAllWishlists] = useState([]);
   const [interests, setInterests] = useState([]);
 
@@ -78,15 +75,12 @@ function MyApp({ Component, pageProps }) {
 
       onSnapshot(docRefFriends, (doc) => {
         if (doc.data() !== undefined) {
-          localStorage.setItem(
-            'friends',
-            JSON.stringify({ ...doc.data().wishlist })
-          );
+          setUsersFollow(doc.data().friends);
         } else {
-          setDoc(docRefFriends, { friend: {} });
+          setDoc(docRefFriends, { friends: [] });
         }
       });
-
+      console.log(usersFollow);
       onSnapshot(docRefWishlist, (doc) => {
         if (doc.data() !== undefined) {
           let storedLists = doc.data().wishlist;
