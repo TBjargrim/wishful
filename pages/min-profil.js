@@ -4,13 +4,20 @@ import Button from '../components/shared/button/Button';
 import Link from 'next/link';
 import NextImage from 'next/image';
 import { db } from '../firebase/config';
-import { doc, onSnapshot } from 'firebase/firestore';
+import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { saveLocalStorage } from '../components/helperFunctions';
+import { useLocalStorage } from '../components/useLocalStorage';
 import AnimateHeight from 'react-animate-height';
 
-const Profile = ({ user, interests, setInterests }) => {
+const Profile = ({
+  user,
+  interests,
+  setInterests,
+  allWishlists,
+  setAllWishlists,
+}) => {
   const [myInfo, setMyInfo] = useState({});
 
-  const [interests, setInterests] = useState([]);
   const [height, setHeight] = useState(0);
   const [listheight, setListHeight] = useState(0);
   const [newWishlist, setNewWishlist] = useState({
@@ -22,7 +29,6 @@ const Profile = ({ user, interests, setInterests }) => {
   });
   const [saveInput, setSaveInput] = useState('');
   const [open, setOpen] = useState(false);
-  const [allWishlists, setAllWishlists] = useState([]);
 
   const openList = (id) => {
     if (open === id) {
@@ -30,20 +36,37 @@ const Profile = ({ user, interests, setInterests }) => {
     }
     setOpen(id);
   };
+  useEffect(() => {
+    if (user) {
+      let docRef = doc(db, 'usersDetails', user.uid);
 
-  onSnapshot(docRef, (doc) => {
-    if (doc.data() !== undefined) {
-      setMyInfo({ ...doc.data() });
-    } else {
-      const savedObj = JSON.parse(localStorage.getItem('collectedInformation'));
-      setMyInfo(savedObj);
+      onSnapshot(docRef, (doc) => {
+        if (doc.data() !== undefined) {
+          setMyInfo({ ...doc.data() });
+        } else {
+          const savedObj = JSON.parse(
+            localStorage.getItem('collectedInformation')
+          );
+          setMyInfo(savedObj);
+        }
+      });
     }
-  });
+  }, []);
 
   const handleAddWishlist = (e) => {
     e.preventDefault();
     setAllWishlists([...allWishlists, newWishlist]);
   };
+
+  useEffect(() => {
+    if (user) {
+      const docRefWishList = doc(db, 'wishlist', user.uid);
+
+      updateDoc(docRefWishList, {
+        wishlist: [...allWishlists],
+      });
+    }
+  }, [allWishlists]);
 
   const onValueChange = (e) => {
     const birthdayIcon = '/birthday-circle.svg';
@@ -96,7 +119,6 @@ const Profile = ({ user, interests, setInterests }) => {
   const handleAddItemToList = (e) => {
     e.preventDefault();
     setSaveInput(e.target.value);
-    console.log(saveInput);
   };
 
   const addNewItem = (index) => (e) => {
@@ -111,10 +133,10 @@ const Profile = ({ user, interests, setInterests }) => {
     };
     setAllWishlists(foundLists);
   };
-
+  console.log(allWishlists);
   useEffect(() => {
     if (user) {
-      const docRef = doc(db, 'usersDetails', user.uid);
+      let docRef = doc(db, 'usersDetails', user.uid);
 
       onSnapshot(docRef, (doc) => {
         if (doc.data() !== undefined) {
