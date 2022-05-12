@@ -85,14 +85,13 @@ const Profile = ({
           {user && (
             <>
               <h5>{user.displayName}</h5>
-              {/* <p>{user.email}</p> */}
               {myInfo && <p>{myInfo.description}</p>}
             </>
           )}
         </div>
 
         <div>
-          {myInfo.birthdate !== '' ? (
+          {myInfo && myInfo.birthdate !== '' ? (
             <div className={styles.middleSection}>
               <div className={styles.dateCard}>
                 <div>
@@ -112,7 +111,7 @@ const Profile = ({
           ) : (
             <></>
           )}
-          {myInfo.addedDates &&
+          {myInfo && myInfo.addedDates !== undefined ? (
             myInfo.addedDates.map((dates) => (
               <div className={styles.dateCard}>
                 <div>
@@ -128,7 +127,10 @@ const Profile = ({
                   <p>{dates.selected}</p>
                 </div>
               </div>
-            ))}
+            ))
+          ) : (
+            <></>
+          )}
 
           <div className={styles.bottomSection}>
             <h3>Mina intressen</h3>
