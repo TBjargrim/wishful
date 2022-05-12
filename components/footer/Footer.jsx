@@ -27,39 +27,43 @@ const Footer = () => {
       </div>
 
       <div className={styles.rightColumn}>
-        <div className={styles.leftName}>
+        <div className={styles.nameDetailsWrapper}>
           <h5>Sandra Persson</h5>
-          <div className={styles.contactInfo}>
-            <Icon src="/githubIcon.svg" alttext="Icon" />
-            <p>github.se/sandrapersson149</p>
-          </div>
+          <div className={styles.iconWrapper}>
+            <div className={styles.contactInfo}>
+              <Icon src="/githubIcon.svg" alttext="Icon" />
+              <p>github.se/sandrapersson149</p>
+            </div>
 
-          <div className={styles.contactInfo}>
-            <Icon src="/linkedinIcon.svg" alttext="Icon" />
-            <p>linkedin.com</p>
-          </div>
+            <div className={styles.contactInfo}>
+              <Icon src="/linkedinIcon.svg" alttext="Icon" />
+              <p>linkedin.com</p>
+            </div>
 
-          <div className={styles.contactInfo}>
-            <Icon src="/mailIcon.svg" alttext="Icon" />
-            <p>sandrapersson.dev@gmail.com</p>
+            <div className={styles.contactInfo}>
+              <Icon src="/mailIcon.svg" alttext="Icon" />
+              <p>sandrapersson.dev@gmail.com</p>
+            </div>
           </div>
         </div>
 
-        <div>
+        <div className={styles.nameDetailsWrapper}>
           <h5>Therese Bjärgrim</h5>
-          <div className={styles.contactInfo}>
-            <Icon src="/githubIcon.svg" alttext="Icon" />
-            <p>github.se/tbjargrim</p>
-          </div>
+          <div className={styles.iconWrapper}>
+            <div className={styles.contactInfo}>
+              <Icon src="/githubIcon.svg" alttext="Icon" />
+              <p>github.se/tbjargrim</p>
+            </div>
 
-          <div className={styles.contactInfo}>
-            <Icon src="/linkedinIcon.svg" alttext="Icon" />
-            <p>linkedin.com</p>
-          </div>
+            <div className={styles.contactInfo}>
+              <Icon src="/linkedinIcon.svg" alttext="Icon" />
+              <p>linkedin.com</p>
+            </div>
 
-          <div className={styles.contactInfo}>
-            <Icon src="/mailIcon.svg" alttext="Icon" />
-            <p>tbjargrim@gmail.com</p>
+            <div className={styles.contactInfo}>
+              <Icon src="/mailIcon.svg" alttext="Icon" />
+              <p>tbjargrim@gmail.com</p>
+            </div>
           </div>
         </div>
         <div className={styles.balloonsImageRight}>

@@ -3,14 +3,20 @@
 
 .profileContainer {
   min-height: calc(100vh - 17.125rem);
+  max-width: 100%;
   display: flex;
+  justify-content: flex-start;
+  margin-left: 4rem;
   @include respond(tablet) {
     flex-direction: column;
-  }
+    margin: 0;
+    align-items: center;
+ 
+}
 }
 
 .userInfoContainer {
-  margin: 2rem 0 3rem 4.375rem;
+  margin: 2rem 0 3rem 0rem;
   width: 25rem;
   height: 48.438rem;
   box-shadow: 4px 5px 18px rgba(0, 0, 0, 0.12);
@@ -22,18 +28,16 @@
   @include respond(tablet) {
     width: 90%;
     height: 25rem;
-    margin-left: 2rem;
+    margin: 2rem;
     flex-direction: row;
     justify-content: space-around;
   }
 
   @include respond(mobile) {
-    width: 85%;
+    width: 90%;
     height: auto;
     flex-direction: column;
-    
   }
-
 }
 
 .topSection {
@@ -41,15 +45,24 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  h5 {
+    font-size: 20px;
+    text-transform: capitalize;
+  }
   p {
-    margin: 0.5rem 0;
+    margin: 0.5rem 3rem;
+    text-align: center;
   }
 
   @include respond(tablet) {
     align-items: left;
   }
 
+  @include respond(mobile) {
+    p {
+      margin: 0.5rem 1.3rem;
+    }
+  }
 }
 
 .middleSection {
@@ -57,9 +70,8 @@
   flex-wrap: wrap;
 
   @include respond(mobile) {
-    padding: 0 1rem;
+    margin: 0 2rem;
   }
-
 }
 
 .dateCard {
@@ -79,7 +91,7 @@
   width: 20rem;
 
   @include respond(mobile) {
-    padding: 0 1rem;
+    padding: 0 2rem;
   }
 }
 
@@ -96,7 +108,6 @@
     box-shadow: 3px 3px 10px 1px rgba(98, 98, 98, 0.12);
     border-radius: 10px;
   }
-
 }
 
 .editButton {
@@ -109,12 +120,12 @@
 }
 
 .wishlistContainer {
-  margin: 4.375rem 0 3rem 6rem;
-
+  margin: 4.375rem 2rem 3rem 8rem;
+  width: 40rem;
   @include respond(tablet) {
-   margin: 1rem 0 5rem 4rem;
+    margin: 1rem 2rem 5rem 2rem;
+    max-width: 90%;
   }
-
 }
 
 .wishlistsWrapper {
@@ -124,7 +135,7 @@
 .wishlist {
   box-shadow: 4px 7px 17px 1px rgba(98, 98, 98, 0.14);
   border-radius: 10px;
-  width: 47rem;
+  max-width: 40rem;
   justify-content: space-between;
   padding: 0 1rem;
   margin-bottom: 1rem;
@@ -134,13 +145,14 @@
 
     h4 {
       padding: 0.5rem;
+      cursor: pointer;
     }
   }
 
   @include respond(tablet) {
     width: 90%;
-   }
-
+    
+  }
 }
 .iconTitleWrapper {
   margin-top: 1rem;
@@ -171,9 +183,11 @@
     border-radius: 7px;
     border: transparent;
     padding-left: 1rem;
+    outline: none;
   }
   button {
     margin-left: 1rem;
+    margin-top: 0.5rem;
     background: transparent;
     border: none;
   }
@@ -193,28 +207,31 @@
     margin-top: 1rem;
     cursor: pointer;
   }
-
 }
 
 .newListForm {
   margin-top: 2rem;
   box-shadow: 4px 7px 17px 1px rgba(98, 98, 98, 0.14);
   border-radius: 0px 0px 10px 10px;
-  width: 47rem;
+  max-width: 40rem;
   display: flex;
   flex-direction: column;
+  
   button {
     border: 1px solid #c1c1c1;
     box-shadow: 8px 11px 25px 1px rgba(98, 98, 98, 0.13);
     border-radius: 10px;
-    width: 6.375rem;
-    height: 2.375rem;
+    width: 6rem;
+    height: 2rem;
   }
 
   @include respond(tablet) {
-   width: 90%;
+    max-width: 100%;
   }
 
+  @include respond(mobile) {
+    width: 100%;
+  }
 }
 
 .listHeader {
@@ -228,22 +245,27 @@
 .contentWrapper {
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   @include respond(tablet) {
     flex-direction: row;
-   }
-
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
 }
 
 .inputWrapper {
   display: flex;
-  margin: 1.5rem 2rem 0 2rem;
+  margin: 1.5rem 0.5rem;
+  @include respond(tablet) {
+    flex-direction: column;
+  }
 }
 
 .nameInput {
   display: flex;
   flex-direction: column;
-  margin-right: 3rem;
+  margin: 0 1rem;
   input {
     box-shadow: 3px 3px 10px 1px rgba(98, 98, 98, 0.12);
     border-radius: 10px;
@@ -252,24 +274,26 @@
     width: 17rem;
     padding: 0.8rem;
     margin-top: 0.5rem;
+    outline: none;
   }
 
   @include respond(tablet) {
     input {
       width: 12rem;
     }
-   }
+  }
 }
 
 .categorieWrapper {
   display: flex;
   flex-direction: column;
-  margin-left: 8rem;
+  margin-left: 2.5rem;
+  
 
   @include respond(tablet) {
-    margin-left: 2rem;
-    margin-bottom: 2rem;
-   }
+    margin: 1rem 0 1rem 1rem;
+    flex-wrap: wrap;
+  }
 }
 
 .radioButtonsWrapper {
@@ -294,9 +318,14 @@
   }
 
   @include respond(tablet) {
-    margin-left: 4rem;
-   }
+    margin-left: 2rem;
+    margin-right: 0;
+  }
 
+  @include respond(mobile) {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
 }
 
 .follow {
