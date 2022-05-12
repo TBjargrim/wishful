@@ -31,9 +31,7 @@
     width: 85%;
     height: auto;
     flex-direction: column;
-    
   }
-
 }
 
 .topSection {
@@ -49,7 +47,6 @@
   @include respond(tablet) {
     align-items: left;
   }
-
 }
 
 .middleSection {
@@ -59,7 +56,6 @@
   @include respond(mobile) {
     padding: 0 1rem;
   }
-
 }
 
 .dateCard {
@@ -96,7 +92,6 @@
     box-shadow: 3px 3px 10px 1px rgba(98, 98, 98, 0.12);
     border-radius: 10px;
   }
-
 }
 
 .editButton {
@@ -112,9 +107,8 @@
   margin: 4.375rem 0 3rem 6rem;
 
   @include respond(tablet) {
-   margin: 1rem 0 5rem 4rem;
+    margin: 1rem 0 5rem 4rem;
   }
-
 }
 
 .wishlistsWrapper {
@@ -139,12 +133,17 @@
 
   @include respond(tablet) {
     width: 90%;
-   }
-
+  }
 }
 .iconTitleWrapper {
+  width: 100%;
   margin-top: 1rem;
   display: flex;
+  justify-content: space-between;
+
+  div {
+    display: flex;
+  }
 }
 
 .wrapper {
@@ -158,6 +157,7 @@
   padding-left: 1rem;
   display: flex;
   flex-direction: column;
+
   li {
     padding-bottom: 0.3rem;
   }
@@ -165,6 +165,7 @@
 
 .formContainer {
   padding-bottom: 1rem;
+
   input {
     background: #f5f5f5;
     box-shadow: 1px 1px 7px 1px rgba(98, 98, 98, 0.14);
@@ -172,6 +173,7 @@
     border: transparent;
     padding-left: 1rem;
   }
+
   button {
     margin-left: 1rem;
     background: transparent;
@@ -193,7 +195,6 @@
     margin-top: 1rem;
     cursor: pointer;
   }
-
 }
 
 .newListForm {
@@ -212,9 +213,8 @@
   }
 
   @include respond(tablet) {
-   width: 90%;
+    width: 90%;
   }
-
 }
 
 .listHeader {
@@ -231,8 +231,7 @@
 
   @include respond(tablet) {
     flex-direction: row;
-   }
-
+  }
 }
 
 .inputWrapper {
@@ -258,7 +257,7 @@
     input {
       width: 12rem;
     }
-   }
+  }
 }
 
 .categorieWrapper {
@@ -269,7 +268,7 @@
   @include respond(tablet) {
     margin-left: 2rem;
     margin-bottom: 2rem;
-   }
+  }
 }
 
 .radioButtonsWrapper {
@@ -295,8 +294,7 @@
 
   @include respond(tablet) {
     margin-left: 4rem;
-   }
-
+  }
 }
 
 .follow {

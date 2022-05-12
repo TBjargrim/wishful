@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import styles from '../../styles/_profile.module.scss';
 import AnimateHeight from 'react-animate-height';
 import NextImage from 'next/image';
+import Button from '../shared/button/Button';
+
 const MyWishLists = ({
   setAllWishlists,
   allWishlists,
@@ -90,6 +92,15 @@ const MyWishLists = ({
       });
     }
   };
+
+  const handleDelete = (e, id) => {
+    e.preventDefault();
+
+    const updatedList = allWishlists.filter((list) => list.id !== id);
+
+    setAllWishlists(updatedList);
+  };
+
   return (
     <div className={styles.wishlistContainer}>
       <div>
@@ -102,6 +113,7 @@ const MyWishLists = ({
             Skapa ny lista +
           </button>
         </div>
+
         <AnimateHeight id="panel" duration={500} height={height}>
           <form className={styles.newListForm}>
             <div className={styles.listHeader}>
@@ -201,33 +213,42 @@ const MyWishLists = ({
       </div>
 
       <div className={styles.wishlistsWrapper}>
-        {allWishlists.map(({ icon, listName, items, id }, index) => (
-          <div key={index} className={styles.wishlist}>
-            <div className={styles.iconTitleWrapper}>
-              <NextImage src={icon} alt="logo" width="35" height="35" />
-              <h4 onClick={() => openList(id)}>{listName}</h4>
-            </div>
-            {open === id ? (
-              <div className={styles.wrapper}>
-                <ul className={styles.addedItems}>
-                  {items && items.map((item) => <li key={item}>{item}</li>)}
-                </ul>
-                <form className={styles.formContainer}>
-                  <input
-                    id="listItem"
-                    type="text"
-                    name="listItem"
-                    placeholder="Skriv vad du önskar dig"
-                    onChange={handleAddItemToList}
-                  />
-                  <button onClick={addNewItem(index)}>
-                    Lägg till i listan +
-                  </button>
-                </form>
+        {allWishlists &&
+          allWishlists.map(({ icon, listName, items, id }, index) => (
+            <div key={index} className={styles.wishlist}>
+              <div className={styles.iconTitleWrapper}>
+                <div onClick={() => openList(id)}>
+                  <NextImage src={icon} alt="logo" width="35" height="35" />
+                  <h4>{listName}</h4>
+                </div>
+
+                <Button onClick={(e) => handleDelete(e, id)} type="quaternary">
+                  Ta bort
+                </Button>
               </div>
-            ) : null}
-          </div>
-        ))}
+
+              {open === id ? (
+                <div className={styles.wrapper}>
+                  <ul className={styles.addedItems}>
+                    {items && items.map((item) => <li key={item}>{item}</li>)}
+                  </ul>
+                  <form className={styles.formContainer}>
+                    <input
+                      id="listItem"
+                      type="text"
+                      name="listItem"
+                      placeholder="Skriv vad du önskar dig"
+                      onChange={handleAddItemToList}
+                    />
+
+                    <button onClick={addNewItem(index)}>
+                      Lägg till i listan +
+                    </button>
+                  </form>
+                </div>
+              ) : null}
+            </div>
+          ))}
       </div>
     </div>
   );
