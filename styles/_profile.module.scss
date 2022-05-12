@@ -11,8 +11,7 @@
     flex-direction: column;
     margin: 0;
     align-items: center;
- 
-}
+  }
 }
 
 .userInfoContainer {
@@ -122,6 +121,7 @@
 .wishlistContainer {
   margin: 4.375rem 2rem 3rem 8rem;
   width: 40rem;
+
   @include respond(tablet) {
     margin: 1rem 2rem 5rem 2rem;
     max-width: 90%;
@@ -151,12 +151,17 @@
 
   @include respond(tablet) {
     width: 90%;
-    
   }
 }
 .iconTitleWrapper {
+  width: 100%;
   margin-top: 1rem;
   display: flex;
+  justify-content: space-between;
+
+  div {
+    display: flex;
+  }
 }
 
 .wrapper {
@@ -170,6 +175,7 @@
   padding-left: 1rem;
   display: flex;
   flex-direction: column;
+
   li {
     padding-bottom: 0.3rem;
   }
@@ -177,6 +183,7 @@
 
 .formContainer {
   padding-bottom: 1rem;
+
   input {
     background: #f5f5f5;
     box-shadow: 1px 1px 7px 1px rgba(98, 98, 98, 0.14);
@@ -185,6 +192,7 @@
     padding-left: 1rem;
     outline: none;
   }
+
   button {
     margin-left: 1rem;
     margin-top: 0.5rem;
@@ -216,7 +224,7 @@
   max-width: 40rem;
   display: flex;
   flex-direction: column;
-  
+
   button {
     border: 1px solid #c1c1c1;
     box-shadow: 8px 11px 25px 1px rgba(98, 98, 98, 0.13);
@@ -288,7 +296,6 @@
   display: flex;
   flex-direction: column;
   margin-left: 2.5rem;
-  
 
   @include respond(tablet) {
     margin: 1rem 0 1rem 1rem;

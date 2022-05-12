@@ -2,27 +2,31 @@ import React from 'react';
 import styles from './_button.module.scss';
 
 const Button = React.forwardRef(function buttonFunction(
-  { type, children },
+  { type, children, onClick },
   ref
 ) {
   return type === 'primary' ? (
-    <button className={styles.primary} ref={ref}>
+    <button onClick={onClick} className={styles.primary} ref={ref}>
       {children}
     </button>
   ) : type === 'secondary' ? (
-    <button className={styles.secondary} ref={ref}>
+    <button onClick={onClick} className={styles.secondary} ref={ref}>
       {children}
     </button>
   ) : type === 'tertiary' ? (
-    <button className={styles.tertiary} ref={ref}>
+    <button onClick={onClick} className={styles.tertiary} ref={ref}>
+      {children}
+    </button>
+  ) : type === 'quaternary' ? (
+    <button onClick={onClick} className={styles.quaternary} ref={ref}>
       {children}
     </button>
   ) : type === 'transparent' ? (
-    <button className={styles.transparent} ref={ref}>
+    <button onClick={onClick} className={styles.transparent} ref={ref}>
       {children}
     </button>
   ) : (
-    <button className={styles.default} ref={ref}>
+    <button onClick={onClick} className={styles.default} ref={ref}>
       {children}
     </button>
   );
