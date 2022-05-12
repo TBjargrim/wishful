@@ -4,13 +4,22 @@ import Button from '../components/shared/button/Button';
 import Link from 'next/link';
 import NextImage from 'next/image';
 import { db } from '../firebase/config';
-import { doc, onSnapshot, setDoc } from 'firebase/firestore';
-import AnimateHeight from 'react-animate-height';
+import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { saveLocalStorage } from '../components/helperFunctions';
 import { useLocalStorage } from '../components/useLocalStorage';
+import AnimateHeight from 'react-animate-height';
 
-const Profile = ({ user, interests, setInterests }) => {
+const Profile = ({
+  user,
+  interests,
+  setInterests,
+  allWishlists,
+  setAllWishlists,
+}) => {
   const [myInfo, setMyInfo] = useState({});
+
   const [height, setHeight] = useState(0);
+  const [listheight, setListHeight] = useState(0);
   const [newWishlist, setNewWishlist] = useState({
     id: '',
     listName: '',
@@ -20,7 +29,6 @@ const Profile = ({ user, interests, setInterests }) => {
   });
   const [saveInput, setSaveInput] = useState('');
   const [open, setOpen] = useState(false);
-  const [allWishlists, setAllWishlists] = useState([]);
 
   const openList = (id) => {
     if (open === id) {
@@ -28,10 +36,10 @@ const Profile = ({ user, interests, setInterests }) => {
     }
     setOpen(id);
   };
-  console.log(allWishlists);
   useEffect(() => {
     if (user) {
-      const docRef = doc(db, 'usersDetails', user.uid);
+      let docRef = doc(db, 'usersDetails', user.uid);
+
       onSnapshot(docRef, (doc) => {
         if (doc.data() !== undefined) {
           setMyInfo({ ...doc.data() });
@@ -42,29 +50,23 @@ const Profile = ({ user, interests, setInterests }) => {
           setMyInfo(savedObj);
         }
       });
-
-      const docRefWishlist = doc(db, 'wishlist', user.uid);
-      onSnapshot(docRefWishlist, (doc) => {
-        setAllWishlists(doc.data());
-      });
     }
-  }, [user]);
+  }, []);
 
   const handleAddWishlist = (e) => {
     e.preventDefault();
     setAllWishlists([...allWishlists, newWishlist]);
-
-    const docRefWishlist = doc(db, 'wishlist', user.uid);
-    /*   onSnapshot(docRefWishlist, (doc) => { */
-    /*       console.log(doc.data());
-      if (doc.data() !== 0) { */
-    // console.log('not undefined');
-    setDoc(docRefWishlist, { allWishlists });
-    /*  } else {
-        setDoc(docRefWishlist, { ...allWishlists });
-      } */
-    /*     }); */
   };
+
+  useEffect(() => {
+    if (user) {
+      const docRefWishList = doc(db, 'wishlist', user.uid);
+
+      updateDoc(docRefWishList, {
+        wishlist: [...allWishlists],
+      });
+    }
+  }, [allWishlists]);
 
   const onValueChange = (e) => {
     const birthdayIcon = '/birthday-circle.svg';
@@ -131,10 +133,10 @@ const Profile = ({ user, interests, setInterests }) => {
     };
     setAllWishlists(foundLists);
   };
-
+  console.log(allWishlists);
   useEffect(() => {
     if (user) {
-      const docRef = doc(db, 'usersDetails', user.uid);
+      let docRef = doc(db, 'usersDetails', user.uid);
 
       onSnapshot(docRef, (doc) => {
         if (doc.data() !== undefined) {
@@ -150,12 +152,13 @@ const Profile = ({ user, interests, setInterests }) => {
   }, [user]);
 
   useEffect(() => {
-    if (myInfo.myInterests) {
+    if (myInfo.myInterests !== undefined) {
       const interests = myInfo.myInterests;
       const arrInterests = interests.split(',');
       setInterests(arrInterests);
     }
   }, [myInfo]);
+
   return (
     <div className={styles.profileContainer}>
       <div className={styles.userInfoContainer}>
@@ -336,37 +339,33 @@ const Profile = ({ user, interests, setInterests }) => {
         </div>
 
         <div className={styles.wishlistsWrapper}>
-          {/*          {allWishlists &&
-            allWishlists.allWishlists.map(
-              ({ icon, listName, items, id }, index) => (
-                <div key={index} className={styles.wishlist}>
-                  <div className={styles.iconTitleWrapper}>
-                    <NextImage src={icon} alt="logo" width="35" height="35" />
-                    <h4 onClick={() => openList(id)}>{listName}</h4>
-                  </div>
-                  {open === id ? (
-                    <div className={styles.wrapper}>
-                      <ul className={styles.addedItems}>
-                        {items &&
-                          items.map((item) => <li key={item}>{item}</li>)}
-                      </ul>
-                      <form className={styles.formContainer}>
-                        <input
-                          id="listItem"
-                          type="text"
-                          name="listItem"
-                          placeholder="Skriv vad du önskar dig"
-                          onChange={handleAddItemToList}
-                        />
-                        <button onClick={addNewItem(index)}>
-                          Lägg till i listan +
-                        </button>
-                      </form>
-                    </div>
-                  ) : null}
+          {allWishlists.map(({ icon, listName, items, id }, index) => (
+            <div key={index} className={styles.wishlist}>
+              <div className={styles.iconTitleWrapper}>
+                <NextImage src={icon} alt="logo" width="35" height="35" />
+                <h4 onClick={() => openList(id)}>{listName}</h4>
+              </div>
+              {open === id ? (
+                <div className={styles.wrapper}>
+                  <ul className={styles.addedItems}>
+                    {items && items.map((item) => <li key={item}>{item}</li>)}
+                  </ul>
+                  <form className={styles.formContainer}>
+                    <input
+                      id="listItem"
+                      type="text"
+                      name="listItem"
+                      placeholder="Skriv vad du önskar dig"
+                      onChange={handleAddItemToList}
+                    />
+                    <button onClick={addNewItem(index)}>
+                      Lägg till i listan +
+                    </button>
+                  </form>
                 </div>
-              )
-            )} */}
+              ) : null}
+            </div>
+          ))}
         </div>
       </div>
     </div>

@@ -14,6 +14,7 @@ import {
   query,
   where,
   getDocs,
+  getDoc,
 } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
@@ -31,6 +32,7 @@ function MyApp({ Component, pageProps }) {
   const [usersFollow, setUsersFollow] = useLocalStorage('friends', {
     friend: {},
   });
+  const [allWishlists, setAllWishlists] = useState([]);
   const [interests, setInterests] = useState([]);
 
   const createUserInformation = async () => {
@@ -76,7 +78,10 @@ function MyApp({ Component, pageProps }) {
 
       onSnapshot(docRefFriends, (doc) => {
         if (doc.data() !== undefined) {
-          localStorage.setItem('friends', JSON.stringify({ ...doc.data() }));
+          localStorage.setItem(
+            'friends',
+            JSON.stringify({ ...doc.data().wishlist })
+          );
         } else {
           setDoc(docRefFriends, { friend: {} });
         }
@@ -84,7 +89,8 @@ function MyApp({ Component, pageProps }) {
 
       onSnapshot(docRefWishlist, (doc) => {
         if (doc.data() !== undefined) {
-          localStorage.setItem('wishlist', JSON.stringify({ ...doc.data() }));
+          let storedLists = doc.data().wishlist;
+          setAllWishlists(storedLists);
         } else {
           setDoc(docRefWishlist, { wishlist: [] });
         }
@@ -113,6 +119,8 @@ function MyApp({ Component, pageProps }) {
         setUsersFollow={setUsersFollow}
         setInterests={setInterests}
         interesets={interests}
+        allWishlists={allWishlists}
+        setAllWishlists={setAllWishlists}
       />
       <Footer />
     </>
