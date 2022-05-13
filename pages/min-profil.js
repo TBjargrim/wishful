@@ -20,7 +20,7 @@ const Profile = ({
     id: '',
     listName: '',
     categorie: '',
-    icon: '/birthday-circle.svg',
+    icon: '',
     items: [],
   });
 
@@ -91,8 +91,8 @@ const Profile = ({
         </div>
 
         <div>
-          {myInfo && myInfo.birthdate !== '' ? (
-            <div className={styles.middleSection}>
+          <div className={styles.middleSection}>
+            {myInfo && myInfo.birthdate !== '' ? (
               <div className={styles.dateCard}>
                 <div>
                   <NextImage
@@ -107,31 +107,31 @@ const Profile = ({
                   <p>Födelsedag</p>
                 </div>
               </div>
-            </div>
-          ) : (
-            <></>
-          )}
-          {myInfo && myInfo.addedDates !== undefined ? (
-            myInfo.addedDates.map((dates) => (
-              <div className={styles.dateCard}>
-                <div>
-                  <NextImage
-                    src={dates.icon}
-                    alt="logo"
-                    width="35"
-                    height="35"
-                  />
-                </div>
-                <div>
-                  <h5>{dates.updatedDate}</h5>
-                  <p>{dates.selected}</p>
-                </div>
-              </div>
-            ))
-          ) : (
-            <></>
-          )}
+            ) : (
+              <></>
+            )}
 
+            {myInfo && myInfo.addedDates !== undefined ? (
+              myInfo.addedDates.map((dates) => (
+                <div className={styles.dateCard}>
+                  <div>
+                    <NextImage
+                      src={dates.icon}
+                      alt="logo"
+                      width="35"
+                      height="35"
+                    />
+                  </div>
+                  <div>
+                    <h5>{dates.updatedDate}</h5>
+                    <p>{dates.selected}</p>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <></>
+            )}
+          </div>
           <div className={styles.bottomSection}>
             <h3>Mina intressen</h3>
             <div className={styles.interestsCards}>

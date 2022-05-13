@@ -33,7 +33,7 @@ const Navbar = () => {
                 </a>
               </Link>
 
-              <div>
+              <div className={styles.navbarItems}>
                 <ul className={styles.navbarList}>
                   <li>
                     <Link href="/hem">
@@ -81,16 +81,16 @@ const Navbar = () => {
                   <a aria-label="link to friendspage">Vänner</a>
                 </Link>
               </li>
-              <li onClick={() => logout()}>
-                <a aria-label="logga ut">Logga ut</a>
-              </li>
             </ul>
+            <div className={styles.logoutBtnContainer}>
+              <button onClick={() => logout()}>Logga ut</button>
+            </div>
           </div>
         )}
       </>
     );
   } else {
-    return <NextImage src="/logo_2.svg" alt="logo" width="90" height="90" />;
+    return <div className={styles.iconWrapper}><NextImage src="/logo_2.svg" alt="logo" width="90" height="90" /></div>
   }
 };
 

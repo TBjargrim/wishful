@@ -24,7 +24,7 @@ const MyWishLists = ({
 
   const handleAddItemToList = (e) => {
     e.preventDefault();
-    setSaveInput(e.target.value);
+    // setSaveInput(e.target.value);
   };
 
   const addNewItem = (index) => (e) => {
@@ -38,11 +38,19 @@ const MyWishLists = ({
       items: [...foundLists[index].items, saveInput],
     };
     setAllWishlists(foundLists);
+    setSaveInput('');
   };
 
   const handleAddWishlist = (e) => {
     e.preventDefault();
     setAllWishlists([...allWishlists, newWishlist]);
+    setNewWishlist({
+      id: '',
+      listName: '',
+      categorie: '',
+      con: '',
+      items: [],
+    });
   };
 
   const onValueChange = (e) => {
@@ -221,10 +229,14 @@ const MyWishLists = ({
                   <NextImage src={icon} alt="logo" width="35" height="35" />
                   <h4>{listName}</h4>
                 </div>
-
-                <Button onClick={(e) => handleDelete(e, id)} type="quaternary">
-                  Ta bort
-                </Button>
+                <div className={styles.deleteBtn}>
+                  <Button
+                    onClick={(e) => handleDelete(e, id)}
+                    type="quaternary"
+                  >
+                    Ta bort
+                  </Button>
+                </div>
               </div>
 
               {open === id ? (
@@ -238,7 +250,8 @@ const MyWishLists = ({
                       type="text"
                       name="listItem"
                       placeholder="Skriv vad du önskar dig"
-                      onChange={handleAddItemToList}
+                      value={saveInput}
+                      onChange={(e) => setSaveInput(e.target.value)}
                     />
 
                     <button onClick={addNewItem(index)}>

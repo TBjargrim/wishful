@@ -1,4 +1,5 @@
 @import 'varibles';
+@import 'mixins';
 
 .landingWrapper {
   width: 100%;
@@ -10,12 +11,24 @@
 
 .topSection {
   display: flex;
-  margin: 1rem;
+  margin: 1rem 4rem;
   align-items: center;
+
+  @include respond(tablet) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.presentsImgWrapper {
+  @include respond(mobile) {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .leftColumn {
-  margin-right: 7rem;
+  margin-right: 5rem;
   max-width: 39rem;
 
   h2 {
@@ -34,17 +47,28 @@
     color: $color-grey900;
     margin-top: 1rem;
   }
+
+  @include respond(tablet) {
+    margin: 0 1rem;
+    h2 {
+      font-size: $fs-h2;
+    }
+    p {
+      font-size: $fs-p2;
+    }
+  }
 }
 
 .rightColumn {
   width: 300px;
-}
+  margin-top: 4rem;
 
-.buttonSection {
-  margin: 2rem 0;
-
-  button {
-    margin: 1rem 1rem 0 0;
+  @include respond(tablet) {
+    max-width: 250px;
+    margin: 4rem auto;
+    box-shadow: 8px 11px 25px 1px rgba(98, 98, 98, 0.13);
+    // border-radius: 10px;
+    // border: 1px solid lightgray;
   }
 }
 
@@ -57,6 +81,13 @@
   background: rgba(217, 248, 255, 0.5);
   box-shadow: 8px 11px 25px 1px rgba(98, 98, 98, 0.13);
   border-radius: 10px;
+
+  @include respond(mobile) {
+    flex-direction: column;
+    background: none;
+    margin-top: 3rem;
+    box-shadow: none;
+  }
 }
 
 .card {
@@ -80,6 +111,17 @@
     color: $color-grey900;
     font-size: $fs-p3;
     padding: 0 1.3rem;
+  }
+
+  @include respond(tablet) {
+    width: 12rem;
+  }
+
+  @include respond(mobile) {
+    margin: 2rem;
+    background-color: rgba(217, 248, 255, 0.5);
+    box-shadow: 8px 11px 25px 1px rgba(98, 98, 98, 0.13);
+    border-radius: 10px;
   }
 }
 

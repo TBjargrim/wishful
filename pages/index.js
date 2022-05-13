@@ -7,7 +7,7 @@ const LandingPage = () => {
     <div className={styles.landingWrapper}>
       <div className={styles.topSection}>
         <div className={styles.leftColumn}>
-          <div>
+          <div className={styles.presentsImgWrapper}>
             <Icon
               src="/landingImage.svg"
               altText="Wrapped gifts"
