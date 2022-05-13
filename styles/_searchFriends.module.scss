@@ -1,8 +1,15 @@
 @import 'varibles';
+@import 'mixins.scss';
 
 .friendsWrapper {
   display: flex;
   min-height: calc(100vh - 17.125rem);
+
+  @include respond(tablet) {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
 
   h3 {
     padding: 4rem 0 0 4rem;
@@ -28,6 +35,10 @@
   border-radius: 15px;
   padding: 0 3.75rem;
 
+  @include respond(tablet) {
+    margin: -0.5rem 0 0;
+  }
+
   h3 {
     padding: 6rem 0 0;
   }
@@ -36,3 +47,52 @@
     margin: 1rem 0 0;
   }
 }
+
+.rightColumn {
+  margin: -2rem 0 2rem 0;
+  min-height: 48.438rem;
+  padding: 0 3.75rem;
+
+  @include respond(tablet) {
+    margin: -0.5rem 0 0;
+  }
+
+  h3 {
+    padding: 6rem 0 0;
+  }
+
+  input {
+    margin: 1rem 0 0;
+  }
+}
+
+.friendsLists {
+  margin: 2rem 0;
+
+  li {
+    list-style-type: none;
+    text-align: left;
+    background-color: $color-grey200;
+    margin: 1.5rem 0;
+    border-radius: 0.938rem;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    a {
+      text-decoration: none;
+
+      h5 {
+        font-weight: 600;
+      }
+    }
+  }
+}
+/*   @include respond(tablet) {
+    align-items: left;
+  }
+
+  @include respond(mobile) {
+    p {
+      margin: 0.5rem 1.3rem;
+    }
+  } */
