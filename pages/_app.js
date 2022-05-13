@@ -36,7 +36,7 @@ function MyApp({ Component, pageProps }) {
     try {
       const q = query(collection(db, 'users'), where('uid', '==', user.uid));
       const docs = await getDocs(q);
-
+      console.log(user);
       if (docs.docs.length === 0) {
         await addDoc(collection(db, 'users'), {
           uid: user.uid,
@@ -69,6 +69,8 @@ function MyApp({ Component, pageProps }) {
             myInterests: '',
             description: '',
             addedDates,
+            uid: user.uid,
+            name: user.displayName,
           });
         }
       });

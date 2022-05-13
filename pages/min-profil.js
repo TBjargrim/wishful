@@ -68,13 +68,13 @@ const Profile = ({
     }
   }, [user]);
 
-  useEffect(() => {
+  /*  useEffect(() => {
     if (myInfo.myInterests !== undefined) {
       const interests = myInfo.myInterests;
       const arrInterests = interests.split(',');
       setInterests(arrInterests);
     }
-  }, [myInfo]);
+  }, [myInfo]); */
 
   return (
     <div className={styles.profileContainer}>

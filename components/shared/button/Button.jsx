@@ -21,6 +21,10 @@ const Button = React.forwardRef(function buttonFunction(
     <button onClick={onClick} className={styles.quaternary} ref={ref}>
       {children}
     </button>
+  ) : type === 'quinary' ? (
+    <button onClick={onClick} className={styles.quinary} ref={ref}>
+      {children}
+    </button>
   ) : type === 'transparent' ? (
     <button onClick={onClick} className={styles.transparent} ref={ref}>
       {children}

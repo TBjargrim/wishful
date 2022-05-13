@@ -29,6 +29,8 @@ const Settings = ({ user, addedDates, setAddedDates }) => {
       myInterests: '',
       description: '',
       addedDates,
+      uid: user.uid,
+      name: user.displayName,
     }
   );
 
@@ -40,7 +42,14 @@ const Settings = ({ user, addedDates, setAddedDates }) => {
         if (data.addedDates) {
           const savedDates = data.addedDates;
           setAddedDates(savedDates);
+          setCollectedInformation({
+            ...collectedInformation,
+          });
         }
+      });
+
+      setCollectedInformation({
+        ...collectedInformation,
       });
     }
   }, [user]);
@@ -105,6 +114,7 @@ const Settings = ({ user, addedDates, setAddedDates }) => {
     } else {
       setCollectedInformation({
         ...collectedInformation,
+
         [e.target.name]: e.target.value,
       });
     }
