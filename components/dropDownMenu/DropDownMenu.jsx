@@ -35,7 +35,7 @@ const DropdownMenu = () => {
   return (
     <div className={styles.menuContainer}>
       <div onClick={handleOpenMenu} className={styles.menuTrigger}>
-        <NextImage src="/avatar_1.svg" alt="avatar" width="64" height="64" />
+        <NextImage src="/avatar_1.svg" alt="avatar" width="75" height="75" />
       </div>
       <nav ref={dropdownRef} className={`${styles.menu} ${setActiveClass}`}>
         <ul>
