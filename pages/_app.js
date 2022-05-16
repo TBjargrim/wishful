@@ -31,6 +31,7 @@ function MyApp({ Component, pageProps }) {
   const [usersFollow, setUsersFollow] = useState([]);
   const [allWishlists, setAllWishlists] = useState([]);
   const [interests, setInterests] = useState([]);
+  const [collectedInformation, setCollectedInformation] = useState({});
 
   const createUserInformation = async () => {
     try {
@@ -58,10 +59,7 @@ function MyApp({ Component, pageProps }) {
 
       onSnapshot(docRef, (doc) => {
         if (doc.data() !== undefined) {
-          localStorage.setItem(
-            'collectedInformation',
-            JSON.stringify(doc.data())
-          );
+          setCollectedInformation(doc.data());
         } else {
           setDoc(docRef, {
             profileImage: '',
@@ -92,7 +90,7 @@ function MyApp({ Component, pageProps }) {
       });
     }
   }, [user]);
-  console.log(usersFollow);
+
   useEffect(() => {
     if (loading) {
       return;
@@ -116,6 +114,8 @@ function MyApp({ Component, pageProps }) {
         interesets={interests}
         allWishlists={allWishlists}
         setAllWishlists={setAllWishlists}
+        collectedInformation={collectedInformation}
+        setCollectedInformation={setCollectedInformation}
       />
       <Footer />
     </>
