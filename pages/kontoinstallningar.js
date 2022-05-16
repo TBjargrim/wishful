@@ -124,11 +124,12 @@ const Settings = ({ user, addedDates, setAddedDates }) => {
     const birthdayIcon = '/birthday-circle.svg';
     const weddingDayIcon = '/wedding-circle.svg';
     const yearDayIcon = '/confetti-circle.svg';
+    const otherIcon = '/flowers-circle.svg';
 
     setAddedDate({
       ...addedDate,
       selected: e.target.value,
-      icon: birthdayIcon,
+      icon: otherIcon,
     });
 
     if (e.target.value === 'Bröllopsdag') {
@@ -178,7 +179,7 @@ const Settings = ({ user, addedDates, setAddedDates }) => {
       <form onSubmit={(e) => handleSubmit(e, '/min-profil')}>
         <div className={styles.topSection}>
           <div className={styles.fields}>
-            <div className={styles.icon}>
+            <div className={styles.userAvatar}>
               <Icon src="/avatar_1.svg" alt="logo" width="70" height="70" />
             </div>
             {collectedInformation && (
@@ -191,7 +192,7 @@ const Settings = ({ user, addedDates, setAddedDates }) => {
                   id="profileImage"
                   type="text"
                   value={collectedInformation.profileImage}
-                  placeholder="ex. www.nånting.se"
+                  placeholder="klistra in länk till en bild här"
                   onChange={(e) => handleChange(e)}
                 />
               </>
@@ -217,7 +218,7 @@ const Settings = ({ user, addedDates, setAddedDates }) => {
                   id="birthday"
                   type="text"
                   value={collectedInformation.birthdate}
-                  placeholder="ex. 890101"
+                  placeholder="ex. 1990-01-01"
                   onChange={(e) => handleChange(e)}
                 />
               </>
@@ -229,7 +230,7 @@ const Settings = ({ user, addedDates, setAddedDates }) => {
                   <div className={styles.dateWrapper}>
                     <label htmlFor={addDate.selected}>{addDate.selected}</label>
                     <input
-                      placeholder="ex. 890101"
+                      placeholder="ex. 1990-01-01"
                       id={addDate.selected}
                       type="text"
                       value={addDate.date}
@@ -291,9 +292,7 @@ const Settings = ({ user, addedDates, setAddedDates }) => {
                       value={addedDate.date}
                       onChange={addedDateChange}
                     />
-                    <button onClick={(e) => addSelectedDate(e)}>
-                      Lägg till
-                    </button>
+                    <button onClick={(e) => addSelectedDate(e)}>Klar!</button>
                   </div>
                 </div>
               </AnimateHeight>
@@ -310,7 +309,7 @@ const Settings = ({ user, addedDates, setAddedDates }) => {
                   <textarea
                     id="description"
                     name="description"
-                    placeholder="Beskrivning ..."
+                    placeholder=" Berätta något om dig själv..."
                     type="text"
                     value={collectedInformation.description}
                     onChange={(e) => handleChange(e)}
