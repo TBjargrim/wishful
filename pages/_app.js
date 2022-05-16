@@ -36,7 +36,7 @@ function MyApp({ Component, pageProps }) {
     try {
       const q = query(collection(db, 'users'), where('uid', '==', user.uid));
       const docs = await getDocs(q);
-      console.log(user);
+
       if (docs.docs.length === 0) {
         await addDoc(collection(db, 'users'), {
           uid: user.uid,
@@ -82,7 +82,6 @@ function MyApp({ Component, pageProps }) {
           setDoc(docRefFriends, { friends: [] });
         }
       });
-      console.log(usersFollow);
       onSnapshot(docRefWishlist, (doc) => {
         if (doc.data() !== undefined) {
           let storedLists = doc.data().wishlist;
@@ -93,7 +92,7 @@ function MyApp({ Component, pageProps }) {
       });
     }
   }, [user]);
-
+  console.log(usersFollow);
   useEffect(() => {
     if (loading) {
       return;
