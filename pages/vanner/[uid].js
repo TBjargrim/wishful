@@ -11,7 +11,6 @@ import {
   getDoc,
   updateDoc,
 } from 'firebase/firestore';
-import { saveLocalStorage } from '../../components/helperFunctions';
 
 const User = ({
   usersFollow,
@@ -24,7 +23,7 @@ const User = ({
 }) => {
   const { name, email, uid } = queryUser;
   const [isFriend, setIsFriend] = useState(false);
-
+  console.log(detailsUser);
   const {
     addedDates,
     birthdate,
@@ -59,10 +58,9 @@ const User = ({
   const handleFollowUsers = () => {
     setIsFriend(true);
 
-    setUsersFollow([...usersFollow, { name, uid }]);
+    setUsersFollow([...usersFollow, { name, uid, profileImage }]);
   };
 
-  console.log(usersFollow);
   const handleUnFollowUsers = () => {
     setIsFriend(false);
     const removeUser = usersFollow.filter((obj) => {
