@@ -31,7 +31,8 @@ const Settings = ({
       const docRef = doc(db, 'usersDetails', user.uid);
       onSnapshot(docRef, (doc) => {
         const data = doc.data();
-        if (data.addedDates) {
+
+        if (data) {
           const savedDates = data.addedDates;
           setAddedDates(savedDates);
           setCollectedInformation({
@@ -49,6 +50,15 @@ const Settings = ({
   useEffect(() => {
     setCollectedInformation({ ...collectedInformation, addedDates });
   }, [addedDates]);
+
+  useEffect(() => {
+    if (collectedInformation.myInterests !== undefined) {
+      const interest = collectedInformation.myInterests;
+      const arrInterests = interest.split(',');
+      console.log(arrInterests);
+      setCollectedInformation({ ...collectedInformation, arrInterests });
+    }
+  }, [collectedInformation.myInterests]);
 
   const handleSubmit = (e, path) => {
     e.preventDefault();
@@ -86,7 +96,7 @@ const Settings = ({
       }
     });
 
-    router.push(path);
+    /*     router.push(path); */
   };
 
   const handleChange = (e) => {

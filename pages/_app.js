@@ -30,7 +30,6 @@ function MyApp({ Component, pageProps }) {
   const [user, loading, error] = useAuthState(auth);
   const [usersFollow, setUsersFollow] = useState([]);
   const [allWishlists, setAllWishlists] = useState([]);
-  const [interests, setInterests] = useState([]);
   const [collectedInformation, setCollectedInformation] = useState({});
 
   const createUserInformation = async () => {
@@ -59,7 +58,7 @@ function MyApp({ Component, pageProps }) {
 
       onSnapshot(docRef, (doc) => {
         if (doc.data() !== undefined) {
-          setCollectedInformation(doc.data());
+          setCollectedInformation({ ...doc.data() });
         } else {
           setDoc(docRef, {
             profileImage: '',
@@ -110,8 +109,6 @@ function MyApp({ Component, pageProps }) {
         addedDates={addedDates}
         usersFollow={usersFollow}
         setUsersFollow={setUsersFollow}
-        setInterests={setInterests}
-        interesets={interests}
         allWishlists={allWishlists}
         setAllWishlists={setAllWishlists}
         collectedInformation={collectedInformation}

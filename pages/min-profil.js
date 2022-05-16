@@ -9,13 +9,11 @@ import MyWishLists from '../components/myWishists/MyWishLists';
 
 const Profile = ({
   user,
-  interests,
-  setInterests,
   allWishlists,
   setAllWishlists,
+  collectedInformation,
+  setCollectedInformation,
 }) => {
-  const [myInfo, setMyInfo] = useState({});
-
   const [newWishlist, setNewWishlist] = useState({
     id: '',
     listName: '',
@@ -23,23 +21,6 @@ const Profile = ({
     icon: '',
     items: [],
   });
-
-  useEffect(() => {
-    if (user) {
-      let docRef = doc(db, 'usersDetails', user.uid);
-
-      onSnapshot(docRef, (doc) => {
-        if (doc.data() !== undefined) {
-          setMyInfo({ ...doc.data() });
-        } else {
-          const savedObj = JSON.parse(
-            localStorage.getItem('collectedInformation')
-          );
-          setMyInfo(savedObj);
-        }
-      });
-    }
-  }, []);
 
   useEffect(() => {
     if (user) {
@@ -51,31 +32,6 @@ const Profile = ({
     }
   }, [allWishlists]);
 
-  useEffect(() => {
-    if (user) {
-      let docRef = doc(db, 'usersDetails', user.uid);
-
-      onSnapshot(docRef, (doc) => {
-        if (doc.data() !== undefined) {
-          setMyInfo({ ...doc.data() });
-        } else {
-          const savedObj = JSON.parse(
-            localStorage.getItem('collectedInformation')
-          );
-          setMyInfo(savedObj);
-        }
-      });
-    }
-  }, [user]);
-
-  /*  useEffect(() => {
-    if (myInfo.myInterests !== undefined) {
-      const interests = myInfo.myInterests;
-      const arrInterests = interests.split(',');
-      setInterests(arrInterests);
-    }
-  }, [myInfo]); */
-
   return (
     <div className={styles.profileContainer}>
       <div className={styles.userInfoContainer}>
@@ -85,14 +41,16 @@ const Profile = ({
           {user && (
             <>
               <h5>{user.displayName}</h5>
-              {myInfo && <p>{myInfo.description}</p>}
+              {collectedInformation && (
+                <p>{collectedInformation.description}</p>
+              )}
             </>
           )}
         </div>
 
         <div>
           <div className={styles.middleSection}>
-            {myInfo && myInfo.birthdate !== '' ? (
+            {collectedInformation && collectedInformation.birthdate !== '' ? (
               <div className={styles.dateCard}>
                 <div>
                   <NextImage
@@ -103,7 +61,7 @@ const Profile = ({
                   />
                 </div>
                 <div>
-                  <h5>{myInfo.updatedBirthdate}</h5>
+                  <h5>{collectedInformation.updatedBirthdate}</h5>
                   <p>Födelsedag</p>
                 </div>
               </div>
@@ -111,32 +69,37 @@ const Profile = ({
               <></>
             )}
 
-            {myInfo && myInfo.addedDates !== undefined ? (
-              myInfo.addedDates.map((dates) => (
-                <div className={styles.dateCard}>
-                  <div>
-                    <NextImage
-                      src={dates.icon}
-                      alt="logo"
-                      width="35"
-                      height="35"
-                    />
+            {collectedInformation &&
+            collectedInformation.addedDates !== undefined ? (
+              collectedInformation.addedDates.map(
+                ({ icon, updatedDate, selected }, i) => (
+                  <div key={i} className={styles.dateCard}>
+                    <div>
+                      <NextImage src={icon} alt="logo" width="35" height="35" />
+                    </div>
+                    <div>
+                      <h5>{updatedDate}</h5>
+                      <p>{selected}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h5>{dates.updatedDate}</h5>
-                    <p>{dates.selected}</p>
-                  </div>
-                </div>
-              ))
+                )
+              )
             ) : (
               <></>
             )}
           </div>
           <div className={styles.bottomSection}>
             <h3>Mina intressen</h3>
-            <div className={styles.interestsCards}>
-              {interests && interests.map((interest) => <p>{interest}</p>)}
-            </div>
+
+            {collectedInformation.arrInterests ? (
+              collectedInformation.arrInterests.map((interest) => (
+                <div className={styles.interestsCards}>
+                  <p>{interest}</p>
+                </div>
+              ))
+            ) : (
+              <div></div>
+            )}
           </div>
 
           <div className={styles.editButton}>
