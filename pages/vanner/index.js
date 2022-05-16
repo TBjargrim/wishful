@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import styles from '../../styles/_searchFriends.module.scss';
 import { db } from '../../firebase/config';
-import { collection, getDocs, query } from 'firebase/firestore';
+import { collection, getDocs, query, doc, updateDoc } from 'firebase/firestore';
 import Button from '../../components/shared/button/Button';
 import NextImage from 'next/image';
 
@@ -11,29 +11,24 @@ const Friends = ({ user, userDetails, usersFollow, setUsersFollow }) => {
   const [filterNewFriends, setFilterNewFriends] = useState('');
   const [filterFriends, setFilterFriends] = useState('');
 
-  const numberOfFriends = 10;
-  const renderList = allUsers.slice(0, numberOfFriends);
+  useEffect(() => {
+    if (user) {
+      const removeCurrentUser = allUsers.filter(
+        (item) => item.uid !== user.uid
+      );
+
+      setAllUsers(removeCurrentUser);
+    }
+  }, []);
 
   useEffect(() => {
-    /*       const removeCurrentUser = users.filter((singelUser) => {
-        return user.uid !== singelUser.uid;
-      }); */
-
-    let removeCurrentUser = userDetails.filter((el) => {
+    const removeFromAllUsers = allUsers.filter((el) => {
+      el.uid !== el.uid;
       return !usersFollow.some((f) => {
         return f.uid === el.uid && f.uid === el.uid;
       });
     });
-    setAllUsers(removeCurrentUser);
-  }, [user]);
-
-  useEffect(() => {
-    let removeCurrentUser = userDetails.filter((el) => {
-      return !usersFollow.some((f) => {
-        return f.uid === el.uid && f.uid === el.uid;
-      });
-    });
-    setAllUsers(removeCurrentUser);
+    setAllUsers(removeFromAllUsers);
   }, [usersFollow]);
 
   const addFriend = (e, name, uid, profileImage) => {
@@ -51,6 +46,16 @@ const Friends = ({ user, userDetails, usersFollow, setUsersFollow }) => {
     setUsersFollow(filteredFriends);
   };
 
+  useEffect(() => {
+    if (user) {
+      const docRef = doc(db, 'friends', user.uid);
+
+      updateDoc(docRef, {
+        friends: [...usersFollow],
+      });
+    }
+  }, [usersFollow]);
+
   return (
     <div className={styles.friendsWrapper}>
       <section className={styles.leftColumn}>
@@ -63,8 +68,8 @@ const Friends = ({ user, userDetails, usersFollow, setUsersFollow }) => {
         />
 
         <ul className={styles.friendsLists}>
-          {renderList &&
-            renderList
+          {allUsers &&
+            allUsers
               .filter(
                 (f) =>
                   f.name.includes(filterNewFriends) || filterNewFriends === ''

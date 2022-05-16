@@ -92,7 +92,7 @@ function MyApp({ Component, pageProps }) {
       });
     }
   }, [user]);
-
+  console.log(usersFollow);
   useEffect(() => {
     if (loading) {
       return;
