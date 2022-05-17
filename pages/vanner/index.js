@@ -165,20 +165,16 @@ const Friends = ({ user, userDetails, usersFollow, setUsersFollow }) => {
 export default Friends;
 
 export const getStaticProps = async () => {
-  const users = [];
   const userDetails = [];
-  const q = query(collection(db, 'users'));
+
   const queryDetails = query(collection(db, 'usersDetails'));
 
-  const querySnapshot = await getDocs(q);
   const querySnapshotDetails = await getDocs(queryDetails);
 
-  querySnapshot.docs.map((doc) => users.push({ ...doc.data() }));
   querySnapshotDetails.docs.map((doc) => userDetails.push(doc.data()));
 
   return {
     props: {
-      users,
       userDetails,
       fallback: true,
     },

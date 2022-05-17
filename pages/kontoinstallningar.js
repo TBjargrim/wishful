@@ -13,33 +13,26 @@ import {
   getDocs,
   onSnapshot,
 } from 'firebase/firestore';
-import { useLocalStorage } from '../components/useLocalStorage';
 import AnimateHeight from 'react-animate-height';
 
-const Settings = ({ user, addedDates, setAddedDates }) => {
+const Settings = ({
+  user,
+  addedDates,
+  setAddedDates,
+  collectedInformation,
+  setCollectedInformation,
+}) => {
   const router = useRouter();
   const [height, setHeight] = useState(0);
   const [addedDate, setAddedDate] = useState({});
-
-  const [collectedInformation, setCollectedInformation] = useLocalStorage(
-    'collectedInformation',
-    {
-      profileImage: '',
-      birthdate: '',
-      myInterests: '',
-      description: '',
-      addedDates,
-      uid: user.uid,
-      name: user.displayName,
-    }
-  );
 
   useEffect(() => {
     if (user) {
       const docRef = doc(db, 'usersDetails', user.uid);
       onSnapshot(docRef, (doc) => {
         const data = doc.data();
-        if (data.addedDates) {
+
+        if (data) {
           const savedDates = data.addedDates;
           setAddedDates(savedDates);
           setCollectedInformation({
@@ -56,8 +49,16 @@ const Settings = ({ user, addedDates, setAddedDates }) => {
 
   useEffect(() => {
     setCollectedInformation({ ...collectedInformation, addedDates });
-    saveLocalStorage('collectedInformation', collectedInformation);
   }, [addedDates]);
+
+  useEffect(() => {
+    if (collectedInformation.myInterests !== undefined) {
+      const interest = collectedInformation.myInterests;
+      const arrInterests = interest.split(',');
+      console.log(arrInterests);
+      setCollectedInformation({ ...collectedInformation, arrInterests });
+    }
+  }, [collectedInformation.myInterests]);
 
   const handleSubmit = (e, path) => {
     e.preventDefault();
@@ -67,8 +68,6 @@ const Settings = ({ user, addedDates, setAddedDates }) => {
       ...collectedInformation,
       updatedBirthdate: updatedBirthdate,
     });
-
-    saveLocalStorage('collectedInformation', collectedInformation);
 
     const docRef = doc(db, 'usersDetails', user.uid);
 
@@ -97,9 +96,7 @@ const Settings = ({ user, addedDates, setAddedDates }) => {
       }
     });
 
-    /*      .then(); */
-
-    router.push(path);
+    /*     router.push(path); */
   };
 
   const handleChange = (e) => {
@@ -121,7 +118,6 @@ const Settings = ({ user, addedDates, setAddedDates }) => {
   };
 
   const onValueChange = (e) => {
-    const birthdayIcon = '/birthday-circle.svg';
     const weddingDayIcon = '/wedding-circle.svg';
     const yearDayIcon = '/confetti-circle.svg';
     const otherIcon = '/flowers-circle.svg';
