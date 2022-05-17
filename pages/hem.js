@@ -42,7 +42,21 @@ const Hem = ({ userDetails, usersFollow }) => {
 
     setEvents(eventsData);
   }, [friendsData]);
-  console.log(events);
+
+
+  const changeYear = (friend) => {
+    let getDate = friend.map((date) => date.birthdate);
+    let newFriendDates = [];
+
+    for (let i = 0; i < getDate.length; i++) {
+      let getYear = getDate[i].slice(0, 4);
+      let makeNewDate = getDate[i].replace(getYear, '2022');
+      newFriendDates.push(makeNewDate);
+    }
+    return newFriendDates
+  };
+  console.log(changeYear(friendsData));
+
 
   const localizer = dateFnsLocalizer({
     format,
@@ -114,7 +128,7 @@ const Hem = ({ userDetails, usersFollow }) => {
             {events.length > 0 ? (
               events.map(({ title, type, birthday }) => (
                 <div className={styles.reminderCard}>
-                  <div className={styles.cardImg}>
+                  <div className={styles.cardImgReminder}>
                     <NextImage
                       src="/present-circle.svg"
                       alt="logo"

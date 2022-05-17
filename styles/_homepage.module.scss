@@ -106,6 +106,10 @@
   margin-top: -1rem;
 }
 
+.cardImgReminder {
+  margin: 0.2rem;
+}
+
 .emptyMessage {
   font-size: $fs-p2;
   font-weight: $font-weight-medium;
@@ -114,22 +118,39 @@
 }
 
 .rightContainer {
-  margin: 5rem;
+  margin: 3rem 5rem 5rem 5rem;
 }
 
 .reminders {
   margin: 2rem 0 5rem 0;
+  padding-bottom: 1rem;
   display: flex;
   text-align: center;
+  flex-wrap: nowrap;
+  overflow: scroll;
+  max-width: 900px;
+  overflow-y: hidden;
+}
+
+.reminders::-webkit-scrollbar {
+  height: 0.5rem;
+  background-color: rgb(240, 240, 240);
+  border-radius: 1rem;
+}
+
+.reminders::-webkit-scrollbar-thumb {
+  background-color: $color-primary;
+  border-radius: 1rem;
 }
 
 .reminderCard {
   width: 11.563rem;
-  height: 6.875rem;
+  height: 8rem;
   background: #fff8f6;
   box-shadow: 2px 4px 9px rgba(0, 0, 0, 0.11);
   border-radius: 5px;
-  margin: 0.5rem 0.5rem;
+  margin: 0.5rem 1rem;
+  flex: 0 0 auto;
 
   div {
     display: flex;
@@ -139,6 +160,9 @@
   h6 {
     font-size: $fs-p3;
     font-weight: $font-weight-medium;
+  }
+  p {
+    padding-top: 0.2rem;
   }
   span {
     font-weight: $font-weight-bold;

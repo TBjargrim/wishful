@@ -10,6 +10,16 @@ body {
   color: $color-grey900;
 }
 
+body::-webkit-scrollbar {
+  width: 0.5rem;
+  background-color: rgb(236, 236, 236);
+}
+
+body::-webkit-scrollbar-thumb {
+background-color: $color-grey400;
+
+}
+
 h2 {
   font-size: $fs-h2;
   font-weight: $font-weight-medium;
