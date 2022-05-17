@@ -1,9 +1,27 @@
 @import 'varibles';
+@import 'mixins';
 // @import 'react-big-calendar/lib/sass/styles';
 
 .homepageContainer {
   min-height: calc(100vh - 17.125rem);
   display: flex;
+  position: relative;
+
+  @include respond(tablet) {
+    flex-direction: column;
+  }
+}
+
+.homepageContainer .leftContainer {
+  @include respond(tablet) {
+    order: 2;
+  }
+}
+
+.homepageContainer .rightContainer {
+  @include respond(tablet) {
+    order: 1;
+  }
 }
 
 .leftContainer {
@@ -17,10 +35,16 @@
   flex-direction: column;
   align-items: center;
   padding: 2rem 1.5rem;
+
+  @include respond(tablet) {
+    width: 100%;
+    margin: 1rem 2rem;
+  }
 }
 
 .searchWrapper {
   margin: 3rem 0;
+
   input {
     box-shadow: 2px 4px 9px rgba(0, 0, 0, 0.11);
     border-radius: 5px;
@@ -33,9 +57,14 @@
 
 .eventsWrapper {
   width: 100%;
+
   h3 {
     padding-bottom: 0.5rem;
     border-bottom: 1px solid #c1c1c1;
+
+    @include respond(tablet) {
+      padding: 1rem;
+    }
   }
 }
 
@@ -43,6 +72,10 @@
   display: flex;
   flex-wrap: wrap;
   padding: 2rem 0;
+
+  @include respond(tablet) {
+    justify-content: center;
+  }
 }
 
 .eventCard {
@@ -86,6 +119,8 @@
 
 .reminders {
   margin: 2rem 0 5rem 0;
+  display: flex;
+  text-align: center;
 }
 
 .reminderCard {
