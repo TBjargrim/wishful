@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from '../../styles/_profile.module.scss';
 import AnimateHeight from 'react-animate-height';
 import NextImage from 'next/image';
@@ -12,7 +12,7 @@ const MyWishLists = ({
 }) => {
   const [height, setHeight] = useState(0);
   const [open, setOpen] = useState(false);
-  const [listheight, setListHeight] = useState(0);
+
   const [saveInput, setSaveInput] = useState('');
 
   const openList = (id) => {
@@ -20,11 +20,6 @@ const MyWishLists = ({
       return setOpen(true);
     }
     setOpen(id);
-  };
-
-  const handleAddItemToList = (e) => {
-    e.preventDefault();
-    // setSaveInput(e.target.value);
   };
 
   const addNewItem = (index) => (e) => {
@@ -103,10 +98,25 @@ const MyWishLists = ({
 
   const handleDelete = (e, id) => {
     e.preventDefault();
-
     const updatedList = allWishlists.filter((list) => list.id !== id);
-
     setAllWishlists(updatedList);
+  };
+
+  const handleRemoveItem = (e, item, index) => {
+    e.preventDefault();
+    let findList = allWishlists[index];
+    let itemsInList = findList.items;
+    let removeItem = itemsInList.filter((items) => items !== item);
+
+    let foundLists = [...allWishlists];
+    foundLists[index] = {
+      id: foundLists[index].id,
+      listName: foundLists[index].listName,
+      categorie: foundLists[index].categorie,
+      icon: foundLists[index].icon,
+      items: removeItem,
+    };
+    setAllWishlists(foundLists);
   };
 
   return (
@@ -242,7 +252,17 @@ const MyWishLists = ({
               {open === id ? (
                 <div className={styles.wrapper}>
                   <ul className={styles.addedItems}>
-                    {items && items.map((item) => <li key={item}>{item}</li>)}
+                    {items &&
+                      items.map((item) => (
+                        <div className={styles.itemInWishlist}>
+                          <li key={item}>{item}</li>
+                          <button
+                            onClick={(e) => handleRemoveItem(e, item, index)}
+                          >
+                            x
+                          </button>
+                        </div>
+                      ))}
                   </ul>
                   <form className={styles.formContainer}>
                     <input

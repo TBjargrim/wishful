@@ -67,81 +67,6 @@ const Hem = ({ userDetails, usersFollow }) => {
     showMore: (total) => `+ ${total} till`,
   };
 
-  /* const events = [
-    {
-      title: 'Sandras födelsedag',
-      type: 'birthday',
-      color: '#6E97FF',
-      // allDay: true,
-      start: new Date(2022, 4, 4),
-      end: new Date(2022, 4, 4),
-    },
-    {
-      title: 'Kalles födelsedag',
-      type: 'birthday',
-      color: '#6E97FF',
-      // allDay: true,
-      start: new Date(2022, 4, 4),
-      end: new Date(2022, 4, 4),
-    },
-    {
-      title: 'Sandras födelsedag',
-      type: 'birthday',
-      color: '#6E97FF',
-      // allDay: true,
-      start: new Date(2022, 4, 4),
-      end: new Date(2022, 4, 4),
-    },
-    {
-      title: 'Sandras födelsedag',
-      type: 'birthday',
-      color: '#6E97FF',
-      // allDay: true,
-      start: new Date(2022, 4, 4),
-      end: new Date(2022, 4, 4),
-    },
-    {
-      title: 'Pernillas bröllopsdag',
-      type: 'wedding',
-      color: '#BF6EFF',
-      // allDay: true,
-      start: new Date(2022, 4, 5),
-      end: new Date(2022, 4, 5),
-    },
-    {
-      title: 'Lisas fest',
-      type: 'party',
-      color: '#FFC855',
-      // allDay: true,
-      start: new Date(2022, 4, 8),
-      end: new Date(2022, 4, 8),
-    },
-    {
-      title: 'Therese och Bens bröllopsdag',
-      type: 'wedding',
-      color: '#BF6EFF',
-      // allDay: true,
-      start: new Date(2022, 4, 12),
-      end: new Date(2022, 4, 12),
-    },
-    {
-      title: 'Lenas födelsedag',
-      type: 'birthday',
-      color: '#6E97FF',
-      // allDay: true,
-      start: new Date(2022, 4, 13),
-      end: new Date(2022, 4, 13),
-    },
-    {
-      title: 'Lars Bröllopsdag',
-      type: 'wedding',
-      color: '#BF6EFF',
-      // allDay: true,
-      start: new Date(2022, 4, 23),
-      end: new Date(2022, 4, 23),
-    },
-  ]; */
-
   return (
     <div>
       <div className={styles.homepageContainer}>
@@ -154,7 +79,7 @@ const Hem = ({ userDetails, usersFollow }) => {
               <h3>Denna månad</h3>
             </div>
             <div className={styles.cardWrapper}>
-              {events &&
+              {events.length > 0 ? (
                 events.map(({ title, type, birthday }) => (
                   <div className={styles.eventCard}>
                     <div className={styles.cardImg}>
@@ -171,7 +96,12 @@ const Hem = ({ userDetails, usersFollow }) => {
                       <p>{type}</p>
                     </div>
                   </div>
-                ))}
+                ))
+              ) : (
+                <div className={styles.emptyMessage}>
+                  <p>Denna månad är det inga händelser eller event</p>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -181,7 +111,7 @@ const Hem = ({ userDetails, usersFollow }) => {
             <h3>Påminnelse</h3>
           </div>
           <div className={styles.reminders}>
-            {events &&
+            {events.length > 0 ? (
               events.map(({ title, type, birthday }) => (
                 <div className={styles.reminderCard}>
                   <div className={styles.cardImg}>
@@ -204,11 +134,12 @@ const Hem = ({ userDetails, usersFollow }) => {
                     </a>
                   </div>
                 </div>
-              ))}
-
-            {/* <div className={styles.emptyMessage}>
-              <p>Du har inga påminnelser just nu</p>
-            </div> */}
+              ))
+            ) : (
+              <div className={styles.emptyMessage}>
+                <p>Du har inga påminnelser just nu</p>
+              </div>
+            )}
           </div>
           <div className={styles.calender}>
             <Calendar
