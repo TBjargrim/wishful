@@ -16,6 +16,7 @@ import { useEffect } from 'react';
 const Hem = ({ userDetails, usersFollow }) => {
   const [friendsData, setFriendsData] = useState([]);
   const [events, setEvents] = useState([]);
+  const [currentMonthDates, setCurrentMonthDates] = useState([]);
 
   const locales = {
     sv: sv,
@@ -29,34 +30,104 @@ const Hem = ({ userDetails, usersFollow }) => {
   }, [usersFollow]);
 
   useEffect(() => {
+    const newAddedDates = changeAddedDates(friendsData);
     const eventsData = friendsData.map((v) => ({
-      title: v.name,
-      type: 'födelsedag',
-      birthday: v.updatedBirthdate,
-      allEvents: v.addedDates,
-      color: '#6E97FF',
-      // allDay: true,
-      start: new Date(v.birthdate),
-      end: new Date(v.birthdate),
+      title: v.name + ' Födelsedag',
+      type: 'Födelsedag',
+      writtenDate: v.updatedBirthdate,
+      icon: '/birthday-circle.svg',
+      color: colorForEvent('Födelsedag'),
+      allDay: true,
+      start: changeYear(v.birthdate),
+      end: changeYear(v.birthdate),
     }));
 
-    setEvents(eventsData);
+    const mergedDates = [...newAddedDates, ...eventsData];
+
+    setEvents(mergedDates);
+
+    
+
   }, [friendsData]);
 
 
-  const changeYear = (friend) => {
-    let getDate = friend.map((date) => date.birthdate);
-    let newFriendDates = [];
+useEffect (() => {
+setCurrentMonthDates(getThisMonthsDates(events));
+},[events])
 
+  const changeYear = (getDate) => {
     for (let i = 0; i < getDate.length; i++) {
-      let getYear = getDate[i].slice(0, 4);
-      let makeNewDate = getDate[i].replace(getYear, '2022');
-      newFriendDates.push(makeNewDate);
+      let getYear = getDate.slice(0, 4);
+      let newBirthdate = getDate.replace(getYear, '2022');
+      return newBirthdate;
     }
-    return newFriendDates
   };
-  console.log(changeYear(friendsData));
 
+  const changeAddedDates = (arr) => {
+    let allAddedDates = [];
+
+    for (let i = 0; i < arr.length; i++) {
+      let datesArray = arr[i].addedDates;
+      let getName = arr[i].name;
+      for (let i = 0; i < datesArray.length; i++) {
+        const friendAddedDate = {
+          name: getName + ' ' + datesArray[i].selected,
+          date: datesArray[i].date,
+          writtenDate: datesArray[i].updatedDate,
+          type: datesArray[i].selected,
+          icon: datesArray[i].icon,
+        };
+        allAddedDates.push(friendAddedDate);
+      }
+    }
+
+    const eventsDataVol2 = allAddedDates.map((v) => ({
+      title: v.name,
+      type: v.type,
+      writtenDate: v.writtenDate,
+      color: colorForEvent(v.type),
+      allDay: true,
+      start: changeYear(v.date),
+      end: changeYear(v.date),
+      icon: v.icon,
+    }));
+    return eventsDataVol2;
+  };
+
+  const colorForEvent = (type) => {
+    switch (type) {
+      case 'Födelsedag':
+        return '#5B87F9';
+
+      case 'Bröllopsdag':
+        return '#AF52F8';
+
+      case 'Årsdag':
+        return '#F3D224';
+
+      case 'Övrigt':
+        return '#F3556C';
+
+      default:
+        return '#5B87F9';
+    }
+  };
+
+  const getThisMonthsDates = (allDates) => {
+    const today = new Date().toLocaleDateString('sv-SE');
+    const currentMonth = new Date(today).getMonth() + 1;
+    const monthDates = [];
+
+    for (let i = 0; i < allDates.length; i++) {
+      let str = new Date(allDates[i].start);
+
+      if (str.getMonth() + 1 === currentMonth) {
+        monthDates.push(allDates[i]);
+      }
+    }
+
+    return monthDates;
+  };
 
   const localizer = dateFnsLocalizer({
     format,
@@ -93,21 +164,16 @@ const Hem = ({ userDetails, usersFollow }) => {
               <h3>Denna månad</h3>
             </div>
             <div className={styles.cardWrapper}>
-              {events.length > 0 ? (
-                events.map(({ title, type, birthday }) => (
+              {currentMonthDates.length > 0 ? (
+                currentMonthDates.map(({ title, type, writtenDate, icon }) => (
                   <div className={styles.eventCard}>
                     <div className={styles.cardImg}>
-                      <NextImage
-                        src="/confetti-circle.svg"
-                        alt="logo"
-                        width="45"
-                        height="45"
-                      />
+                      <NextImage src={icon} alt="logo" width="45" height="45" />
                     </div>
                     <div>
-                      <h5>{birthday}</h5>
+                      <h5>{writtenDate}</h5>
                       <p>{title}</p>
-                      <p>{type}</p>
+                      {/* <p>{type}</p> */}
                     </div>
                   </div>
                 ))
@@ -126,7 +192,7 @@ const Hem = ({ userDetails, usersFollow }) => {
           </div>
           <div className={styles.reminders}>
             {events.length > 0 ? (
-              events.map(({ title, type, birthday }) => (
+              events.map(({ title, type, writtenDate }) => (
                 <div className={styles.reminderCard}>
                   <div className={styles.cardImgReminder}>
                     <NextImage
@@ -137,9 +203,7 @@ const Hem = ({ userDetails, usersFollow }) => {
                     />
                   </div>
                   <div>
-                    <h6>
-                      Snart är det {title} {type}
-                    </h6>
+                    <h6>Snart är det {title}</h6>
                     <p>
                       <span>3 dagar</span> kvar
                     </p>
@@ -193,54 +257,3 @@ export const getStaticProps = async () => {
     },
   };
 };
-
-{
-  /*          <div className={styles.eventCard}>
-                <div className={styles.cardImg}>
-                  <NextImage
-                    src="/birthday-circle.svg"
-                    alt="logo"
-                    width="45"
-                    height="45"
-                  />
-                </div>
-                <div>
-                  <h4>8 maj</h4>
-                  <p>Sandras födelsedag</p>
-                </div>
-              </div>
-
-              <div className={styles.eventCard}>
-                <div className={styles.cardImg}>
-                  <NextImage
-                    src="/confetti-circle.svg"
-                    alt="logo"
-                    width="45"
-                    height="45"
-                  />
-                </div>
-                <div>
-                  <h4>17 maj</h4>
-                  <p>Therese och Bens Bröllopsdag</p>
-                </div>
-              </div>
-
-              <div className={styles.eventCard}>
-                <div className={styles.cardImg}>
-                  <NextImage
-                    src="/birthday-circle.svg"
-                    alt="logo"
-                    width="45"
-                    height="45"
-                  />
-                </div>
-                <div>
-                  <h4>28 maj</h4>
-                  <p>Therese och Bens Bröllopsdag</p>
-                </div>
-              </div>
-            </div>
-          <div className={styles.emptyMessage}>
-              <p>Denna månad är det inga händelser eller event</p>
-            </div> */
-}
