@@ -5,28 +5,46 @@ import styles from '../styles/_accountSettings.module.scss';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { colRefUserDetails, db } from '../firebase/config';
-import { changedDate, saveLocalStorage } from '../components/helperFunctions';
+import { useAuth } from '../context/AuthContext';
+import { changedDate } from '../components/helperFunctions';
+import { setAllData } from '../components/helperFunctions';
+
 import {
   setDoc,
   doc,
   updateDoc,
   getDocs,
   onSnapshot,
+  query,
 } from 'firebase/firestore';
 import AnimateHeight from 'react-animate-height';
 
 const Settings = ({
-  user,
+  name,
   addedDates,
   setAddedDates,
   collectedInformation,
   setCollectedInformation,
+  setUsersFollow,
+  setAllWishlists,
 }) => {
+  const { user } = useAuth();
   const router = useRouter();
   const [height, setHeight] = useState(0);
   const [addedDate, setAddedDate] = useState({});
 
   useEffect(() => {
+    setAllData(
+      name,
+      user,
+      setCollectedInformation,
+      addedDates,
+      setUsersFollow,
+      setAllWishlists
+    );
+  }, []);
+
+  /*   useEffect(() => {
     if (user) {
       const docRef = doc(db, 'usersDetails', user.uid);
       onSnapshot(docRef, (doc) => {
@@ -45,8 +63,8 @@ const Settings = ({
         ...collectedInformation,
       });
     }
-  }, [user]);
-
+  }, [user]); */
+  console.log(collectedInformation);
   useEffect(() => {
     setCollectedInformation({ ...collectedInformation, addedDates });
   }, [addedDates]);
@@ -55,7 +73,6 @@ const Settings = ({
     if (collectedInformation.myInterests !== undefined) {
       const interest = collectedInformation.myInterests;
       const arrInterests = interest.split(',');
-      console.log(arrInterests);
       setCollectedInformation({ ...collectedInformation, arrInterests });
     }
   }, [collectedInformation.myInterests]);
@@ -74,7 +91,7 @@ const Settings = ({
     getDocs(colRefUserDetails).then((snapshot) => {
       let userDetails = [];
       snapshot.docs.forEach((doc) => {
-        userDetails.push({ ...doc.data(), id: doc.id });
+        userDetails.push({ ...doc.data(), uid: doc.uid });
       });
 
       if (userDetails.length !== 0) {

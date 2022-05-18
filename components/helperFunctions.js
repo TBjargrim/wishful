@@ -1,3 +1,5 @@
+import { doc, onSnapshot, setDoc } from 'firebase/firestore';
+import { db } from '../firebase/config';
 let testDateString = '2015-10-14';
 export function changedDate(date) {
   function getTheDay(date) {
@@ -37,15 +39,49 @@ export function changedDate(date) {
   return getTheDay(date) + ' ' + getMonth(date);
 }
 
-// console.log(birthdate)
+export const setAllData = (
+  name,
+  user,
+  setCollectedInformation,
+  addedDates,
+  setUsersFollow,
+  setAllWishlists
+) => {
+  if (user) {
+    const docRef = doc(db, 'usersDetails', user.uid);
+    const docRefFriends = doc(db, 'friends', user.uid);
+    const docRefWishlist = doc(db, 'wishlist', user.uid);
 
-// const testDate = '1993-02-07';
-// console.log(testDate.split('-'))
+    onSnapshot(docRef, (doc) => {
+      if (doc.data() !== undefined) {
+        setCollectedInformation({ ...doc.data() });
+      } else {
+        setDoc(docRef, {
+          profileImage: '',
+          birthdate: '',
+          myInterests: '',
+          description: '',
+          addedDates,
+          id: user.uid,
+          name,
+        });
+      }
+    });
 
-// const event = new Date(Date.UTC(2022, 10, 1));
-// let options = {  year: 'numeric', month: 'long', day: 'numeric' };
-// console.log(event.toLocaleString('sv-SE'));
-
-export const saveLocalStorage = async (key, value) => {
-  localStorage.setItem(key, JSON.stringify(value));
+    onSnapshot(docRefFriends, (doc) => {
+      if (doc.data() !== undefined) {
+        setUsersFollow(doc.data().friends);
+      } else {
+        setDoc(docRefFriends, { friends: [] });
+      }
+    });
+    onSnapshot(docRefWishlist, (doc) => {
+      if (doc.data() !== undefined) {
+        let storedLists = doc.data().wishlist;
+        setAllWishlists(storedLists);
+      } else {
+        setDoc(docRefWishlist, { wishlist: [] });
+      }
+    });
+  }
 };

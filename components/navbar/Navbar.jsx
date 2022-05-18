@@ -3,12 +3,14 @@ import { useState } from 'react';
 import NextImage from 'next/image';
 import Link from 'next/link';
 import styles from './_navbar.module.scss';
-import { useUser } from '../../firebase/useUser';
 import DropdownMenu from '../dropDownMenu/DropDownMenu';
+import { useAuth } from '../../context/AuthContext';
+import useRouter from 'next/router';
 
 const Navbar = () => {
   const [openMenu, setOpenMenu] = useState(false);
-  const { authUser, logout } = useUser();
+  const { user, logout } = useAuth();
+  const router = useRouter;
 
   const burgerMenuClass = openMenu ? `${styles.open}` : '';
 
@@ -16,7 +18,12 @@ const Navbar = () => {
     setOpenMenu((open) => !open);
   };
 
-  if (authUser) {
+  const handleLogout = () => {
+    logout();
+    router.push('/');
+  };
+
+  if (user) {
     return (
       <>
         <section className={`${styles.navbarContainer} ${burgerMenuClass}`}>
@@ -83,14 +90,24 @@ const Navbar = () => {
               </li>
             </ul>
             <div className={styles.logoutBtnContainer}>
-              <button onClick={() => logout()}>Logga ut</button>
+              <button
+                onClick={() => {
+                  handleLogout();
+                }}
+              >
+                Logga ut
+              </button>
             </div>
           </div>
         )}
       </>
     );
   } else {
-    return <div className={styles.iconWrapper}><NextImage src="/logo_2.svg" alt="logo" width="90" height="90" /></div>
+    return (
+      <div className={styles.iconWrapper}>
+        <NextImage src="/logo_2.svg" alt="logo" width="90" height="90" />
+      </div>
+    );
   }
 };
 

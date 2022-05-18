@@ -3,17 +3,24 @@ import styles from '../../styles/_profile.module.scss';
 import AnimateHeight from 'react-animate-height';
 import NextImage from 'next/image';
 import Button from '../shared/button/Button';
+import { setAllData } from '../helperFunctions';
+import { useAuth } from '../../context/AuthContext';
 
 const MyWishLists = ({
+  name,
   setAllWishlists,
   allWishlists,
   newWishlist,
   setNewWishlist,
+  setCollectedInformation,
+  setUsersFollow,
+  addedDates,
 }) => {
   const [height, setHeight] = useState(0);
   const [open, setOpen] = useState(false);
   const [listheight, setListHeight] = useState(0);
   const [saveInput, setSaveInput] = useState('');
+  const { user } = useAuth();
 
   const openList = (id) => {
     if (open === id) {
@@ -26,6 +33,17 @@ const MyWishLists = ({
     e.preventDefault();
     // setSaveInput(e.target.value);
   };
+
+  useEffect(() => {
+    /*     setAllData(
+      name,
+      user,
+      setCollectedInformation,
+      addedDates,
+      setUsersFollow,
+      setAllWishlists
+    ); */
+  }, []);
 
   const addNewItem = (index) => (e) => {
     e.preventDefault();

@@ -12,8 +12,18 @@ import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { setAllData } from '../components/helperFunctions';
 
-const Hem = ({ userDetails, usersFollow }) => {
+const Hem = ({
+  name,
+  userDetails,
+  usersFollow,
+  addedDates,
+  setUsersFollow,
+  setCollectedInformation,
+  setAllWishlists,
+}) => {
   const [friendsData, setFriendsData] = useState([]);
   const [events, setEvents] = useState([]);
 
@@ -21,13 +31,26 @@ const Hem = ({ userDetails, usersFollow }) => {
     sv: sv,
   };
 
+  const { user } = useAuth();
+
+  useEffect(() => {
+    /*     setAllData(
+      name,
+      user,
+      setCollectedInformation,
+      addedDates,
+      setUsersFollow,
+      setAllWishlists
+    ); */
+  }, []);
+
   useEffect(() => {
     let usersFollowDetails = userDetails.filter((o1) =>
-      usersFollow.some((o2) => o1.uid === o2.uid)
+      usersFollow.some((o2) => o1.id === o2.id)
     );
     setFriendsData(usersFollowDetails);
   }, [usersFollow]);
-
+  console.log(friendsData);
   useEffect(() => {
     const eventsData = friendsData.map((v) => ({
       title: v.name,
@@ -42,7 +65,6 @@ const Hem = ({ userDetails, usersFollow }) => {
 
     setEvents(eventsData);
   }, [friendsData]);
-  console.log(events);
 
   const localizer = dateFnsLocalizer({
     format,

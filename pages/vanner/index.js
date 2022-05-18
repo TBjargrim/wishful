@@ -2,11 +2,29 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import styles from '../../styles/_searchFriends.module.scss';
 import { db } from '../../firebase/config';
-import { collection, getDocs, query, doc, updateDoc } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  query,
+  doc,
+  updateDoc,
+  onSnapshot,
+} from 'firebase/firestore';
 import Button from '../../components/shared/button/Button';
 import NextImage from 'next/image';
+import { useAuth } from '../../context/AuthContext';
+import { setAllData } from '../../components/helperFunctions';
 
-const Friends = ({ user, userDetails, usersFollow, setUsersFollow }) => {
+const Friends = ({
+  name,
+  userDetails,
+  usersFollow,
+  setUsersFollow,
+  setCollectedInformation,
+  addedDates,
+  setAllWishlists,
+}) => {
+  const { user } = useAuth();
   const [allUsers, setAllUsers] = useState(userDetails);
   const [filterNewFriends, setFilterNewFriends] = useState('');
   const [filterFriends, setFilterFriends] = useState('');
@@ -19,6 +37,20 @@ const Friends = ({ user, userDetails, usersFollow, setUsersFollow }) => {
 
       setAllUsers(removeCurrentUser);
     }
+  }, []);
+  console.log(user);
+
+  useEffect(() => {
+    const docRefFriends = doc(db, 'friends', user.uid);
+
+    onSnapshot(docRefFriends, (doc) => {
+      if (doc.data()) {
+        console.log(doc.data());
+        setUsersFollow(doc.data().friends);
+      } else {
+        setDoc(docRefFriends, { friends: [] });
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -36,11 +68,11 @@ const Friends = ({ user, userDetails, usersFollow, setUsersFollow }) => {
     setUsersFollow([...usersFollow, { name, uid, profileImage }]);
   };
 
-  const removeFriend = (e, id) => {
+  const removeFriend = (e, uid) => {
     e.preventDefault();
 
     const filteredFriends = usersFollow.filter((u) => {
-      return u.uid !== id;
+      return u.uid !== uid;
     });
 
     setUsersFollow(filteredFriends);
@@ -55,6 +87,7 @@ const Friends = ({ user, userDetails, usersFollow, setUsersFollow }) => {
       });
     }
   }, [usersFollow]);
+  console.log(usersFollow);
 
   return (
     <div className={styles.friendsWrapper}>

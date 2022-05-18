@@ -1,6 +1,7 @@
 import Icon from '../components/shared/Icon';
 import styles from '../styles/_landing.module.scss';
-import FirebaseAuth from '../components/auth/FirebaseAuth';
+import Button from '../components/shared/button/Button';
+import Router from 'next/router';
 
 const LandingPage = () => {
   return (
@@ -24,9 +25,11 @@ const LandingPage = () => {
             present i tid? Vi kan hjälpa dig!
           </p>
         </div>
-
-        <div className={styles.rightColumn}>
-          <FirebaseAuth />
+        <div>
+          <Button onClick={() => Router.push('logga-in')}>Logga in</Button>
+          <Button onClick={() => Router.push('skapa-konto')}>
+            Skapa konto
+          </Button>
         </div>
       </div>
 

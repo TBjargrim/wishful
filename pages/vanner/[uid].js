@@ -11,35 +11,51 @@ import {
   getDoc,
   updateDoc,
 } from 'firebase/firestore';
+import { setAllData } from '../../components/helperFunctions';
 
 const User = ({
+  name,
   usersFollow,
   setUsersFollow,
   user,
   queryUser,
   detailsUser,
-  interests,
-  setInterests,
+  collectedInformation,
+  setCollectedInformation,
+  addedDates,
+  setAllWishlists,
 }) => {
-  const { name, email, uid } = queryUser;
+  const { name: friendsName, email, uid } = queryUser;
   const [isFriend, setIsFriend] = useState(false);
-  console.log(detailsUser);
+  const [interests, setInterests] = useState([]);
   const {
-    addedDates,
+    addedDates: allFriendDates,
     birthdate,
     updatedBirthdate,
     description,
     myInterests,
+
     profileImage,
   } = detailsUser[0];
 
   useEffect(() => {
+    setAllData(
+      name,
+      user,
+      setCollectedInformation,
+      addedDates,
+      setUsersFollow,
+      setAllWishlists
+    );
+  }, []);
+
+  useEffect(() => {
     if (myInterests !== undefined) {
-      const interests = myInterests;
-      const arrInterests = interests.split(',');
+      const interest = myInterests;
+      const arrInterests = interest.split(',');
       setInterests(arrInterests);
     }
-  }, [detailsUser]);
+  }, [myInterests]);
 
   useEffect(() => {
     /*    var usersFollowArr = Object.keys(usersFollow).map((key) => {
@@ -85,7 +101,7 @@ const User = ({
       <div className={styles.userInfoContainer}>
         <div className={styles.topSection}>
           <NextImage src="/avatar_1.svg" alt="logo" width="150" height="150" />
-          <h5>{name}</h5>
+          <h5>{friendsName}</h5>
           <p>{email}</p>
           <p>{description}</p>
         </div>
@@ -128,8 +144,8 @@ const User = ({
               </div>
             </>
           )}
-          {addedDates !== undefined ? (
-            addedDates.map((dates, i) => (
+          {allFriendDates !== undefined ? (
+            allFriendDates.map((dates, i) => (
               <div key={i} className={styles.dateCard}>
                 <div>
                   <NextImage
@@ -175,7 +191,7 @@ const User = ({
 
       <div className={styles.wishlistContainer}>
         <div>
-          <h3>{name}s önskelistor</h3>
+          <h3>{friendsName}s önskelistor</h3>
         </div>
         <div className={styles.wishlistsWrapper}>
           <div className={styles.wishlist}>
@@ -251,7 +267,7 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps = async (context) => {
-  const id = context.params.uid;
+  const uid = context.params.uid;
 
   const users = [];
   const detailsUser = [];
@@ -261,9 +277,9 @@ export const getStaticProps = async (context) => {
 
   querySnapshot.docs.map((doc) => users.push({ ...doc.data() }));
 
-  const queryUser = users.find((user) => user.uid === id);
+  const queryUser = users.find((user) => user.uid === uid);
 
-  const details = doc(db, 'usersDetails', id);
+  const details = doc(db, 'usersDetails', uid);
 
   await getDoc(details).then((snapshot) => {
     detailsUser.push({ ...snapshot.data() });
