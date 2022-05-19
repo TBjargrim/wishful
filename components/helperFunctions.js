@@ -62,7 +62,7 @@ export const setAllData = (
           myInterests: '',
           description: '',
           addedDates,
-          id: user.uid,
+          uid: user.uid,
           name,
         });
       }
@@ -70,15 +70,16 @@ export const setAllData = (
 
     onSnapshot(docRefFriends, (doc) => {
       if (doc.data() !== undefined) {
-        setUsersFollow(doc.data().friends);
+        const data = { ...doc.data() };
+        setUsersFollow(data.friends);
       } else {
         setDoc(docRefFriends, { friends: [] });
       }
     });
     onSnapshot(docRefWishlist, (doc) => {
-      if (doc.data() !== undefined) {
-        let storedLists = doc.data().wishlist;
-        setAllWishlists(storedLists);
+      if (doc.data() !== undefined && doc.data().wishlist.length !== 0) {
+        const data = { ...doc.data() };
+        setAllWishlists(data.wishlist);
       } else {
         setDoc(docRefWishlist, { wishlist: [] });
       }

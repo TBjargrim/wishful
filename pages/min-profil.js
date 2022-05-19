@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import styles from '../styles/_profile.module.scss';
 import Button from '../components/shared/button/Button';
 import Link from 'next/link';
@@ -7,8 +7,17 @@ import { db } from '../firebase/config';
 import { doc, updateDoc, onSnapshot } from 'firebase/firestore';
 import MyWishLists from '../components/myWishists/MyWishLists';
 import { useAuth } from '../context/AuthContext';
+import { setAllData } from '../components/helperFunctions';
 
-const Profile = ({ allWishlists, setAllWishlists, collectedInformation }) => {
+const Profile = ({
+  name,
+  allWishlists,
+  setAllWishlists,
+  addedDates,
+  setUsersFollow,
+  collectedInformation,
+  setCollectedInformation,
+}) => {
   const [newWishlist, setNewWishlist] = useState({
     uid: '',
     listName: '',
@@ -17,44 +26,28 @@ const Profile = ({ allWishlists, setAllWishlists, collectedInformation }) => {
     items: [],
   });
   const { user } = useAuth();
+  const didMount = useRef(false);
 
   useEffect(() => {
-    const docRefWishlist = doc(db, 'wishlist', user.uid);
-
-    onSnapshot(docRefWishlist, (doc) => {
-      if (doc.data() !== undefined) {
-        let storedLists = doc.data().wishlist;
-        setAllWishlists(storedLists);
-      } else {
-        setDoc(docRefWishlist, { wishlist: [] });
-      }
-    });
-  }, []);
+    setAllData(
+      name,
+      user,
+      setCollectedInformation,
+      addedDates,
+      setUsersFollow,
+      setAllWishlists
+    );
+  }, [user]);
 
   useEffect(() => {
-    if (user) {
-      const docRefWishList = doc(db, 'wishlist', user.uid);
+    if (didMount.current) {
+      const docRef = doc(db, 'wishlist', user.uid);
 
-      updateDoc(docRefWishList, {
+      updateDoc(docRef, {
         wishlist: [...allWishlists],
       });
-    }
+    } else didMount.current = true;
   }, [allWishlists]);
-  console.log(allWishlists);
-
-/*   useEffect(() => {
-    const docRefWishList = doc(db, 'wishlist', user.uid);
-
-    onSnapshot(docRefWishList, (doc) => {
-      const data = doc.data();
-
-      if (data) {
-        console.log(data.wishlist);
-        const savedWishLists = data.wishlist;
-        setAllWishlists(savedWishLists);
-      }
-    });
-  }, []); */
 
   return (
     <div className={styles.profileContainer}>

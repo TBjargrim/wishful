@@ -9,12 +9,12 @@ const CreateAccount = ({ setName }) => {
   const [data, setData] = useState({
     email: '',
     password: '',
-    name: '',
+    /*     name: '', */
   });
 
-  useEffect(() => {
+  /*   useEffect(() => {
     setName(data.name);
-  }, [data]);
+  }, [data]); */
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -32,15 +32,6 @@ const CreateAccount = ({ setName }) => {
     <section className={styles.signinWrapper}>
       <h2>Skapa konto</h2>
       <form className={styles.form}>
-        <label htmlFor="displayName">Användarnamn</label>
-        <input
-          id="displayName"
-          type="text"
-          placeholder="Användarnamn"
-          value={data.name}
-          onChange={(e) => setData({ ...data, name: e.target.value })}
-        />
-
         <label htmlFor="email">Email</label>
         <input
           id="email"

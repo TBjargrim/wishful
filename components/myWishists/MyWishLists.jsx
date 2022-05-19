@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import styles from '../../styles/_profile.module.scss';
 import AnimateHeight from 'react-animate-height';
 import NextImage from 'next/image';
 import Button from '../shared/button/Button';
 import { setAllData } from '../helperFunctions';
 import { useAuth } from '../../context/AuthContext';
+import { doc, updateDoc, setDoc } from 'firebase/firestore';
+import { db } from '../../firebase/config';
 
 const MyWishLists = ({
   name,
@@ -21,6 +23,7 @@ const MyWishLists = ({
   const [listheight, setListHeight] = useState(0);
   const [saveInput, setSaveInput] = useState('');
   const { user } = useAuth();
+  const didMount = useRef(false);
 
   const openList = (id) => {
     if (open === id) {
@@ -33,17 +36,6 @@ const MyWishLists = ({
     e.preventDefault();
     // setSaveInput(e.target.value);
   };
-
-  useEffect(() => {
-    /*     setAllData(
-      name,
-      user,
-      setCollectedInformation,
-      addedDates,
-      setUsersFollow,
-      setAllWishlists
-    ); */
-  }, []);
 
   const addNewItem = (index) => (e) => {
     e.preventDefault();

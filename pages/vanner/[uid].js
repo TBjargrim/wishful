@@ -102,7 +102,7 @@ const User = ({
         <div className={styles.topSection}>
           <NextImage src="/avatar_1.svg" alt="logo" width="150" height="150" />
           <h5>{friendsName}</h5>
-          <p>{email}</p>
+          <br />
           <p>{description}</p>
         </div>
 

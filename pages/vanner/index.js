@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import styles from '../../styles/_searchFriends.module.scss';
 import { db } from '../../firebase/config';
@@ -26,45 +26,44 @@ const Friends = ({
 }) => {
   const { user } = useAuth();
   const [allUsers, setAllUsers] = useState(userDetails);
-  const [filterNewFriends, setFilterNewFriends] = useState('');
+  const [filterNewFriends, setFilterNewFriends] = useState([]);
   const [filterFriends, setFilterFriends] = useState('');
+  const didMount = useRef(false);
 
   useEffect(() => {
-    if (user) {
-      const removeCurrentUser = allUsers.filter(
-        (item) => item.uid !== user.uid
-      );
+    setAllData(
+      name,
+      user,
+      setCollectedInformation,
+      addedDates,
+      setUsersFollow,
+      setAllWishlists
+    );
+  }, []);
 
-      setAllUsers(removeCurrentUser);
+  const handleFilter = (event) => {
+    const searchInput = event.target.value;
+    const newFilter = allUsers.filter((value) => {
+      return value.name.toLowerCase().includes(searchInput.toLowerCase());
+    });
+
+    if (searchInput === '') {
+      setFilterNewFriends([]);
+    } else {
+      setFilterNewFriends(newFilter);
     }
-  }, []);
-  console.log(user);
+  };
 
   useEffect(() => {
-    const docRefFriends = doc(db, 'friends', user.uid);
-
-    onSnapshot(docRefFriends, (doc) => {
-      if (doc.data()) {
-        console.log(doc.data());
-        setUsersFollow(doc.data().friends);
-      } else {
-        setDoc(docRefFriends, { friends: [] });
-      }
-    });
-  }, []);
-
-  useEffect(() => {
-    const removeFromAllUsers = allUsers.filter((el) => {
-      el.uid !== el.uid;
-      return !usersFollow.some((f) => {
-        return f.uid === el.uid && f.uid === el.uid;
-      });
-    });
+    const removeFromAllUsers = allUsers.filter(
+      (o1) => !usersFollow.some((o2) => o1.uid === o2.uid)
+    );
     setAllUsers(removeFromAllUsers);
   }, [usersFollow]);
 
   const addFriend = (e, name, uid, profileImage) => {
     e.preventDefault();
+
     setUsersFollow([...usersFollow, { name, uid, profileImage }]);
   };
 
@@ -75,19 +74,23 @@ const Friends = ({
       return u.uid !== uid;
     });
 
+    const removedFriend = usersFollow.filter((u) => {
+      return u.uid === uid;
+    });
+    const removedFriendObj = removedFriend.pop();
     setUsersFollow(filteredFriends);
+    setAllUsers([...allUsers, removedFriendObj]);
   };
 
   useEffect(() => {
-    if (user) {
+    if (didMount.current) {
       const docRef = doc(db, 'friends', user.uid);
 
       updateDoc(docRef, {
         friends: [...usersFollow],
       });
-    }
+    } else didMount.current = true;
   }, [usersFollow]);
-  console.log(usersFollow);
 
   return (
     <div className={styles.friendsWrapper}>
@@ -96,50 +99,45 @@ const Friends = ({
 
         <input
           placeholder="Sök bland nya vänner"
-          value={filterNewFriends}
-          onChange={(event) => setFilterNewFriends(event.target.value)}
+          /*    value={filterNewFriends} */
+          onChange={(e) => handleFilter(e)}
         />
 
         <ul className={styles.friendsLists}>
-          {allUsers &&
-            allUsers
-              .filter(
-                (f) =>
-                  f.name.includes(filterNewFriends) || filterNewFriends === ''
-              )
-              .map((f) => (
-                <li key={f.uid}>
-                  <Link
-                    key={f.uid}
-                    href={{
-                      pathname: '/vanner/[uid]',
-                      query: { uid: f.uid },
-                    }}
-                  >
-                    <a>
-                      <div className={styles.profileImage}>
-                        {f.profileImage !== '' ? (
-                          <></>
-                        ) : (
-                          <NextImage
-                            src="/avatar_1.svg"
-                            alt="logo"
-                            width="50"
-                            height="50"
-                          />
-                        )}
-                      </div>
-                      <h5>{f.name}</h5>
-                    </a>
-                  </Link>
-                  <Button
-                    type="quinary"
-                    onClick={(e) => addFriend(e, f.name, f.uid, f.profileImage)}
-                  >
-                    Lägg till +
-                  </Button>
-                </li>
-              ))}
+          {filterNewFriends !== 0 &&
+            filterNewFriends.map((f) => (
+              <li key={f.uid}>
+                <Link
+                  key={f.uid}
+                  href={{
+                    pathname: '/vanner/[uid]',
+                    query: { uid: f.uid },
+                  }}
+                >
+                  <a>
+                    <div className={styles.profileImage}>
+                      {f.profileImage !== '' ? (
+                        <></>
+                      ) : (
+                        <NextImage
+                          src="/avatar_1.svg"
+                          alt="logo"
+                          width="50"
+                          height="50"
+                        />
+                      )}
+                    </div>
+                    <h5>{f.name}</h5>
+                  </a>
+                </Link>
+                <Button
+                  type="quinary"
+                  onClick={(e) => addFriend(e, f.name, f.uid, f.profileImage)}
+                >
+                  Lägg till +
+                </Button>
+              </li>
+            ))}
         </ul>
       </section>
 

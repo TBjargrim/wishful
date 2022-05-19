@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import styles from '../styles/_homepage.module.scss';
 import NextImage from 'next/image';
 import format from 'date-fns/format';
@@ -26,6 +26,7 @@ const Hem = ({
 }) => {
   const [friendsData, setFriendsData] = useState([]);
   const [events, setEvents] = useState([]);
+  const didMount = useRef(false);
 
   const locales = {
     sv: sv,
@@ -34,23 +35,25 @@ const Hem = ({
   const { user } = useAuth();
 
   useEffect(() => {
-    /*     setAllData(
+    setAllData(
       name,
       user,
       setCollectedInformation,
       addedDates,
       setUsersFollow,
       setAllWishlists
-    ); */
+    );
   }, []);
+  console.log(friendsData);
 
   useEffect(() => {
-    let usersFollowDetails = userDetails.filter((o1) =>
-      usersFollow.some((o2) => o1.id === o2.id)
-    );
-    setFriendsData(usersFollowDetails);
+    if (didMount.current) {
+      setFriendsData(
+        userDetails.filter((o1) => usersFollow.some((o2) => o1.uid === o2.uid))
+      );
+    } else didMount.current = true;
   }, [usersFollow]);
-  console.log(friendsData);
+
   useEffect(() => {
     const eventsData = friendsData.map((v) => ({
       title: v.name,
@@ -88,81 +91,6 @@ const Hem = ({
     event: 'Event',
     showMore: (total) => `+ ${total} till`,
   };
-
-  /* const events = [
-    {
-      title: 'Sandras födelsedag',
-      type: 'birthday',
-      color: '#6E97FF',
-      // allDay: true,
-      start: new Date(2022, 4, 4),
-      end: new Date(2022, 4, 4),
-    },
-    {
-      title: 'Kalles födelsedag',
-      type: 'birthday',
-      color: '#6E97FF',
-      // allDay: true,
-      start: new Date(2022, 4, 4),
-      end: new Date(2022, 4, 4),
-    },
-    {
-      title: 'Sandras födelsedag',
-      type: 'birthday',
-      color: '#6E97FF',
-      // allDay: true,
-      start: new Date(2022, 4, 4),
-      end: new Date(2022, 4, 4),
-    },
-    {
-      title: 'Sandras födelsedag',
-      type: 'birthday',
-      color: '#6E97FF',
-      // allDay: true,
-      start: new Date(2022, 4, 4),
-      end: new Date(2022, 4, 4),
-    },
-    {
-      title: 'Pernillas bröllopsdag',
-      type: 'wedding',
-      color: '#BF6EFF',
-      // allDay: true,
-      start: new Date(2022, 4, 5),
-      end: new Date(2022, 4, 5),
-    },
-    {
-      title: 'Lisas fest',
-      type: 'party',
-      color: '#FFC855',
-      // allDay: true,
-      start: new Date(2022, 4, 8),
-      end: new Date(2022, 4, 8),
-    },
-    {
-      title: 'Therese och Bens bröllopsdag',
-      type: 'wedding',
-      color: '#BF6EFF',
-      // allDay: true,
-      start: new Date(2022, 4, 12),
-      end: new Date(2022, 4, 12),
-    },
-    {
-      title: 'Lenas födelsedag',
-      type: 'birthday',
-      color: '#6E97FF',
-      // allDay: true,
-      start: new Date(2022, 4, 13),
-      end: new Date(2022, 4, 13),
-    },
-    {
-      title: 'Lars Bröllopsdag',
-      type: 'wedding',
-      color: '#BF6EFF',
-      // allDay: true,
-      start: new Date(2022, 4, 23),
-      end: new Date(2022, 4, 23),
-    },
-  ]; */
 
   return (
     <div>

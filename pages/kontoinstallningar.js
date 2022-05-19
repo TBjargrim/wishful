@@ -21,6 +21,7 @@ import AnimateHeight from 'react-animate-height';
 
 const Settings = ({
   name,
+  setName,
   addedDates,
   setAddedDates,
   collectedInformation,
@@ -44,27 +45,6 @@ const Settings = ({
     );
   }, []);
 
-  /*   useEffect(() => {
-    if (user) {
-      const docRef = doc(db, 'usersDetails', user.uid);
-      onSnapshot(docRef, (doc) => {
-        const data = doc.data();
-
-        if (data) {
-          const savedDates = data.addedDates;
-          setAddedDates(savedDates);
-          setCollectedInformation({
-            ...collectedInformation,
-          });
-        }
-      });
-
-      setCollectedInformation({
-        ...collectedInformation,
-      });
-    }
-  }, [user]); */
-  console.log(collectedInformation);
   useEffect(() => {
     setCollectedInformation({ ...collectedInformation, addedDates });
   }, [addedDates]);
@@ -85,6 +65,8 @@ const Settings = ({
       ...collectedInformation,
       updatedBirthdate: updatedBirthdate,
     });
+
+    setCollectedInformation({ ...collectedInformation, name });
 
     const docRef = doc(db, 'usersDetails', user.uid);
 
@@ -210,6 +192,14 @@ const Settings = ({
                 />
               </>
             )}
+            <label htmlFor="displayName">Användarnamn</label>
+            <input
+              id="displayName"
+              type="text"
+              placeholder="Användarnamn"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
             {collectedInformation && (
               <>
                 <label htmlFor="interests">Mina intressen</label>
