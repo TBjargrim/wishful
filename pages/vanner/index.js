@@ -1,59 +1,95 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import styles from '../../styles/_searchFriends.module.scss';
 import { db } from '../../firebase/config';
-import { collection, getDocs, query, doc, updateDoc } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  query,
+  doc,
+  updateDoc,
+  onSnapshot,
+} from 'firebase/firestore';
 import Button from '../../components/shared/button/Button';
 import NextImage from 'next/image';
+import { useAuth } from '../../context/AuthContext';
+import { setAllData } from '../../components/helperFunctions';
 
-const Friends = ({ user, userDetails, usersFollow, setUsersFollow }) => {
+const Friends = ({
+  name,
+  userDetails,
+  usersFollow,
+  setUsersFollow,
+  setCollectedInformation,
+  addedDates,
+  setAllWishlists,
+}) => {
+  const { user } = useAuth();
   const [allUsers, setAllUsers] = useState(userDetails);
-  const [filterNewFriends, setFilterNewFriends] = useState('');
+  const [filterNewFriends, setFilterNewFriends] = useState([]);
   const [filterFriends, setFilterFriends] = useState('');
+  const didMount = useRef(false);
 
   useEffect(() => {
-    if (user) {
-      const removeCurrentUser = allUsers.filter(
-        (item) => item.uid !== user.uid
-      );
-
-      setAllUsers(removeCurrentUser);
-    }
+    setAllData(
+      name,
+      user,
+      setCollectedInformation,
+      addedDates,
+      setUsersFollow,
+      setAllWishlists
+    );
   }, []);
 
-  useEffect(() => {
-    const removeFromAllUsers = allUsers.filter((el) => {
-      el.uid !== el.uid;
-      return !usersFollow.some((f) => {
-        return f.uid === el.uid && f.uid === el.uid;
-      });
+  const handleFilter = (event) => {
+    const searchInput = event.target.value;
+    const newFilter = allUsers.filter((value) => {
+      return value.name.toLowerCase().includes(searchInput.toLowerCase());
     });
+
+    if (searchInput === '') {
+      setFilterNewFriends([]);
+    } else {
+      setFilterNewFriends(newFilter);
+    }
+  };
+
+  useEffect(() => {
+    const removeFromAllUsers = allUsers.filter(
+      (o1) => !usersFollow.some((o2) => o1.uid === o2.uid)
+    );
     setAllUsers(removeFromAllUsers);
   }, [usersFollow]);
 
   const addFriend = (e, name, uid, profileImage) => {
     e.preventDefault();
+
     setUsersFollow([...usersFollow, { name, uid, profileImage }]);
   };
 
-  const removeFriend = (e, id) => {
+  const removeFriend = (e, uid) => {
     e.preventDefault();
 
     const filteredFriends = usersFollow.filter((u) => {
-      return u.uid !== id;
+      return u.uid !== uid;
     });
 
+    const removedFriend = usersFollow.filter((u) => {
+      return u.uid === uid;
+    });
+    const removedFriendObj = removedFriend.pop();
     setUsersFollow(filteredFriends);
+    setAllUsers([...allUsers, removedFriendObj]);
   };
 
   useEffect(() => {
-    if (user) {
+    if (didMount.current) {
       const docRef = doc(db, 'friends', user.uid);
 
       updateDoc(docRef, {
         friends: [...usersFollow],
       });
-    }
+    } else didMount.current = true;
   }, [usersFollow]);
 
   return (
@@ -63,50 +99,45 @@ const Friends = ({ user, userDetails, usersFollow, setUsersFollow }) => {
 
         <input
           placeholder="Sök bland nya vänner"
-          value={filterNewFriends}
-          onChange={(event) => setFilterNewFriends(event.target.value)}
+          /*    value={filterNewFriends} */
+          onChange={(e) => handleFilter(e)}
         />
 
         <ul className={styles.friendsLists}>
-          {allUsers &&
-            allUsers
-              .filter(
-                (f) =>
-                  f.name.includes(filterNewFriends) || filterNewFriends === ''
-              )
-              .map((f) => (
-                <li key={f.uid}>
-                  <Link
-                    key={f.uid}
-                    href={{
-                      pathname: '/vanner/[uid]',
-                      query: { uid: f.uid },
-                    }}
-                  >
-                    <a>
-                      <div className={styles.profileImage}>
-                        {f.profileImage !== '' ? (
-                          <></>
-                        ) : (
-                          <NextImage
-                            src="/avatar_1.svg"
-                            alt="logo"
-                            width="50"
-                            height="50"
-                          />
-                        )}
-                      </div>
-                      <h5>{f.name}</h5>
-                    </a>
-                  </Link>
-                  <Button
-                    type="quinary"
-                    onClick={(e) => addFriend(e, f.name, f.uid, f.profileImage)}
-                  >
-                    Lägg till +
-                  </Button>
-                </li>
-              ))}
+          {filterNewFriends !== 0 &&
+            filterNewFriends.map((f) => (
+              <li key={f.uid}>
+                <Link
+                  key={f.uid}
+                  href={{
+                    pathname: '/vanner/[uid]',
+                    query: { uid: f.uid },
+                  }}
+                >
+                  <a>
+                    <div className={styles.profileImage}>
+                      {f.profileImage !== '' ? (
+                        <></>
+                      ) : (
+                        <NextImage
+                          src="/avatar_1.svg"
+                          alt="logo"
+                          width="50"
+                          height="50"
+                        />
+                      )}
+                    </div>
+                    <h5>{f.name}</h5>
+                  </a>
+                </Link>
+                <Button
+                  type="quinary"
+                  onClick={(e) => addFriend(e, f.name, f.uid, f.profileImage)}
+                >
+                  Lägg till +
+                </Button>
+              </li>
+            ))}
         </ul>
       </section>
 

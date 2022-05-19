@@ -1,35 +1,52 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import styles from '../styles/_profile.module.scss';
 import Button from '../components/shared/button/Button';
 import Link from 'next/link';
 import NextImage from 'next/image';
 import { db } from '../firebase/config';
-import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc, onSnapshot } from 'firebase/firestore';
 import MyWishLists from '../components/myWishists/MyWishLists';
+import { useAuth } from '../context/AuthContext';
+import { setAllData } from '../components/helperFunctions';
 
 const Profile = ({
-  user,
+  name,
   allWishlists,
   setAllWishlists,
+  addedDates,
+  setUsersFollow,
   collectedInformation,
   setCollectedInformation,
 }) => {
   const [newWishlist, setNewWishlist] = useState({
-    id: '',
+    uid: '',
     listName: '',
     categorie: '',
     icon: '',
     items: [],
   });
+  const { user } = useAuth();
+  const didMount = useRef(false);
 
   useEffect(() => {
-    if (user) {
-      const docRefWishList = doc(db, 'wishlist', user.uid);
+    setAllData(
+      name,
+      user,
+      setCollectedInformation,
+      addedDates,
+      setUsersFollow,
+      setAllWishlists
+    );
+  }, [user]);
 
-      updateDoc(docRefWishList, {
+  useEffect(() => {
+    if (didMount.current) {
+      const docRef = doc(db, 'wishlist', user.uid);
+
+      updateDoc(docRef, {
         wishlist: [...allWishlists],
       });
-    }
+    } else didMount.current = true;
   }, [allWishlists]);
 
   return (
@@ -38,18 +55,16 @@ const Profile = ({
         <div className={styles.topSection}>
           <NextImage src="/avatar_1.svg" alt="logo" width="150" height="150" />
 
-          {user && (
+          {collectedInformation && (
             <>
-              <h5>{user.displayName}</h5>
-              {collectedInformation && (
-                <p>{collectedInformation.description}</p>
-              )}
+              <h5>{collectedInformation.name}</h5>
+              <p>{collectedInformation.description}</p>
             </>
           )}
         </div>
 
         <div>
-          <div className={styles.middleSection}>
+          <div className={styles.muiddleSection}>
             {collectedInformation && collectedInformation.birthdate !== '' ? (
               <div className={styles.dateCard}>
                 <div>

@@ -5,47 +5,45 @@ import styles from '../styles/_accountSettings.module.scss';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { colRefUserDetails, db } from '../firebase/config';
-import { changedDate, saveLocalStorage } from '../components/helperFunctions';
+import { useAuth } from '../context/AuthContext';
+import { changedDate } from '../components/helperFunctions';
+import { setAllData } from '../components/helperFunctions';
+
 import {
   setDoc,
   doc,
   updateDoc,
   getDocs,
   onSnapshot,
+  query,
 } from 'firebase/firestore';
 import AnimateHeight from 'react-animate-height';
 
 const Settings = ({
-  user,
+  name,
+  setName,
   addedDates,
   setAddedDates,
   collectedInformation,
   setCollectedInformation,
+  setUsersFollow,
+  setAllWishlists,
 }) => {
+  const { user } = useAuth();
   const router = useRouter();
   const [height, setHeight] = useState(0);
   const [addedDate, setAddedDate] = useState({});
 
   useEffect(() => {
-    if (user) {
-      const docRef = doc(db, 'usersDetails', user.uid);
-      onSnapshot(docRef, (doc) => {
-        const data = doc.data();
-
-        if (data) {
-          const savedDates = data.addedDates;
-          setAddedDates(savedDates);
-          setCollectedInformation({
-            ...collectedInformation,
-          });
-        }
-      });
-
-      setCollectedInformation({
-        ...collectedInformation,
-      });
-    }
-  }, [user]);
+    setAllData(
+      name,
+      user,
+      setCollectedInformation,
+      addedDates,
+      setUsersFollow,
+      setAllWishlists
+    );
+  }, []);
 
   useEffect(() => {
     setCollectedInformation({ ...collectedInformation, addedDates });
@@ -55,7 +53,6 @@ const Settings = ({
     if (collectedInformation.myInterests !== undefined) {
       const interest = collectedInformation.myInterests;
       const arrInterests = interest.split(',');
-      console.log(arrInterests);
       setCollectedInformation({ ...collectedInformation, arrInterests });
     }
   }, [collectedInformation.myInterests]);
@@ -69,12 +66,14 @@ const Settings = ({
       updatedBirthdate: updatedBirthdate,
     });
 
+    setCollectedInformation({ ...collectedInformation, name });
+
     const docRef = doc(db, 'usersDetails', user.uid);
 
     getDocs(colRefUserDetails).then((snapshot) => {
       let userDetails = [];
       snapshot.docs.forEach((doc) => {
-        userDetails.push({ ...doc.data(), id: doc.id });
+        userDetails.push({ ...doc.data(), uid: doc.uid });
       });
 
       if (userDetails.length !== 0) {
@@ -193,6 +192,14 @@ const Settings = ({
                 />
               </>
             )}
+            <label htmlFor="displayName">Användarnamn</label>
+            <input
+              id="displayName"
+              type="text"
+              placeholder="Användarnamn"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
             {collectedInformation && (
               <>
                 <label htmlFor="interests">Mina intressen</label>
