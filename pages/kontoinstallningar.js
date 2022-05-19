@@ -291,7 +291,7 @@ const Settings = ({
                     <input
                       id="date"
                       type="num"
-                      placeholder="ex. 220101"
+                      placeholder="ex. 2021-08-10"
                       value={addedDate.date}
                       onChange={addedDateChange}
                     />

@@ -34,7 +34,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem 1.5rem;
+  padding: 2rem 1rem;
 
   @include respond(tablet) {
     width: 100%;
@@ -81,7 +81,7 @@
 .eventCard {
   box-shadow: 2px 4px 9px rgba(0, 0, 0, 0.11);
   border-radius: 15px;
-  width: 7rem;
+  width: 6.5rem;
   height: 6.2rem;
   margin: 1rem 0.5rem;
 
@@ -91,12 +91,14 @@
     align-items: center;
   }
 
-  h4 {
+  h5 {
+    padding-top: 0.5rem;
     font-weight: $font-weight-bold;
+    font-size: 0.8rem;
   }
 
   p {
-    font-size: $fs-p4;
+    font-size: 0.7rem;
     text-align: center;
     padding: 0 0.2rem;
   }
@@ -104,6 +106,10 @@
 
 .cardImg {
   margin-top: -1rem;
+}
+
+.cardImgReminder {
+  margin: 0.2rem;
 }
 
 .emptyMessage {
@@ -114,22 +120,40 @@
 }
 
 .rightContainer {
-  margin: 5rem;
+  margin: 3rem 5rem 5rem 5rem;
 }
 
 .reminders {
   margin: 2rem 0 5rem 0;
+  padding-bottom: 1rem;
   display: flex;
   text-align: center;
+  flex-wrap: nowrap;
+  overflow: scroll;
+  max-width: 900px;
+  overflow-y: hidden;
+}
+
+.reminders::-webkit-scrollbar {
+  height: 0.5rem;
+  background-color: rgb(240, 240, 240);
+  border-radius: 1rem;
+}
+
+.reminders::-webkit-scrollbar-thumb {
+  background-color: $color-primary;
+  border-radius: 1rem;
 }
 
 .reminderCard {
   width: 11.563rem;
-  height: 6.875rem;
+  height: 8rem;
   background: #fff8f6;
   box-shadow: 2px 4px 9px rgba(0, 0, 0, 0.11);
   border-radius: 5px;
-  margin: 0.5rem 0.5rem;
+  margin: 0.5rem 1rem;
+  padding: 0 0.4rem;
+  flex: 0 0 auto;
 
   div {
     display: flex;
@@ -139,6 +163,9 @@
   h6 {
     font-size: $fs-p3;
     font-weight: $font-weight-medium;
+  }
+  p {
+    padding-top: 0.2rem;
   }
   span {
     font-weight: $font-weight-bold;
