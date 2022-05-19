@@ -17,6 +17,7 @@ const Hem = ({ userDetails, usersFollow }) => {
   const [friendsData, setFriendsData] = useState([]);
   const [events, setEvents] = useState([]);
   const [currentMonthDates, setCurrentMonthDates] = useState([]);
+  const [reminderDates, setReminderDates] = useState([]);
 
   const locales = {
     sv: sv,
@@ -45,15 +46,16 @@ const Hem = ({ userDetails, usersFollow }) => {
     const mergedDates = [...newAddedDates, ...eventsData];
 
     setEvents(mergedDates);
-
-    
-
   }, [friendsData]);
 
+  useEffect(() => {
+    setCurrentMonthDates(getThisMonthsDates(events));
+    
+  }, [events]);
 
-useEffect (() => {
-setCurrentMonthDates(getThisMonthsDates(events));
-},[events])
+  useEffect(() => {
+    setReminderDates(findClosestDates(currentMonthDates));
+  }, [currentMonthDates])
 
   const changeYear = (getDate) => {
     for (let i = 0; i < getDate.length; i++) {
@@ -152,13 +154,42 @@ setCurrentMonthDates(getThisMonthsDates(events));
     showMore: (total) => `+ ${total} till`,
   };
 
+  const findClosestDates = (dates) => {
+    let allUpcommingEvents = [];
+    const today = new Date().toLocaleDateString('sv-SE').slice(8, 10);
+
+    for (let i = 0; i < dates.length; i++) {
+      const theDate = dates[i].start;
+      if (theDate.slice(8, 10) > today) {
+        // console.log('bigger');
+        // console.log(dates[i]);
+        const dateForReminder = {
+          date: dates[i].start,
+          newDate:  theDate.slice(8, 10) - today,
+          title: dates[i].title,
+          type: dates[i].type,
+        };
+        allUpcommingEvents.push(dateForReminder);
+      }
+      // else if (theDate.slice(8, 10) < today) {
+      //   console.log('smaller');
+      // }
+    }
+    const sortedArr = allUpcommingEvents.sort((x, y) => {return x.newDate- y.newDate});
+
+    return sortedArr;
+  };
+
+  // console.log(findClosestDates(currentMonthDates));
+
+
   return (
     <div>
       <div className={styles.homepageContainer}>
         <div className={styles.leftContainer}>
-          <div className={styles.searchWrapper}>
+          {/* <div className={styles.searchWrapper}>
             <input placeholder="Sök bland dina vänner"></input>
-          </div>
+          </div> */}
           <div className={styles.eventsWrapper}>
             <div>
               <h3>Denna månad</h3>
@@ -191,8 +222,8 @@ setCurrentMonthDates(getThisMonthsDates(events));
             <h3>Påminnelse</h3>
           </div>
           <div className={styles.reminders}>
-            {events.length > 0 ? (
-              events.map(({ title, type, writtenDate }) => (
+            {reminderDates.length > 0 ? (
+              reminderDates.map(({ title, newDate }) => (
                 <div className={styles.reminderCard}>
                   <div className={styles.cardImgReminder}>
                     <NextImage
@@ -205,7 +236,7 @@ setCurrentMonthDates(getThisMonthsDates(events));
                   <div>
                     <h6>Snart är det {title}</h6>
                     <p>
-                      <span>3 dagar</span> kvar
+                      <span>{newDate} dagar</span> kvar
                     </p>
                     <a>
                       <button>Se önskelistor</button>
