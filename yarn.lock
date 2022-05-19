@@ -2981,7 +2981,7 @@
     "supports-preserve-symlinks-flag" "^1.0.0"
 
 "resolve@^2.0.0-next.3":
-  "integrity" "sha512-W8LucSynKUIDu9ylraa7ueVZ7hc0uAgJBxVsQSKOXOyle8a93qXhcz+XAXZ8bIq2d6i4Ehddn6Evt+0/UwKk6Q=="
+  "integrity" "sha512-W8LucSynKidu9ylraa7ueVZ7hc0uAgJBxVsQSKOXOyle8a93qXhcz+XAXZ8bIq2d6i4Ehddn6Evt+0/UwKk6Q=="
   "resolved" "https://registry.npmjs.org/resolve/-/resolve-2.0.0-next.3.tgz"
   "version" "2.0.0-next.3"
   dependencies:
@@ -3226,7 +3226,7 @@
     "https-proxy-agent" "^5.0.0"
     "node-fetch" "^2.6.1"
     "stream-events" "^1.0.5"
-    "uuid" "^8.0.0"
+    "uid" "^8.0.0"
 
 "text-table@^0.2.0":
   "integrity" "sha1-f17oI66AUgfACvLfSoTsP8+lcLQ="
@@ -3344,9 +3344,9 @@
   "resolved" "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz"
   "version" "1.0.2"
 
-"uuid@^8.0.0":
+"uid@^8.0.0":
   "integrity" "sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg=="
-  "resolved" "https://registry.npmjs.org/uuid/-/uuid-8.3.2.tgz"
+  "resolved" "https://registry.npmjs.org/uid/-/uid-8.3.2.tgz"
   "version" "8.3.2"
 
 "v8-compile-cache@^2.0.3":

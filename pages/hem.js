@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import styles from '../styles/_homepage.module.scss';
 import NextImage from 'next/image';
 import format from 'date-fns/format';
@@ -12,21 +12,49 @@ import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { setAllData } from '../components/helperFunctions';
 
-const Hem = ({ userDetails, usersFollow }) => {
+const Hem = ({
+  name,
+  userDetails,
+  usersFollow,
+  addedDates,
+  setUsersFollow,
+  setCollectedInformation,
+  setAllWishlists,
+}) => {
   const [friendsData, setFriendsData] = useState([]);
   const [events, setEvents] = useState([]);
+
+  const didMount = useRef(false);
+
   const [currentMonthDates, setCurrentMonthDates] = useState([]);
 
   const locales = {
     sv: sv,
   };
 
+  const { user } = useAuth();
+
   useEffect(() => {
-    let usersFollowDetails = userDetails.filter((o1) =>
-      usersFollow.some((o2) => o1.uid === o2.uid)
+    setAllData(
+      name,
+      user,
+      setCollectedInformation,
+      addedDates,
+      setUsersFollow,
+      setAllWishlists
     );
-    setFriendsData(usersFollowDetails);
+  }, []);
+  console.log(friendsData);
+
+  useEffect(() => {
+    if (didMount.current) {
+      setFriendsData(
+        userDetails.filter((o1) => usersFollow.some((o2) => o1.uid === o2.uid))
+      );
+    } else didMount.current = true;
   }, [usersFollow]);
 
   useEffect(() => {
@@ -45,15 +73,11 @@ const Hem = ({ userDetails, usersFollow }) => {
     const mergedDates = [...newAddedDates, ...eventsData];
 
     setEvents(mergedDates);
-
-    
-
   }, [friendsData]);
 
-
-useEffect (() => {
-setCurrentMonthDates(getThisMonthsDates(events));
-},[events])
+  useEffect(() => {
+    setCurrentMonthDates(getThisMonthsDates(events));
+  }, [events]);
 
   const changeYear = (getDate) => {
     for (let i = 0; i < getDate.length; i++) {
