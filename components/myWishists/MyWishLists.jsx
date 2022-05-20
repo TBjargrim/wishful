@@ -1,12 +1,9 @@
-import { useEffect, useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import styles from '../../styles/_profile.module.scss';
 import AnimateHeight from 'react-animate-height';
 import NextImage from 'next/image';
 import Button from '../shared/button/Button';
-import { setAllData } from '../helperFunctions';
 import { useAuth } from '../../context/AuthContext';
-import { doc, updateDoc, setDoc } from 'firebase/firestore';
-import { db } from '../../firebase/config';
 
 const MyWishLists = ({
   name,
