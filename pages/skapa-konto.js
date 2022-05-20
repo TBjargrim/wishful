@@ -3,6 +3,7 @@ import Button from '../components/shared/button/Button';
 import styles from '../styles/_signin.module.scss';
 import { useAuth } from '../context/AuthContext';
 import Router from 'next/router';
+import Link from 'next/link';
 
 const CreateAccount = () => {
   const { signup } = useAuth();
