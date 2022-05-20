@@ -20,7 +20,6 @@ import {
 import AnimateHeight from 'react-animate-height';
 
 const Settings = ({
-  name,
   setName,
   addedDates,
   setAddedDates,
@@ -36,7 +35,6 @@ const Settings = ({
 
   useEffect(() => {
     setAllData(
-      name,
       user,
       setCollectedInformation,
       addedDates,
@@ -44,7 +42,7 @@ const Settings = ({
       setAllWishlists
     );
   }, []);
-
+  console.log(collectedInformation);
   useEffect(() => {
     setCollectedInformation({ ...collectedInformation, addedDates });
   }, [addedDates]);
@@ -99,6 +97,7 @@ const Settings = ({
   };
 
   const handleChange = (e) => {
+    console.log(e.target.value);
     if (e.target.name === 'birthdate') {
       const updatedBirthdate = changedDate(e.target.value);
 
@@ -192,13 +191,14 @@ const Settings = ({
                 />
               </>
             )}
-            <label htmlFor="displayName">Användarnamn</label>
+            <label htmlFor="name">Användarnamn</label>
             <input
-              id="displayName"
+              name="name"
+              id="name"
               type="text"
               placeholder="Användarnamn"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={collectedInformation.name}
+              onChange={(e) => handleChange(e)}
             />
             {collectedInformation && (
               <>

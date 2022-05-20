@@ -10,7 +10,6 @@ import { useAuth } from '../context/AuthContext';
 import { setAllData } from '../components/helperFunctions';
 
 const Profile = ({
-  name,
   allWishlists,
   setAllWishlists,
   addedDates,
@@ -30,7 +29,6 @@ const Profile = ({
 
   useEffect(() => {
     setAllData(
-      name,
       user,
       setCollectedInformation,
       addedDates,

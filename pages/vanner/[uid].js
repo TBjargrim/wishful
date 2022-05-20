@@ -44,7 +44,7 @@ const User = ({
 
   useEffect(() => {
     setAllData(
-      name,
+   
       user,
       setCollectedInformation,
       addedDates,

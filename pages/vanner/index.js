@@ -32,7 +32,7 @@ const Friends = ({
 
   useEffect(() => {
     setAllData(
-      name,
+
       user,
       setCollectedInformation,
       addedDates,

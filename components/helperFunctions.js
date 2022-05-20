@@ -40,7 +40,6 @@ export function changedDate(date) {
 }
 
 export const setAllData = (
-  name,
   user,
   setCollectedInformation,
   addedDates,
@@ -63,7 +62,7 @@ export const setAllData = (
           description: '',
           addedDates,
           uid: user.uid,
-          name,
+          name:'',
         });
       }
     });
