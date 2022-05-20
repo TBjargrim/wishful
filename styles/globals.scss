@@ -1,4 +1,5 @@
 @import 'varibles';
+@import 'mixins';
 
 *,
 html,
@@ -49,6 +50,20 @@ h5 {
   button:hover {
     background: none !important;
     box-shadow: inset 0 3px 5px rgba(121, 121, 121, 0.13);
+  }
+  @include respond(sDesktop) {
+button {
+  font-size: 10px !important;
+}
+  }
+
+  @include respond(tablet) {
+    display: flex;
+    align-items: flex-start !important;
+    flex-direction: column;
+    button {
+      margin: 1rem 0 !important;
+    }
   }
 }
 
