@@ -40,11 +40,16 @@
     min-height: 10rem;
     margin: 1rem 2rem;
   }
+
+  @include respond(mobile) {
+    width: 90%;
+    margin: 2rem auto 5rem auto;  
+  }
 }
 
 .eventsWrapper {
   width: 100%;
-  border: 1px solid green;
+  
   h3 {
     padding-bottom: 0.5rem;
     border-bottom: 1px solid #c1c1c1;
@@ -106,13 +111,20 @@
   font-weight: $font-weight-medium;
   text-align: center;
   margin: 3rem 4rem;
+
+  @include respond(S) {
+    margin: 1rem;
+  }
 }
 
 .rightContainer {
   margin: 3rem auto;
 
-  @include respond(mobile) {
-    
+  @include respond(S) {
+    padding-left: 0;
+    h3 {
+      padding-left: 2rem;
+    }
   }
 }
 
@@ -130,10 +142,14 @@
   //   max-width: 45rem;
   // }  
   @include respond(mobile) {
-    width: 25rem;
+    width: 20rem;
     margin: 2rem auto;
   }
 
+  @include respond(S) {
+    width: 17rem;
+    margin: 1rem 0.5rem;
+  }
 }
 
 .reminders::-webkit-scrollbar {
@@ -194,7 +210,13 @@
     height: 35rem;
   }
   @include respond(mobile) {
-    width: 15rem;
+    width: 19rem;
     height: 25rem;
+    margin: 0 1rem;
+  }
+  @include respond(S) {
+    width: 17rem;
+    height: 25rem;
+    margin: 0 1rem;
   }
 }

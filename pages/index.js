@@ -25,9 +25,9 @@ const LandingPage = () => {
             present i tid? Vi kan hjälpa dig!
           </p>
         </div>
-        <div>
-          <Button onClick={() => Router.push('logga-in')}>Logga in</Button>
-          <Button onClick={() => Router.push('skapa-konto')}>
+        <div className={styles.buttonWrapper}>
+          <Button type="default" onClick={() => Router.push('logga-in')}>Logga in</Button>
+          <Button type="primary" onClick={() => Router.push('skapa-konto')}>
             Skapa konto
           </Button>
         </div>

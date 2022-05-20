@@ -1,16 +1,5 @@
 @import 'varibles';
-
-// .firebaseLogin {
-//   h1 {
-//     color: green;
-//   }
-//   div > div {
-//     button {
-//       background: red;
-//       color: blue;
-//     }
-//   }
-// }
+@import 'mixins';
 
 .signinWrapper {
   display: flex;
@@ -45,6 +34,17 @@
     padding-left: 1rem;
     outline: none;
   }
+
+  @include respond(mobile) {
+input {
+  width: 20rem;
+}
+  }
+  @include respond(S) {
+    input {
+      width: 15rem;
+    }
+      }
 }
 
 .passwordWrapper {
