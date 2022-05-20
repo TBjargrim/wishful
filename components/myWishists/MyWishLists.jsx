@@ -3,7 +3,6 @@ import styles from '../../styles/_profile.module.scss';
 import AnimateHeight from 'react-animate-height';
 import NextImage from 'next/image';
 import Button from '../shared/button/Button';
-import { useAuth } from '../../context/AuthContext';
 
 const MyWishLists = ({
   name,
@@ -11,16 +10,11 @@ const MyWishLists = ({
   allWishlists,
   newWishlist,
   setNewWishlist,
-  setCollectedInformation,
-  setUsersFollow,
-  addedDates,
 }) => {
   const [height, setHeight] = useState(0);
   const [open, setOpen] = useState(false);
 
   const [saveInput, setSaveInput] = useState('');
-  const { user } = useAuth();
-  const didMount = useRef(false);
 
   const openList = (id) => {
     if (open === id) {

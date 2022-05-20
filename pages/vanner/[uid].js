@@ -15,36 +15,42 @@ import {
 import { setAllData } from '../../components/helperFunctions';
 
 const User = ({
-  name,
   usersFollow,
   setUsersFollow,
   user,
-  queryUser,
   detailsUser,
   setCollectedInformation,
   addedDates,
   setAllWishlists,
   wishlistsUser,
 }) => {
-  const { name: friendsName, email, uid } = queryUser;
   const [isFriend, setIsFriend] = useState(false);
   const [interests, setInterests] = useState([]);
   const [height, setHeight] = useState(0);
+  const [open, setOpen] = useState(false);
+
   const {
+    name,
+    uid,
     addedDates: allFriendDates,
     birthdate,
     updatedBirthdate,
     description,
     myInterests,
-
     profileImage,
   } = detailsUser[0];
 
   const { wishlist } = wishlistsUser[0];
 
+  const openList = (id) => {
+    if (open === id) {
+      return setOpen(true);
+    }
+    setOpen(id);
+  };
+
   useEffect(() => {
     setAllData(
-   
       user,
       setCollectedInformation,
       addedDates,
@@ -61,6 +67,7 @@ const User = ({
     }
   }, [myInterests]);
 
+  console.log(usersFollow);
   useEffect(() => {
     const userExcists = usersFollow.some((u) => u.uid === uid);
 
@@ -95,13 +102,13 @@ const User = ({
       });
     }
   }, [usersFollow]);
-  console.log(height);
+  console.log(wishlist);
   return (
     <div className={styles.profileContainer}>
       <div className={styles.userInfoContainer}>
         <div className={styles.topSection}>
           <NextImage src="/avatar_1.svg" alt="logo" width="150" height="150" />
-          <h5>{friendsName}</h5>
+          <h5>{name}</h5>
           <br />
           <p>{description}</p>
         </div>
@@ -187,42 +194,55 @@ const User = ({
 
       <div className={styles.wishlistContainer}>
         <div>
-          <h3>{friendsName.split(' ')[0]}s önskelistor</h3>
+          <h3>{name.split(' ')[0]}s önskelistor</h3>
         </div>
         {wishlist !== undefined ? (
-          wishlist.map(({ icon, listName, items }) => (
-            <div className={styles.wishlistsWrapperFriend}>
+          wishlist.map(({ icon, listName, items, id }) => (
+            <div key={id} className={styles.wishlistsWrapperFriend}>
               <div
                 aria-expanded={height !== 0}
                 className={styles.wishlistFriend}
-                onClick={() => setHeight(height === 0 ? 'auto' : 0)}
+                onClick={() => {
+                  openList(id), setHeight(height === 0 ? 'auto' : 0);
+                }}
               >
                 <div>
                   <NextImage src={icon} alt="logo" width="35" height="35" />
                   <h4>{listName}</h4>
                 </div>
-                <Icon
-                  className={styles.plus}
-                  src="/plus-icon.svg"
-                  altText="Plus-icon"
-                  width="15"
-                  height="15"
-                />
+                {height === 0 ? (
+                  <img
+                    className={styles.iconPlus}
+                    src="/plus-icon.svg"
+                    altText="Plus-icon"
+                    width="15"
+                    height="15"
+                  />
+                ) : (
+                  <img
+                    className={styles.iconClose}
+                    src="/closeicon.svg"
+                    altText="Plus-icon"
+                    width="10"
+                    height="10"
+                  />
+                )}
               </div>
-
-              <AnimateHeight id="panel" duration={500} height={height}>
-                {items.map((item) => (
-                  <div className={styles.list}>
-                    <Icon
-                      src="/balloons1.svg"
-                      alttext="Balloons"
-                      width="30"
-                      height="30"
-                    />
-                    <p>{item}</p>
-                  </div>
-                ))}
-              </AnimateHeight>
+              {open === id && (
+                <AnimateHeight id="panel" duration={500} height={height}>
+                  {items.map((item) => (
+                    <div className={styles.list}>
+                      <Icon
+                        src="/balloons1.svg"
+                        alttext="Balloons"
+                        width="30"
+                        height="30"
+                      />
+                      <p>{item}</p>
+                    </div>
+                  ))}
+                </AnimateHeight>
+              )}
             </div>
           ))
         ) : (
@@ -240,7 +260,7 @@ export default User;
 
 export async function getStaticPaths() {
   const users = [];
-  const q = query(collection(db, 'users'));
+  const q = query(collection(db, 'usersDetails'));
 
   const querySnapshot = await getDocs(q);
 
@@ -261,17 +281,15 @@ export async function getStaticPaths() {
 export const getStaticProps = async (context) => {
   const uid = context.params.uid;
 
-  const users = [];
+  /*   const users = []; */
   const detailsUser = [];
   const wishlistsUser = [];
 
-  const q = query(collection(db, 'users'));
+  /*   const querySnapshot = await getDocs(q); */
 
-  const querySnapshot = await getDocs(q);
+  /*   querySnapshot.docs.map((doc) => users.push({ ...doc.data() })); */
 
-  querySnapshot.docs.map((doc) => users.push({ ...doc.data() }));
-
-  const queryUser = users.find((user) => user.uid === uid);
+  /*   const queryUser = users.find((user) => user.uid === uid); */
 
   const details = doc(db, 'usersDetails', uid);
 
@@ -287,7 +305,7 @@ export const getStaticProps = async (context) => {
 
   return {
     props: {
-      queryUser,
+      /*    queryUser, */
       detailsUser,
       wishlistsUser,
       fallback: false,

@@ -16,7 +16,6 @@ import { useAuth } from '../../context/AuthContext';
 import { setAllData } from '../../components/helperFunctions';
 
 const Friends = ({
-  name,
   userDetails,
   usersFollow,
   setUsersFollow,
@@ -32,7 +31,6 @@ const Friends = ({
 
   useEffect(() => {
     setAllData(
-
       user,
       setCollectedInformation,
       addedDates,
@@ -92,6 +90,7 @@ const Friends = ({
     } else didMount.current = true;
   }, [usersFollow]);
 
+  console.log(usersFollow);
   return (
     <div className={styles.friendsWrapper}>
       <section className={styles.leftColumn}>
