@@ -48,7 +48,6 @@ const Hem = ({
       setAllWishlists
     );
   }, []);
-  console.log(friendsData);
 
   useEffect(() => {
     if (didMount.current) {
@@ -78,12 +77,11 @@ const Hem = ({
 
   useEffect(() => {
     setCurrentMonthDates(getThisMonthsDates(events));
-    
   }, [events]);
 
   useEffect(() => {
     setReminderDates(findClosestDates(currentMonthDates));
-  }, [currentMonthDates])
+  }, [currentMonthDates]);
 
   const changeYear = (getDate) => {
     for (let i = 0; i < getDate.length; i++) {
@@ -193,7 +191,7 @@ const Hem = ({
         // console.log(dates[i]);
         const dateForReminder = {
           date: dates[i].start,
-          newDate:  theDate.slice(8, 10) - today,
+          newDate: theDate.slice(8, 10) - today,
           title: dates[i].title,
           type: dates[i].type,
         };
@@ -203,13 +201,14 @@ const Hem = ({
       //   console.log('smaller');
       // }
     }
-    const sortedArr = allUpcommingEvents.sort((x, y) => {return x.newDate- y.newDate});
+    const sortedArr = allUpcommingEvents.sort((x, y) => {
+      return x.newDate - y.newDate;
+    });
 
     return sortedArr;
   };
 
   // console.log(findClosestDates(currentMonthDates));
-
 
   return (
     <div>
