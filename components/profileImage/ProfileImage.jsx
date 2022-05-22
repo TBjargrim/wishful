@@ -1,23 +1,25 @@
 import { useState } from 'react';
-import { storage } from '../firebase/config';
+import { storage } from '../../firebase/config';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import Icon from './shared/Icon';
-import styles from '../profileImage.module.scss';
+import Icon from '../shared/Icon';
+import styles from './_profileImage.module.scss';
 
-const ProfileImage = ({ image, setImage, collectedInformation }) => {
+const ProfileImage = ({ collectedInformation }) => {
   const [progress, setProgress] = useState(0);
+  const [image, setImage] = useState();
 
   const formHandler = (e) => {
     e.preventDefault();
     const file = e.target[0].files[0];
+    console.log(file);
     uploadFiles(file);
   };
 
   const uploadFiles = (file) => {
     //
     if (!file) return;
-    const sotrageRef = ref(storage, `files/${file.name}`);
-    const uploadTask = uploadBytesResumable(sotrageRef, file);
+    const storageRef = ref(storage, `files/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
 
     uploadTask.on(
       'state_changed',

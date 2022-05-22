@@ -42,7 +42,7 @@ const Settings = ({
       setAllWishlists
     );
   }, []);
-  console.log(collectedInformation);
+
   useEffect(() => {
     setCollectedInformation({ ...collectedInformation, addedDates });
   }, [addedDates]);
@@ -170,12 +170,13 @@ const Settings = ({
       <h3>Fyll i din profil</h3>
       <p>Den här informationen kommer vara synlig på din sida</p>
 
+      <ProfileImage />
+
       <form onSubmit={(e) => handleSubmit(e, '/min-profil')}>
         <div className={styles.topSection}>
           <div className={styles.fields}>
             <div className={styles.userAvatar}>
               {/*  <Icon src="/avatar_1.svg" alt="logo" width="70" height="70" /> */}
-              <ProfileImage />
             </div>
             {collectedInformation && (
               <>
