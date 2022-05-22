@@ -7,7 +7,7 @@ import DropdownMenu from '../dropDownMenu/DropDownMenu';
 import { useAuth } from '../../context/AuthContext';
 import useRouter from 'next/router';
 
-const Navbar = () => {
+const Navbar = ({ collectedInformation }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const { user, logout } = useAuth();
   const router = useRouter;
@@ -58,7 +58,7 @@ const Navbar = () => {
                     </Link>
                   </li>
                 </ul>
-                <DropdownMenu />
+                <DropdownMenu collectedInformation={collectedInformation} />
               </div>
             </>
           )}

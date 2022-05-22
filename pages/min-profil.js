@@ -8,6 +8,7 @@ import { doc, updateDoc, onSnapshot } from 'firebase/firestore';
 import MyWishLists from '../components/myWishists/MyWishLists';
 import { useAuth } from '../context/AuthContext';
 import { setAllData } from '../components/helperFunctions';
+import Icon from '../components/shared/Icon';
 
 const Profile = ({
   allWishlists,
@@ -26,7 +27,7 @@ const Profile = ({
   });
   const { user } = useAuth();
   const didMount = useRef(false);
-
+  console.log(collectedInformation);
   useEffect(() => {
     setAllData(
       user,
@@ -51,10 +52,9 @@ const Profile = ({
     <div className={styles.profileContainer}>
       <div className={styles.userInfoContainer}>
         <div className={styles.topSection}>
-          <NextImage src="/avatar_1.svg" alt="logo" width="150" height="150" />
-
           {collectedInformation && (
             <>
+              <img src={collectedInformation.profileImage} alt="ProfileImage" />
               <h5>{collectedInformation.name}</h5>
               <p>{collectedInformation.description}</p>
             </>

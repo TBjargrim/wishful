@@ -1,12 +1,29 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { storage } from '../../firebase/config';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import Icon from '../shared/Icon';
 import styles from './_profileImage.module.scss';
+import { setAllData } from '../helperFunctions';
 
-const ProfileImage = ({ collectedInformation }) => {
+const ProfileImage = ({
+  collectedInformation,
+  user,
+  setCollectedInformation,
+  addedDates,
+  setUsersFollow,
+  setAllWishlists,
+}) => {
   const [progress, setProgress] = useState(0);
-  const [image, setImage] = useState();
+
+  useEffect(() => {
+    setAllData(
+      user,
+      setCollectedInformation,
+      addedDates,
+      setUsersFollow,
+      setAllWishlists
+    );
+  }, []);
 
   const formHandler = (e) => {
     e.preventDefault();
@@ -32,7 +49,10 @@ const ProfileImage = ({ collectedInformation }) => {
       (error) => console.log(error),
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setImage(downloadURL);
+          setCollectedInformation({
+            ...collectedInformation,
+            profileImage: downloadURL,
+          });
         });
       }
     );
@@ -41,11 +61,16 @@ const ProfileImage = ({ collectedInformation }) => {
   return (
     <>
       <div className={styles.profileImageContainer}>
-        <p>Ändra profilbild</p>
+        <p>Lägg till / Ändra profilbild</p>
 
         <div className={styles.profileImageWrapper}>
-          {image ? (
-            <img src={image} alt="logo" width="80" height="80" />
+          {collectedInformation.profileImage ? (
+            <img
+              src={collectedInformation.profileImage}
+              alt="logo"
+              width="80"
+              height="80"
+            />
           ) : (
             <Icon src="/avatar_1.svg" alt="logo" width="70" height="70" />
           )}

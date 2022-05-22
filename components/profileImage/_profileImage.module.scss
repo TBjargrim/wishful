@@ -13,11 +13,19 @@
   display: flex;
   justify-content: center;
   gap: 6rem;
+
+  img {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    margin: 2rem 0;
+  }
 }
 
 .form {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   gap: 0.5rem;
 }
@@ -29,7 +37,7 @@
 .chooseFileButton {
   cursor: pointer;
   display: inline-block;
-  width: 100px;
+  width: 90px;
   box-shadow: 0.5rem 0.688rem 1.563rem 0.063rem rgba(98, 98, 98, 0.13);
   border-radius: 0.938rem;
   border: 0.063rem solid $color-primary;
@@ -45,7 +53,7 @@
 }
 
 .submitButton {
-  width: 100px;
+  width: 90px;
   box-shadow: 0.5rem 0.688rem 1.563rem 0.063rem rgba(98, 98, 98, 0.13);
   border-radius: 0.938rem;
   border: none;

@@ -5,7 +5,7 @@ import styles from './_dropDownMenu.module.scss';
 import { useAuth } from '../../context/AuthContext';
 import useRouter from 'next/router';
 
-const DropdownMenu = () => {
+const DropdownMenu = ({ collectedInformation }) => {
   const dropdownRef = useRef(null);
   const [isActive, setIsActive] = useState(false);
   const { user, logout } = useAuth();
@@ -42,7 +42,16 @@ const DropdownMenu = () => {
   return (
     <div className={styles.menuContainer}>
       <div onClick={handleOpenMenu} className={styles.menuTrigger}>
-        <NextImage src="/avatar_1.svg" alt="avatar" width="75" height="75" />
+        {collectedInformation.profileImage !== '' ? (
+          <img
+            src={collectedInformation.profileImage}
+            alt="logo"
+            width="90"
+            height="90"
+          />
+        ) : (
+          <NextImage src="/avatar_1.svg" alt="avatar" width="75" height="75" />
+        )}
       </div>
       <nav ref={dropdownRef} className={`${styles.menu} ${setActiveClass}`}>
         <ul>

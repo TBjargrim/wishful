@@ -8,7 +8,7 @@ const firebaseConfig = {
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
   databaseURL: process.env.FIREBASE_DATA_URL,
   projectId: 'wishlist-cd524',
-  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  storageBucket: 'wishlist-cd524.appspot.com',
   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.FIREBASE_APP_ID,
 };
