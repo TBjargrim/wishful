@@ -227,8 +227,8 @@ const Settings = ({
               </>
             )}
 
-            {addedDates.length >= 0 &&
-              addedDates.map((addDate, i) => (
+            {collectedInformation.addedDates !== undefined &&
+              collectedInformation.addedDates.map((addDate, i) => (
                 <div key={i} className={styles.newDateWrapper}>
                   <div className={styles.dateWrapper}>
                     <label htmlFor={addDate.selected}>{addDate.selected}</label>
