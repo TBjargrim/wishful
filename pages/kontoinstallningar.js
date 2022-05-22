@@ -31,7 +31,11 @@ const Settings = ({
   const { user } = useAuth();
   const router = useRouter();
   const [height, setHeight] = useState(0);
-  const [addedDate, setAddedDate] = useState({});
+  const [addedDate, setAddedDate] = useState({
+    selected: '',
+    icon: '',
+    date: '',
+  });
 
   useEffect(() => {
     setAllData(

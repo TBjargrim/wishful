@@ -2,21 +2,12 @@ import Icon from '../components/shared/Icon';
 import styles from '../styles/_landing.module.scss';
 import Button from '../components/shared/button/Button';
 import Router from 'next/router';
-import Link from 'next/link';
 
 const LandingPage = () => {
   return (
     <div className={styles.landingWrapper}>
       <div className={styles.topSection}>
         <div className={styles.leftColumn}>
-          <div className={styles.presentsImgWrapper}>
-            <Icon
-              src="/landingImage.svg"
-              altText="Wrapped gifts"
-              width="200"
-              height="200"
-            />
-          </div>
           <h2>
             Kom aldrig mer tomhänt till ett kalas med hjälp av
             <span> Wishful</span>
@@ -25,12 +16,23 @@ const LandingPage = () => {
             Har du nånsin kommit tomhänt till ett kalas för att du glömt köpa
             present i tid? Vi kan hjälpa dig!
           </p>
+          <div className={styles.buttonSection}>
+            <Button onClick={() => Router.push('logga-in')}>Logga in</Button>
+            <Button onClick={() => Router.push('skapa-konto')}>
+              Skapa konto
+            </Button>
+          </div>
         </div>
+
         <div>
-          <Button onClick={() => Router.push('logga-in')}>Logga in</Button>
-          <Button onClick={() => Router.push('skapa-konto')}>
-            Skapa konto
-          </Button>
+          <div className={styles.presentsImgWrapper}>
+            <Icon
+              src="/landingImage.svg"
+              altText="Wrapped gifts"
+              width="200"
+              height="200"
+            />
+          </div>
         </div>
       </div>
 
@@ -40,7 +42,7 @@ const LandingPage = () => {
             <Icon
               src="/alarmClock.svg"
               altText="logo"
-              width="120"
+              width="150"
               height="52"
             />
           </div>
