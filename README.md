@@ -1,34 +1,49 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Wishful
 
-## Getting Started
+The website is a project we worked on as a school project.
 
-First, run the development server:
+## Table of content
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+<details open="open">
+  <ol>
+    <li><a href="#project-description">Project description</a>
+        <li><a href="#prerequisites">Prerequisites</a></li> 
+    </li>
+    <li><a href="#created-by">Created by</a></li>
+  </ol>
+</details>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project description
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+The website is a project we worked on as a school project.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Have you also stood empty-handed for an hour before the set time for a party, felt the stress and thought:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- What should I buy with me?
+- What is suitable to buy for this particular person?
+- Wondering what he wants?
 
-## Learn More
+If you could get a reminder, not only for when the person turns one but also when it's time to buy a gift and feel free to get suggestions on what to buy.
 
-To learn more about Next.js, take a look at the following resources:
+This idea was developed to become a reminder web page that helps users remember birthdays / anniversaries or the like. On the website you can see your friends '/ family members' wish lists, when they turn one or celebrate an anniversary.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Prerequisites
+In order to download our code you need to install the following packages:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- date-fns
+- firebase
+- firebase-admin
+- next
+- prettier
+- react
+- react-animate-height
+- react-big-calendar
+- react-datepicker
+- react-dom
+- sass
 
-## Deploy on Vercel
+## Created by
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [Therese Bjärgrim ](https://github.com/tbjargrim)
+- [Sandra Persson](https://github.com/sandrapersson149)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
