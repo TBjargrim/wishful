@@ -8,7 +8,8 @@ import { colRefUserDetails, db } from '../firebase/config';
 import { useAuth } from '../context/AuthContext';
 import { changedDate } from '../components/helperFunctions';
 import { setAllData } from '../components/helperFunctions';
-
+import ProfileImage from '../components/profileImage/ProfileImage';
+import AnimateHeight from 'react-animate-height';
 import {
   setDoc,
   doc,
@@ -17,7 +18,6 @@ import {
   onSnapshot,
   query,
 } from 'firebase/firestore';
-import AnimateHeight from 'react-animate-height';
 
 const Settings = ({
   setName,
@@ -174,7 +174,8 @@ const Settings = ({
         <div className={styles.topSection}>
           <div className={styles.fields}>
             <div className={styles.userAvatar}>
-              <Icon src="/avatar_1.svg" alt="logo" width="70" height="70" />
+              {/*  <Icon src="/avatar_1.svg" alt="logo" width="70" height="70" /> */}
+              <ProfileImage />
             </div>
             {collectedInformation && (
               <>
