@@ -105,8 +105,8 @@ const Profile = ({
             <h3>Mina intressen</h3>
 
             {collectedInformation.arrInterests ? (
-              collectedInformation.arrInterests.map((interest) => (
-                <div className={styles.interestsCards}>
+              collectedInformation.arrInterests.map((interest, i) => (
+                <div key={i} className={styles.interestsCards}>
                   <p>{interest}</p>
                 </div>
               ))

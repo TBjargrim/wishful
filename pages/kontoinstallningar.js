@@ -164,7 +164,7 @@ const Settings = ({
     const newDates = [...addedDates.slice(0, i), ...addedDates.slice(i + 1)];
     setAddedDates(newDates);
   };
-
+  console.log(collectedInformation);
   return (
     <div className={styles.settingWrapper}>
       <h3>Fyll i din profil</h3>

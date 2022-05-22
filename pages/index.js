@@ -2,6 +2,7 @@ import Icon from '../components/shared/Icon';
 import styles from '../styles/_landing.module.scss';
 import Button from '../components/shared/button/Button';
 import Router from 'next/router';
+import Link from 'next/link';
 
 const LandingPage = () => {
   return (

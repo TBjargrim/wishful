@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Button from '../components/shared/button/Button';
 import styles from '../styles/_signin.module.scss';
 import { useAuth } from '../context/AuthContext';
+import Link from 'next/link';
 import Router from 'next/router';
 
 const SignIn = () => {
@@ -17,6 +18,7 @@ const SignIn = () => {
 
     try {
       await login(data.email, data.password, data.displayName);
+
       Router.push('/hem');
     } catch (err) {
       console.log(err);
@@ -45,16 +47,14 @@ const SignIn = () => {
       </form>
 
       <div className={styles.buttonWrapper}>
-        {/*         <Link href={'/hem'} passHref>
-          <a> */}
+        
         <Button onClick={(e) => handleLogin(e)}>Logga in</Button>
-        {/*           </a>
-        </Link>
+
         <Link href={'/'} passHref>
-          <a> */}
-        <Button type="transparent">Tillbaka</Button>
-        {/*           </a>
-        </Link> */}
+          <a>
+            <Button type="transparent">Tillbaka</Button>
+          </a>
+        </Link>
       </div>
     </section>
   );
