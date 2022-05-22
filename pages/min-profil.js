@@ -18,7 +18,7 @@ const Profile = ({
   setCollectedInformation,
 }) => {
   const [newWishlist, setNewWishlist] = useState({
-    uid: '',
+    id: '',
     listName: '',
     categorie: '',
     icon: '',

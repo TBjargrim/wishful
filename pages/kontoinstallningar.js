@@ -31,11 +31,7 @@ const Settings = ({
   const { user } = useAuth();
   const router = useRouter();
   const [height, setHeight] = useState(0);
-  const [addedDate, setAddedDate] = useState({
-    selected: '',
-    icon: '',
-    date: '',
-  });
+  const [addedDate, setAddedDate] = useState({});
 
   useEffect(() => {
     setAllData(
@@ -46,7 +42,7 @@ const Settings = ({
       setAllWishlists
     );
   }, []);
-  console.log(collectedInformation);
+
   useEffect(() => {
     setCollectedInformation({ ...collectedInformation, addedDates });
   }, [addedDates]);
