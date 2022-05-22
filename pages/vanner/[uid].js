@@ -67,7 +67,6 @@ const User = ({
     }
   }, [myInterests]);
 
-  console.log(usersFollow);
   useEffect(() => {
     const userExcists = usersFollow.some((u) => u.uid === uid);
 
@@ -102,7 +101,7 @@ const User = ({
       });
     }
   }, [usersFollow]);
-  console.log(wishlist);
+
   return (
     <div className={styles.profileContainer}>
       <div className={styles.userInfoContainer}>

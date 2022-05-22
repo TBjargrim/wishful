@@ -136,18 +136,18 @@ const MyWishLists = ({
         <AnimateHeight id="panel" duration={500} height={height}>
           <form className={styles.newListForm}>
             <div className={styles.listHeader}>
-              <NextImage
+              {/*               <NextImage
                 src="/empty-circle.svg"
                 alt="logo"
                 width="35"
                 height="35"
-              />
-              <h3>Ny lista ...</h3>
+              /> 
+              <h3>Ny lista ...</h3>*/}
             </div>
             <div className={styles.contentWrapper}>
               <div className={styles.inputWrapper}>
                 <div className={styles.nameInput}>
-                  <label>Namn på ny lista</label>
+                  <h5>Namn på ny lista</h5>
                   <input
                     id="listname"
                     type="text"
@@ -164,7 +164,7 @@ const MyWishLists = ({
                 </div>
 
                 <div className={styles.categorieWrapper}>
-                  <label>Välj kategori</label>
+                  <h5>Välj kategori</h5>
                   <div className={styles.radioButtonsWrapper}>
                     <div className={styles.radioButton}>
                       <input
