@@ -3,6 +3,7 @@ import Button from '../components/shared/button/Button';
 import styles from '../styles/_signin.module.scss';
 import { useAuth } from '../context/AuthContext';
 import Router from 'next/router';
+import Link from 'next/link';
 
 const SignIn = () => {
   const { user, login } = useAuth();
@@ -45,16 +46,17 @@ const SignIn = () => {
       </form>
 
       <div className={styles.buttonWrapper}>
-        {/*         <Link href={'/hem'} passHref>
+        {/* <Link href={'/hem'} passHref>
           <a> */}
-        <Button onClick={(e) => handleLogin(e)}>Logga in</Button>
-        {/*           </a>
-        </Link>
-        <Link href={'/'} passHref>
-          <a> */}
-        <Button type="transparent">Tillbaka</Button>
-        {/*           </a>
+            <Button onClick={(e) => handleLogin(e)}>Logga in</Button>
+          {/* </a>
         </Link> */}
+
+        <Link href={'/'} passHref>
+          <a>
+            <Button type="transparent">Tillbaka</Button>
+          </a>
+        </Link>
       </div>
     </section>
   );

@@ -4,7 +4,7 @@ import Button from '../components/shared/button/Button';
 import Link from 'next/link';
 import NextImage from 'next/image';
 import { db } from '../firebase/config';
-import { doc, updateDoc, onSnapshot } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 import MyWishLists from '../components/myWishists/MyWishLists';
 import { useAuth } from '../context/AuthContext';
 import { setAllData } from '../components/helperFunctions';
@@ -51,7 +51,7 @@ const Profile = ({
     <div className={styles.profileContainer}>
       <div className={styles.userInfoContainer}>
         <div className={styles.topSection}>
-          <NextImage src="/avatar_1.svg" alt="logo" width="150" height="150" />
+          <NextImage src="/avatar_1.svg" alt="user avatar image" width="150" height="150" />
 
           {collectedInformation && (
             <>
@@ -68,7 +68,7 @@ const Profile = ({
                 <div>
                   <NextImage
                     src="/birthday-circle.svg"
-                    alt="logo"
+                    alt="/birthday-circle.svg"
                     width="35"
                     height="35"
                   />
@@ -85,10 +85,10 @@ const Profile = ({
             {collectedInformation &&
             collectedInformation.addedDates !== undefined ? (
               collectedInformation.addedDates.map(
-                ({ icon, updatedDate, selected }, i) => (
-                  <div key={i} className={styles.dateCard}>
+                ({ icon, updatedDate, selected }, index) => (
+                  <div key={index} className={styles.dateCard}>
                     <div>
-                      <NextImage src={icon} alt="logo" width="35" height="35" />
+                      <NextImage src={icon} alt={icon} width="35" height="35" />
                     </div>
                     <div>
                       <h5>{updatedDate}</h5>
@@ -105,9 +105,9 @@ const Profile = ({
             <h3>Mina intressen</h3>
 
             {collectedInformation.arrInterests ? (
-              collectedInformation.arrInterests.map((interest) => (
+              collectedInformation.arrInterests.map((interest, index) => (
                 <div className={styles.interestsCards}>
-                  <p>{interest}</p>
+                  <p key={index}>{interest}</p>
                 </div>
               ))
             ) : (
