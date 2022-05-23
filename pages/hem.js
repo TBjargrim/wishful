@@ -15,6 +15,7 @@ import { useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { setAllData } from '../components/helperFunctions';
 import Header from '../components/shared/Header';
+import Link from 'next/link';
 
 const Hem = ({
   name,
@@ -27,17 +28,15 @@ const Hem = ({
 }) => {
   const [friendsData, setFriendsData] = useState([]);
   const [events, setEvents] = useState([]);
-
-  const didMount = useRef(false);
-
   const [currentMonthDates, setCurrentMonthDates] = useState([]);
   const [reminderDates, setReminderDates] = useState([]);
+
+  const { user } = useAuth();
+  const didMount = useRef(false);
 
   const locales = {
     sv: sv,
   };
-
-  const { user } = useAuth();
 
   useEffect(() => {
     setAllData(
@@ -81,7 +80,7 @@ const Hem = ({
   }, [events]);
 
   useEffect(() => {
-    setReminderDates(findClosestDates(currentMonthDates));
+    setReminderDates(findClosestDates(currentMonthDates, events));
   }, [currentMonthDates]);
 
   const changeYear = (getDate) => {
@@ -105,6 +104,7 @@ const Hem = ({
           writtenDate: datesArray[i].updatedDate,
           type: datesArray[i].selected,
           icon: datesArray[i].icon,
+          uid: arr[i].uid,
         };
         allAddedDates.push(friendAddedDate);
       }
@@ -119,6 +119,7 @@ const Hem = ({
       start: changeYear(v.date),
       end: changeYear(v.date),
       icon: v.icon,
+      uid: v.uid,
     }));
     return eventsDataVol2;
   };
@@ -184,7 +185,6 @@ const Hem = ({
   const findClosestDates = (dates) => {
     let allUpcommingEvents = [];
     const today = new Date().toLocaleDateString('sv-SE').slice(8, 10);
-
     for (let i = 0; i < dates.length; i++) {
       const theDate = dates[i].start;
       if (theDate.slice(8, 10) > today) {
@@ -193,12 +193,10 @@ const Hem = ({
           newDate: theDate.slice(8, 10) - today,
           title: dates[i].title,
           type: dates[i].type,
+          uid: dates[i].uid,
         };
         allUpcommingEvents.push(dateForReminder);
       }
-      // else if (theDate.slice(8, 10) < today) {
-      //   console.log('smaller');
-      // }
     }
     const sortedArr = allUpcommingEvents.sort((x, y) => {
       return x.newDate - y.newDate;
@@ -206,18 +204,13 @@ const Hem = ({
 
     return sortedArr;
   };
-
-  // console.log(findClosestDates(currentMonthDates));
-
+  console.log(reminderDates);
   return (
     <>
       <Header children="Hem" />
       <div>
         <div className={styles.homepageContainer}>
           <div className={styles.leftContainer}>
-            {/* <div className={styles.searchWrapper}>
-            <input placeholder="Sök bland dina vänner"></input>
-          </div> */}
             <div className={styles.eventsWrapper}>
               <div>
                 <h3>Denna månad</h3>
@@ -273,10 +266,16 @@ const Hem = ({
                       <p>
                         <span>{newDate} dagar</span> kvar
                       </p>
-
-                      <a>
-                        <button>Se önskelistor</button>
-                      </a>
+                      <Link
+                        href={{
+                          pathname: '/vanner/[uid]',
+                          query: { uid: uid },
+                        }}
+                      >
+                        <a>
+                          <button>Se önskelistor</button>
+                        </a>
+                      </Link>
                     </div>
                   </div>
                 ))
