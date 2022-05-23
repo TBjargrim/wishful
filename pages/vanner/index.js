@@ -91,6 +91,7 @@ const Friends = ({
     } else didMount.current = true;
   }, [usersFollow]);
 
+  console.log(usersFollow);
   return (
     <div className={styles.friendsWrapper}>
       <section className={styles.leftColumn}>
@@ -182,7 +183,7 @@ const Friends = ({
                           </>
                         ) : (
                           <NextImage
-                            src="/avatar_1.svg"
+                            src="/profileImage.jpg"
                             alt="logo"
                             width="50"
                             height="50"

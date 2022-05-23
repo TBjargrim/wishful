@@ -3,7 +3,6 @@ import styles from '../../styles/_profile.module.scss';
 import AnimateHeight from 'react-animate-height';
 import NextImage from 'next/image';
 import Button from '../shared/button/Button';
-import { useAuth } from '../../context/AuthContext';
 
 const MyWishLists = ({
   name,
@@ -11,16 +10,11 @@ const MyWishLists = ({
   allWishlists,
   newWishlist,
   setNewWishlist,
-  setCollectedInformation,
-  setUsersFollow,
-  addedDates,
 }) => {
   const [height, setHeight] = useState(0);
   const [open, setOpen] = useState(false);
 
   const [saveInput, setSaveInput] = useState('');
-  const { user } = useAuth();
-  const didMount = useRef(false);
 
   const openList = (id) => {
     if (open === id) {
@@ -144,7 +138,7 @@ const MyWishLists = ({
             <div className={styles.contentWrapper}>
               <div className={styles.inputWrapper}>
                 <div className={styles.nameInput}>
-                  <label>Namn på ny lista</label>
+                  <h5>Namn på ny lista</h5>
                   <input
                     id="listname"
                     type="text"
@@ -161,7 +155,7 @@ const MyWishLists = ({
                 </div>
 
                 <div className={styles.categorieWrapper}>
-                  <label>Välj kategori</label>
+                  <h5>Välj kategori</h5>
                   <div className={styles.radioButtonsWrapper}>
                     <div className={styles.radioButton}>
                       <input

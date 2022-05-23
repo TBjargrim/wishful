@@ -8,7 +8,6 @@ import { doc, updateDoc } from 'firebase/firestore';
 import MyWishLists from '../components/myWishists/MyWishLists';
 import { useAuth } from '../context/AuthContext';
 import { setAllData } from '../components/helperFunctions';
-import Icon from '../components/shared/Icon';
 
 const Profile = ({
   allWishlists,
@@ -19,7 +18,7 @@ const Profile = ({
   setCollectedInformation,
 }) => {
   const [newWishlist, setNewWishlist] = useState({
-    uid: '',
+    id: '',
     listName: '',
     categorie: '',
     icon: '',
@@ -105,9 +104,9 @@ const Profile = ({
             <h3>Mina intressen</h3>
 
             {collectedInformation.arrInterests ? (
-              collectedInformation.arrInterests.map((interest, index) => (
-                <div className={styles.interestsCards}>
-                  <p key={index}>{interest}</p>
+              collectedInformation.arrInterests.map((interest, i) => (
+                <div key={i} className={styles.interestsCards}>
+                  <p>{interest}</p>
                 </div>
               ))
             ) : (

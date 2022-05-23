@@ -381,6 +381,7 @@
 
 .formContainer {
   padding-bottom: 1rem;
+  display: flex;
 
   input {
     background: #f5f5f5;
@@ -468,4 +469,12 @@
   p {
     margin: 0 0 0 0.5rem;
   }
+}
+
+.iconPlus {
+  transition: transform 0.3s ease;
+}
+
+.iconClose {
+  transition: transform 0.3s ease;
 }

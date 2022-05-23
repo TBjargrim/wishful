@@ -161,7 +161,7 @@ const Settings = ({
     const newDates = [...addedDates.slice(0, i), ...addedDates.slice(i + 1)];
     setAddedDates(newDates);
   };
-
+  console.log(collectedInformation);
   return (
     <div className={styles.settingWrapper}>
       <h3>Fyll i din profil</h3>
@@ -229,8 +229,8 @@ const Settings = ({
               </>
             )}
 
-            {addedDates.length >= 0 &&
-              addedDates.map((addDate, i) => (
+            {collectedInformation.addedDates !== undefined &&
+              collectedInformation.addedDates.map((addDate, i) => (
                 <div key={i} className={styles.newDateWrapper}>
                   <div className={styles.dateWrapper}>
                     <label htmlFor={addDate.selected}>{addDate.selected}</label>

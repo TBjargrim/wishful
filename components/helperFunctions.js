@@ -76,7 +76,7 @@ export const setAllData = (
       }
     });
     onSnapshot(docRefWishlist, (doc) => {
-      if (doc.data() !== undefined && doc.data().wishlist.length !== 0) {
+      if (doc.data() !== undefined) {
         const data = { ...doc.data() };
         setAllWishlists(data.wishlist);
       } else {

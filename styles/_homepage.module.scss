@@ -5,6 +5,7 @@
   min-height: calc(100vh - 17.125rem);
   display: flex;
   position: relative;
+  z-index: -1;
 
   @include respond(tablet) {
     flex-direction: column;

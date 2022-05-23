@@ -14,32 +14,37 @@ import {
 import { setAllData } from '../../components/helperFunctions';
 
 const User = ({
-  name,
   usersFollow,
   setUsersFollow,
   user,
-  queryUser,
   detailsUser,
   setCollectedInformation,
   addedDates,
   setAllWishlists,
   wishlistsUser,
 }) => {
-  const { name: friendsName, email, uid } = queryUser;
   const [isFriend, setIsFriend] = useState(false);
   const [interests, setInterests] = useState([]);
 
   const {
+    name,
+    uid,
     addedDates: allFriendDates,
     birthdate,
     updatedBirthdate,
     description,
     myInterests,
-
     profileImage,
   } = detailsUser[0];
 
   const { wishlist } = wishlistsUser[0];
+
+  const openList = (id) => {
+    if (open === id) {
+      return setOpen(true);
+    }
+    setOpen(id);
+  };
 
   useEffect(() => {
     setAllData(
@@ -99,7 +104,7 @@ const User = ({
       <div className={styles.userInfoContainer}>
         <div className={styles.topSection}>
           <NextImage src="/avatar_1.svg" alt="logo" width="150" height="150" />
-          <h5>{friendsName}</h5>
+          <h5>{name}</h5>
           <br />
           <p>{description}</p>
         </div>
@@ -185,11 +190,11 @@ const User = ({
 
       <div className={styles.wishlistContainer}>
         <div>
-          <h3>{friendsName.split(' ')[0]}s önskelistor</h3>
+          <h3>{name.split(' ')[0]}s önskelistor</h3>
         </div>
         {wishlist !== undefined ? (
-          wishlist.map(({ icon, listName, items }) => (
-            <div className={styles.wishlistsWrapperFriend}>
+          wishlist.map(({ icon, listName, items, id }) => (
+            <div key={id} className={styles.wishlistsWrapperFriend}>
               <div className={styles.wishlistFriend}>
                 <div>
                   <NextImage src={icon} alt="logo" width="35" height="35" />
@@ -248,17 +253,10 @@ export async function getStaticPaths() {
 export const getStaticProps = async (context) => {
   const uid = context.params.uid;
 
-  const users = [];
   const detailsUser = [];
   const wishlistsUser = [];
 
   const q = query(collection(db, 'usersDetails'));
-
-  const querySnapshot = await getDocs(q);
-
-  querySnapshot.docs.map((doc) => users.push({ ...doc.data() }));
-
-  const queryUser = users.find((user) => user.uid === uid);
 
   const details = doc(db, 'usersDetails', uid);
 
@@ -274,7 +272,6 @@ export const getStaticProps = async (context) => {
 
   return {
     props: {
-      queryUser,
       detailsUser,
       wishlistsUser,
       fallback: false,
