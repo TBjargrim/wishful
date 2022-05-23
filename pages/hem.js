@@ -14,7 +14,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { setAllData } from '../components/helperFunctions';
-import Link from 'next/link';
+import Header from '../components/shared/Header';
 
 const Hem = ({
   name,
@@ -210,90 +210,100 @@ const Hem = ({
   // console.log(findClosestDates(currentMonthDates));
 
   return (
-    <div>
-      <div className={styles.homepageContainer}>
-        <div className={styles.leftContainer}>
-          {/* <div className={styles.searchWrapper}>
+    <>
+      <Header children="Hem" />
+      <div>
+        <div className={styles.homepageContainer}>
+          <div className={styles.leftContainer}>
+            {/* <div className={styles.searchWrapper}>
             <input placeholder="Sök bland dina vänner"></input>
           </div> */}
-          <div className={styles.eventsWrapper}>
-            <div>
-              <h3>Denna månad</h3>
+            <div className={styles.eventsWrapper}>
+              <div>
+                <h3>Denna månad</h3>
+              </div>
+              <div className={styles.cardWrapper}>
+                {currentMonthDates.length > 0 ? (
+                  currentMonthDates.map(
+                    ({ title, type, writtenDate, icon }) => (
+                      <div className={styles.eventCard}>
+                        <div className={styles.cardImg}>
+                          <NextImage
+                            src={icon}
+                            alt={icon}
+                            width="45"
+                            height="45"
+                          />
+                        </div>
+                        <div>
+                          <h5>{writtenDate}</h5>
+                          <p>{title}</p>
+                          {/* <p>{type}</p> */}
+                        </div>
+                      </div>
+                    )
+                  )
+                ) : (
+                  <div className={styles.emptyMessage}>
+                    <p>Denna månad är det inga händelser eller event</p>
+                  </div>
+                )}
+              </div>
             </div>
-            <div className={styles.cardWrapper}>
-              {currentMonthDates.length > 0 ? (
-                currentMonthDates.map(({ title, type, writtenDate, icon }) => (
-                  <div className={styles.eventCard}>
-                    <div className={styles.cardImg}>
-                      <NextImage src={icon} alt={icon} width="45" height="45" />
+          </div>
+
+          <div className={styles.rightContainer}>
+            <div>
+              <h3>Påminnelse</h3>
+            </div>
+            <div className={styles.reminders}>
+              {reminderDates.length > 0 ? (
+                reminderDates.map(({ title, newDate, uid }) => (
+                  <div className={styles.reminderCard}>
+                    <div className={styles.cardImgReminder}>
+                      <NextImage
+                        src="/present-circle.svg"
+                        alt="present circle logo"
+                        width="40"
+                        height="40"
+                      />
                     </div>
                     <div>
-                      <h5>{writtenDate}</h5>
-                      <p>{title}</p>
-                      {/* <p>{type}</p> */}
+                      <h6>Snart är det {title}</h6>
+                      <p>
+                        <span>{newDate} dagar</span> kvar
+                      </p>
+
+                      <a>
+                        <button>Se önskelistor</button>
+                      </a>
                     </div>
                   </div>
                 ))
               ) : (
                 <div className={styles.emptyMessage}>
-                  <p>Denna månad är det inga händelser eller event</p>
+                  <p>Du har inga påminnelser just nu</p>
                 </div>
               )}
             </div>
-          </div>
-        </div>
-
-        <div className={styles.rightContainer}>
-          <div>
-            <h3>Påminnelse</h3>
-          </div>
-          <div className={styles.reminders}>
-            {reminderDates.length > 0 ? (
-              reminderDates.map(({ title, newDate, uid }) => (
-                <div className={styles.reminderCard}>
-                  <div className={styles.cardImgReminder}>
-                    <NextImage
-                      src="/present-circle.svg"
-                      alt="present circle logo"
-                      width="40"
-                      height="40"
-                    />
-                  </div>
-                  <div>
-                    <h6>Snart är det {title}</h6>
-                    <p>
-                      <span>{newDate} dagar</span> kvar
-                    </p>
-
-                    <a>
-                      <button>Se önskelistor</button>
-                    </a>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className={styles.emptyMessage}>
-                <p>Du har inga påminnelser just nu</p>
-              </div>
-            )}
-          </div>
-          <div className={styles.calender}>
-            <Calendar
-              classname={styles.calendarStyle}
-              localizer={localizer}
-              culture={'sv'}
-              messages={languageChange}
-              events={events}
-              startAccessor="start"
-              endAccessor="end"
-              eventPropGetter={(events) => ({
-                style: { backgroundColor: events.color, width: '95%' },
-              })}
-            />
+            <div className={styles.calender}>
+              <Calendar
+                classname={styles.calendarStyle}
+                localizer={localizer}
+                culture={'sv'}
+                messages={languageChange}
+                events={events}
+                startAccessor="start"
+                endAccessor="end"
+                eventPropGetter={(events) => ({
+                  style: { backgroundColor: events.color, width: '95%' },
+                })}
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

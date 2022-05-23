@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import styles from '../../styles/_searchFriends.module.scss';
 import { db } from '../../firebase/config';
+import Header from '../../components/shared/Header';
 import {
   collection,
   getDocs,
@@ -93,75 +94,22 @@ const Friends = ({
 
   console.log(usersFollow);
   return (
-    <div className={styles.friendsWrapper}>
-      <section className={styles.leftColumn}>
-        <h3>Hitta nya vänner</h3>
+    <>
+      <Header children="Hitta vänner" />
 
-        <input
-          placeholder="Sök bland nya vänner"
-          /*    value={filterNewFriends} */
-          onChange={(e) => handleFilter(e)}
-        />
+      <div className={styles.friendsWrapper}>
+        <section className={styles.leftColumn}>
+          <h3>Hitta nya vänner</h3>
 
-        <ul className={styles.friendsLists}>
-          {filterNewFriends !== 0 &&
-            filterNewFriends.map((f) => (
-              <li key={f.uid}>
-                <Link
-                  key={f.uid}
-                  href={{
-                    pathname: '/vanner/[uid]',
-                    query: { uid: f.uid },
-                  }}
-                >
-                  <a>
-                    <div className={styles.profileImage}>
-                      {f.profileImage !== '' ? (
-                        <>
-                          <img
-                            src={f.profileImage}
-                            alt="profileImage"
-                            width="90"
-                            height="90"
-                          />
-                        </>
-                      ) : (
-                        <NextImage
-                          src="/profileImage.jpg"
-                          alt="profileImage"
-                          width="50"
-                          height="50"
-                        />
-                      )}
-                    </div>
-                    <h5>{f.name}</h5>
-                  </a>
-                </Link>
-                <Button
-                  type="quinary"
-                  onClick={(e) => addFriend(e, f.name, f.uid, f.profileImage)}
-                >
-                  Lägg till +
-                </Button>
-              </li>
-            ))}
-        </ul>
-      </section>
+          <input
+            placeholder="Sök bland nya vänner"
+            /*    value={filterNewFriends} */
+            onChange={(e) => handleFilter(e)}
+          />
 
-      <section className={styles.rightColumn}>
-        <h3>Mina vänner</h3>
-        <input
-          placeholder="Sök bland mina vänner"
-          value={filterFriends}
-          onChange={(event) => setFilterFriends(event.target.value)}
-        />
-        <ul className={styles.friendsLists}>
-          {usersFollow &&
-            usersFollow
-              .filter(
-                (f) => f.name.includes(filterFriends) || filterFriends === ''
-              )
-              .map((f) => (
+          <ul className={styles.friendsLists}>
+            {filterNewFriends !== 0 &&
+              filterNewFriends.map((f) => (
                 <li key={f.uid}>
                   <Link
                     key={f.uid}
@@ -184,7 +132,7 @@ const Friends = ({
                         ) : (
                           <NextImage
                             src="/profileImage.jpg"
-                            alt="logo"
+                            alt="profileImage"
                             width="50"
                             height="50"
                           />
@@ -194,16 +142,73 @@ const Friends = ({
                     </a>
                   </Link>
                   <Button
-                    type="quaternary"
-                    onClick={(e) => removeFriend(e, f.uid)}
+                    type="quinary"
+                    onClick={(e) => addFriend(e, f.name, f.uid, f.profileImage)}
                   >
-                    Ta bort
+                    Lägg till +
                   </Button>
                 </li>
               ))}
-        </ul>
-      </section>
-    </div>
+          </ul>
+        </section>
+
+        <section className={styles.rightColumn}>
+          <h3>Mina vänner</h3>
+          <input
+            placeholder="Sök bland mina vänner"
+            value={filterFriends}
+            onChange={(event) => setFilterFriends(event.target.value)}
+          />
+          <ul className={styles.friendsLists}>
+            {usersFollow &&
+              usersFollow
+                .filter(
+                  (f) => f.name.includes(filterFriends) || filterFriends === ''
+                )
+                .map((f) => (
+                  <li key={f.uid}>
+                    <Link
+                      key={f.uid}
+                      href={{
+                        pathname: '/vanner/[uid]',
+                        query: { uid: f.uid },
+                      }}
+                    >
+                      <a>
+                        <div className={styles.profileImage}>
+                          {f.profileImage !== '' ? (
+                            <>
+                              <img
+                                src={f.profileImage}
+                                alt="profileImage"
+                                width="90"
+                                height="90"
+                              />
+                            </>
+                          ) : (
+                            <NextImage
+                              src="/profileImage.jpg"
+                              alt="logo"
+                              width="50"
+                              height="50"
+                            />
+                          )}
+                        </div>
+                        <h5>{f.name}</h5>
+                      </a>
+                    </Link>
+                    <Button
+                      type="quaternary"
+                      onClick={(e) => removeFriend(e, f.uid)}
+                    >
+                      Ta bort
+                    </Button>
+                  </li>
+                ))}
+          </ul>
+        </section>
+      </div>
+    </>
   );
 };
 
