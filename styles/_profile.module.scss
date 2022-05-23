@@ -48,13 +48,6 @@
   flex-direction: column;
   align-items: center;
 
-  img {
-    width: 100px;
-    height: 100px;
-    border-radius: 100%;
-    margin: 2rem 0;
-  }
-
   h5 {
     font-size: 20px;
     text-transform: capitalize;
@@ -75,6 +68,22 @@
     p {
       margin: 0.5rem 1.3rem;
     }
+  }
+}
+
+.imgWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 100%;
+  overflow: hidden;
+  margin: 1rem 0;
+  img {
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
   }
 }
 

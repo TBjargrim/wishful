@@ -44,13 +44,13 @@
 
   @include respond(mobile) {
     width: 90%;
-    margin: 2rem auto 5rem auto;  
+    margin: 2rem auto 5rem auto;
   }
 }
 
 .eventsWrapper {
   width: 100%;
-  
+
   h3 {
     padding-bottom: 0.5rem;
     border-bottom: 1px solid #c1c1c1;
@@ -120,6 +120,13 @@
 
 .rightContainer {
   margin: 3rem auto;
+  padding-left: 2rem;
+  @include respond(sDesktop) {
+    padding-left: 3rem;
+  }
+  @include respond(tablet) {
+    padding-left: 0;
+  }
 
   @include respond(S) {
     padding-left: 0;
@@ -136,12 +143,13 @@
   text-align: center;
   flex-wrap: nowrap;
   overflow: scroll;
-  max-width: 60rem;
+  max-width: 50rem;
   overflow-y: hidden;
 
-  // @include respond(tablet) {
-  //   max-width: 45rem;
-  // }  
+  @include respond(sDesktop) {
+    max-width: 35rem;
+    margin: 2rem 0 5rem 2rem;
+  }
   @include respond(mobile) {
     width: 20rem;
     margin: 2rem auto;
