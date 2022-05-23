@@ -119,7 +119,7 @@ const MyWishLists = ({
     };
     setAllWishlists(foundLists);
   };
-
+  console.log(allWishlists);
   return (
     <div className={styles.wishlistContainer}>
       <div>
@@ -145,6 +145,7 @@ const MyWishLists = ({
                     name="listName"
                     value={newWishlist.listName}
                     placeholder="ex. önskelista"
+                    required
                     onChange={(e) =>
                       setNewWishlist({
                         ...newWishlist,
@@ -228,7 +229,10 @@ const MyWishLists = ({
             <div key={index} className={styles.wishlist}>
               <div className={styles.iconTitleWrapper}>
                 <div onClick={() => openList(id)}>
-                  <NextImage src={icon} alt={icon} width="35" height="35" />
+                  {icon && (
+                    <NextImage src={icon} alt={icon} width="35" height="35" />
+                  )}
+
                   <h4>{listName}</h4>
                 </div>
                 <div className={styles.deleteBtn}>

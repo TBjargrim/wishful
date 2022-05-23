@@ -26,7 +26,7 @@ const Profile = ({
   });
   const { user } = useAuth();
   const didMount = useRef(false);
-  console.log(collectedInformation);
+
   useEffect(() => {
     setAllData(
       user,
@@ -53,7 +53,21 @@ const Profile = ({
         <div className={styles.topSection}>
           {collectedInformation && (
             <>
-              <img src={collectedInformation.profileImage} alt="ProfileImage" />
+              {collectedInformation.profileImage !== '' ? (
+                <img
+                  src={collectedInformation.profileImage}
+                  alt="logo"
+                  width="90"
+                  height="90"
+                />
+              ) : (
+                <NextImage
+                  src="/profileImage.jpg"
+                  alt="avatar"
+                  width="55"
+                  height="55"
+                />
+              )}
               <h5>{collectedInformation.name}</h5>
               <p>{collectedInformation.description}</p>
             </>
