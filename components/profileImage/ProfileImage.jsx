@@ -59,11 +59,11 @@ const ProfileImage = ({
   };
 
   return (
-    <>
-      <div className={styles.profileImageContainer}>
-        <p>Lägg till / Ändra profilbild</p>
+    <div className={styles.profileImageContainer}>
+      <p>Lägg till / Ändra profilbild</p>
 
-        <div className={styles.profileImageWrapper}>
+      <div className={styles.profileImageWrapper}>
+        <div className={styles.imgWrapper}>
           {collectedInformation.profileImage ? (
             <img
               src={collectedInformation.profileImage}
@@ -72,25 +72,24 @@ const ProfileImage = ({
               height="80"
             />
           ) : (
-            <Icon src="/profileImage.jpg" alt="logo" width="70" height="70" />
+            <Icon src="/profileImage.jpg" alt="logo" width="90" height="90" />
           )}
-
-          <form onSubmit={formHandler} className={styles.form}>
-            <label className={styles.chooseFileButton}>
-              Välj fil
-              <input type="file" className={styles.input} />
-            </label>
-            <button className={styles.submitButton} type="submit">
-              {progress == 0
-                ? 'Ladda upp'
-                : progress == 100
-                ? 'Klar'
-                : `${progress} %`}
-            </button>
-          </form>
         </div>
+        <form onSubmit={formHandler} className={styles.form}>
+          <label className={styles.chooseFileButton}>
+            Välj fil
+            <input type="file" className={styles.input} />
+          </label>
+          <button className={styles.submitButton} type="submit">
+            {progress == 0
+              ? 'Ladda upp'
+              : progress == 100
+              ? 'Klar'
+              : `${progress} %`}
+          </button>
+        </form>
       </div>
-    </>
+    </div>
   );
 };
 

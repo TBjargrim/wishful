@@ -53,7 +53,12 @@ const Profile = ({
         <div className={styles.topSection}>
           {collectedInformation && (
             <>
-              <img src={collectedInformation.profileImage} alt="ProfileImage" />
+              <div className={styles.imgWrapper}>
+                <img
+                  src={collectedInformation.profileImage}
+                  alt="ProfileImage"
+                />
+              </div>
               <h5>{collectedInformation.name}</h5>
               <p>{collectedInformation.description}</p>
             </>
