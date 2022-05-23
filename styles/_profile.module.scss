@@ -160,14 +160,14 @@
 //form for adding new wishlist
 .newListWrapper {
   button {
-    font-size: 1rem;
-    font-weight: $font-weight-regular;
-    color: white;
+    font-size: 1.1rem;
+    font-weight: $font-weight-semibold;
+    letter-spacing: 0.07rem;
+    color: black;
     box-shadow: 8px 11px 25px 1px rgba(98, 98, 98, 0.13);
     border-radius: 10px;
-    background: $color-primary;
-    width: 8.25rem;
-    height: 2.188rem;
+    background-color: $color-primary-lighter;
+    padding: 0.5rem 1rem;
     border: transparent;
     margin-top: 1rem;
     cursor: pointer;
@@ -199,14 +199,6 @@
   }
 }
 
-.listHeader {
-  display: flex;
-  padding: 0 2rem;
-  h3 {
-    margin-left: 1rem;
-  }
-}
-
 .contentWrapper {
   display: flex;
   flex-direction: column;
@@ -225,6 +217,7 @@
 
   @include respond(tablet) {
     flex-direction: column;
+    align-items: flex-start;
   }
 }
 
@@ -263,6 +256,12 @@
 
 .radioButtonsWrapper {
   margin-top: 0.5rem;
+
+  @include respond(tablet) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 .radioButton {
@@ -277,9 +276,10 @@
   margin-right: 2rem;
   padding-bottom: 1rem;
   button {
-    background: $color-primary;
-    color: white;
+    background: $color-primary-lighter;
+    color: black;
     border: transparent;
+    font-weight: $font-weight-semibold;
   }
 
   @include respond(tablet) {

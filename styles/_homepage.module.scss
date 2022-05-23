@@ -1,6 +1,5 @@
 @import 'varibles';
 @import 'mixins';
-// @import 'react-big-calendar/lib/sass/styles';
 
 .homepageContainer {
   min-height: calc(100vh - 17.125rem);
@@ -27,7 +26,7 @@
 .leftContainer {
   margin-left: 4.375rem;
   margin-bottom: 4rem;
-  width: 27rem;
+  width: 25rem;
   min-height: 48.438rem;
   box-shadow: 4px 5px 18px rgba(0, 0, 0, 0.12);
   border-radius: 15px;
@@ -37,27 +36,20 @@
   padding: 2rem 1rem;
 
   @include respond(tablet) {
-    width: 100%;
+    width: 90%;
+    min-height: 10rem;
     margin: 1rem 2rem;
   }
-}
 
-.searchWrapper {
-  margin: 3rem 0;
-
-  input {
-    box-shadow: 2px 4px 9px rgba(0, 0, 0, 0.11);
-    border-radius: 5px;
-    border: none;
-    width: 20.625rem;
-    height: 2rem;
-    outline: none;
+  @include respond(mobile) {
+    width: 90%;
+    margin: 2rem auto 5rem auto;  
   }
 }
 
 .eventsWrapper {
   width: 100%;
-
+  
   h3 {
     padding-bottom: 0.5rem;
     border-bottom: 1px solid #c1c1c1;
@@ -72,9 +64,11 @@
   display: flex;
   flex-wrap: wrap;
   padding: 2rem 0;
+  margin-top: 2rem;
 
   @include respond(tablet) {
-    justify-content: center;
+    justify-content: flex-start;
+    padding: 2rem;
   }
 }
 
@@ -117,10 +111,21 @@
   font-weight: $font-weight-medium;
   text-align: center;
   margin: 3rem 4rem;
+
+  @include respond(S) {
+    margin: 1rem;
+  }
 }
 
 .rightContainer {
-  margin: 3rem 5rem 5rem 5rem;
+  margin: 3rem auto;
+
+  @include respond(S) {
+    padding-left: 0;
+    h3 {
+      padding-left: 2rem;
+    }
+  }
 }
 
 .reminders {
@@ -130,8 +135,21 @@
   text-align: center;
   flex-wrap: nowrap;
   overflow: scroll;
-  max-width: 900px;
+  max-width: 60rem;
   overflow-y: hidden;
+
+  // @include respond(tablet) {
+  //   max-width: 45rem;
+  // }  
+  @include respond(mobile) {
+    width: 20rem;
+    margin: 2rem auto;
+  }
+
+  @include respond(S) {
+    width: 17rem;
+    margin: 1rem 0.5rem;
+  }
 }
 
 .reminders::-webkit-scrollbar {
@@ -178,6 +196,27 @@
 }
 
 .calender {
-  width: 50rem;
+  width: 40rem;
   height: 30rem;
+  margin: 0 2rem;
+
+  @include respond(sDesktop) {
+    width: 30rem;
+    height: 35rem;
+    margin: 0 2rem;
+  }
+  @include respond(tablet) {
+    width: 35rem;
+    height: 35rem;
+  }
+  @include respond(mobile) {
+    width: 19rem;
+    height: 25rem;
+    margin: 0 1rem;
+  }
+  @include respond(S) {
+    width: 17rem;
+    height: 25rem;
+    margin: 0 1rem;
+  }
 }
