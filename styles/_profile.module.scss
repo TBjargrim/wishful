@@ -447,6 +447,7 @@
 }
 
 .wishlistsWrapperFriend {
+  display: flex;
   box-shadow: 4px 7px 17px 1px rgba(98, 98, 98, 0.14);
   border-radius: 10px;
   max-width: 40rem;
@@ -456,13 +457,11 @@
 
 .wishlistFriend {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   cursor: pointer;
 
   div {
     display: flex;
-    justify-content: center;
-    align-items: center;
 
     h4 {
       margin: 0 0 0 1rem;
@@ -470,20 +469,10 @@
   }
 }
 
-.list {
-  display: flex;
-  align-items: center;
-  margin: 0.5rem 1rem;
+.wishItem {
+  margin: 0 0 0 2.5rem;
 
   p {
     margin: 0 0 0 0.5rem;
   }
-}
-
-.iconPlus {
-  transition: transform 0.3s ease;
-}
-
-.iconClose {
-  transition: transform 0.3s ease;
 }

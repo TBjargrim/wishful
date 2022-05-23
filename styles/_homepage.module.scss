@@ -5,7 +5,7 @@
   min-height: calc(100vh - 17.125rem);
   display: flex;
   position: relative;
-  z-index: -1;
+  /*   z-index: -1; */
 
   @include respond(tablet) {
     flex-direction: column;
@@ -150,6 +150,7 @@
     max-width: 35rem;
     margin: 2rem 0 5rem 2rem;
   }
+
   @include respond(mobile) {
     width: 20rem;
     margin: 2rem auto;

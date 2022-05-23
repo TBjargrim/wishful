@@ -35,6 +35,10 @@
   width: 30%;
   padding: 2.125rem 0 2.125rem 6rem;
 
+  h5 {
+    margin: 0 0 0.5rem 0;
+  }
+
   @include respond(tablet) {
     padding-left: 2rem;
   }
@@ -89,9 +93,21 @@
   }
 }
 
-.contactInfo {
+.contactInfoWishful {
   display: flex;
-  padding: 0.2rem 1rem;
+  padding: 0.3rem 0;
+
+  p {
+    margin-left: 0.5rem;
+  }
+}
+
+.contactInfo {
+  padding: 0.3rem 1rem;
+
+  a {
+    display: flex;
+  }
 
   p {
     margin-left: 0.5rem;
@@ -102,6 +118,10 @@
 }
 
 .iconWrapper {
+  a {
+    text-decoration: none;
+  }
+
   @include respond(tablet) {
     display: flex;
     padding: 0;
@@ -125,6 +145,7 @@
 
 .balloonsImageRight {
   position: absolute;
+  z-index: -1;
   top: -3rem;
   right: 0;
 
