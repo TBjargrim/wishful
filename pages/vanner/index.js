@@ -126,7 +126,7 @@ const Friends = ({
                         </>
                       ) : (
                         <NextImage
-                          src="/avatar_1.svg"
+                          src="/profileImage.jpg"
                           alt="profileImage"
                           width="50"
                           height="50"

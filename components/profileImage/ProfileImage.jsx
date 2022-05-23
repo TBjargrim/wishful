@@ -72,7 +72,7 @@ const ProfileImage = ({
               height="80"
             />
           ) : (
-            <Icon src="/avatar_1.svg" alt="logo" width="70" height="70" />
+            <Icon src="/profileImage.jpg" alt="logo" width="70" height="70" />
           )}
 
           <form onSubmit={formHandler} className={styles.form}>

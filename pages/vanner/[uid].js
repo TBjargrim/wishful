@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import NextImage from 'next/image';
 import Icon from '../../components/shared/Icon';
 import styles from '../../styles/_profile.module.scss';
-import AnimateHeight from 'react-animate-height';
 import { db } from '../../firebase/config';
 import {
   collection,
@@ -29,7 +28,7 @@ const User = ({
   const { name: friendsName, email, uid } = queryUser;
   const [isFriend, setIsFriend] = useState(false);
   const [interests, setInterests] = useState([]);
-  const [height, setHeight] = useState(0);
+
   const {
     addedDates: allFriendDates,
     birthdate,
@@ -44,7 +43,6 @@ const User = ({
 
   useEffect(() => {
     setAllData(
-   
       user,
       setCollectedInformation,
       addedDates,
@@ -95,7 +93,7 @@ const User = ({
       });
     }
   }, [usersFollow]);
-  console.log(height);
+
   return (
     <div className={styles.profileContainer}>
       <div className={styles.userInfoContainer}>
@@ -143,7 +141,7 @@ const User = ({
           {allFriendDates !== undefined ? (
             allFriendDates.map((dates, i) => (
               <div className={styles.dateCard}>
-                <div>
+                <div className={styles.list}>
                   <NextImage
                     src={dates.icon}
                     alt="logo"
@@ -192,37 +190,26 @@ const User = ({
         {wishlist !== undefined ? (
           wishlist.map(({ icon, listName, items }) => (
             <div className={styles.wishlistsWrapperFriend}>
-              <div
-                aria-expanded={height !== 0}
-                className={styles.wishlistFriend}
-                onClick={() => setHeight(height === 0 ? 'auto' : 0)}
-              >
+              <div className={styles.wishlistFriend}>
                 <div>
                   <NextImage src={icon} alt="logo" width="35" height="35" />
                   <h4>{listName}</h4>
                 </div>
-                <Icon
-                  className={styles.plus}
-                  src="/plus-icon.svg"
-                  altText="Plus-icon"
-                  width="15"
-                  height="15"
-                />
-              </div>
 
-              <AnimateHeight id="panel" duration={500} height={height}>
                 {items.map((item) => (
-                  <div className={styles.list}>
-                    <Icon
-                      src="/balloons1.svg"
-                      alttext="Balloons"
-                      width="30"
-                      height="30"
-                    />
-                    <p>{item}</p>
+                  <div className={styles.wishItem}>
+                    <div>
+                      <Icon
+                        src="/balloons1.svg"
+                        alttext="Balloons"
+                        width="30"
+                        height="30"
+                      />
+                      <p>{item}</p>
+                    </div>
                   </div>
                 ))}
-              </AnimateHeight>
+              </div>
             </div>
           ))
         ) : (
@@ -240,7 +227,7 @@ export default User;
 
 export async function getStaticPaths() {
   const users = [];
-  const q = query(collection(db, 'users'));
+  const q = query(collection(db, 'usersDetails'));
 
   const querySnapshot = await getDocs(q);
 
@@ -265,7 +252,7 @@ export const getStaticProps = async (context) => {
   const detailsUser = [];
   const wishlistsUser = [];
 
-  const q = query(collection(db, 'users'));
+  const q = query(collection(db, 'usersDetails'));
 
   const querySnapshot = await getDocs(q);
 

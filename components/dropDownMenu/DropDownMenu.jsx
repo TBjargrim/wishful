@@ -50,7 +50,12 @@ const DropdownMenu = ({ collectedInformation }) => {
             height="90"
           />
         ) : (
-          <NextImage src="/avatar_1.svg" alt="avatar" width="75" height="75" />
+          <NextImage
+            src="/profileImage.jpg"
+            alt="avatar"
+            width="55"
+            height="55"
+          />
         )}
       </div>
       <nav ref={dropdownRef} className={`${styles.menu} ${setActiveClass}`}>
