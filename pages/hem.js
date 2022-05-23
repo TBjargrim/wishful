@@ -14,6 +14,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { setAllData } from '../components/helperFunctions';
+import Link from 'next/link';
 
 const Hem = ({
   name,
@@ -67,6 +68,7 @@ const Hem = ({
       allDay: true,
       start: changeYear(v.birthdate),
       end: changeYear(v.birthdate),
+      uid: v.uid,
     }));
 
     const mergedDates = [...newAddedDates, ...eventsData];
@@ -186,8 +188,6 @@ const Hem = ({
     for (let i = 0; i < dates.length; i++) {
       const theDate = dates[i].start;
       if (theDate.slice(8, 10) > today) {
-        // console.log('bigger');
-        // console.log(dates[i]);
         const dateForReminder = {
           date: dates[i].start,
           newDate: theDate.slice(8, 10) - today,
@@ -249,7 +249,7 @@ const Hem = ({
           </div>
           <div className={styles.reminders}>
             {reminderDates.length > 0 ? (
-              reminderDates.map(({ title, newDate }) => (
+              reminderDates.map(({ title, newDate, uid }) => (
                 <div className={styles.reminderCard}>
                   <div className={styles.cardImgReminder}>
                     <NextImage
@@ -264,6 +264,7 @@ const Hem = ({
                     <p>
                       <span>{newDate} dagar</span> kvar
                     </p>
+
                     <a>
                       <button>Se önskelistor</button>
                     </a>

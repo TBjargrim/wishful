@@ -98,12 +98,29 @@ const User = ({
       });
     }
   }, [usersFollow]);
-
+  console.log(profileImage);
   return (
     <div className={styles.profileContainer}>
       <div className={styles.userInfoContainer}>
         <div className={styles.topSection}>
-          <NextImage src="/avatar_1.svg" alt="logo" width="150" height="150" />
+          {profileImage ? (
+            <>
+              <img
+                src={profileImage}
+                alt="profileImage"
+                width="90"
+                height="90"
+              />
+            </>
+          ) : (
+            <NextImage
+              src="/profileImage.jpg"
+              alt="profileImage"
+              width="90"
+              height="90"
+            />
+          )}
+
           <h5>{name}</h5>
           <br />
           <p>{description}</p>

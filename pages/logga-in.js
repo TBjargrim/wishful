@@ -4,7 +4,6 @@ import styles from '../styles/_signin.module.scss';
 import { useAuth } from '../context/AuthContext';
 import Link from 'next/link';
 import Router from 'next/router';
-import Link from 'next/link';
 
 const SignIn = () => {
   const { user, login } = useAuth();

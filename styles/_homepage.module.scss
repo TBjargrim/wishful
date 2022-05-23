@@ -5,7 +5,7 @@
   min-height: calc(100vh - 17.125rem);
   display: flex;
   position: relative;
-  z-index: -1;
+  /*   z-index: -1; */
 
   @include respond(tablet) {
     flex-direction: column;
@@ -44,13 +44,13 @@
 
   @include respond(mobile) {
     width: 90%;
-    margin: 2rem auto 5rem auto;  
+    margin: 2rem auto 5rem auto;
   }
 }
 
 .eventsWrapper {
   width: 100%;
-  
+
   h3 {
     padding-bottom: 0.5rem;
     border-bottom: 1px solid #c1c1c1;
@@ -141,7 +141,7 @@
 
   // @include respond(tablet) {
   //   max-width: 45rem;
-  // }  
+  // }
   @include respond(mobile) {
     width: 20rem;
     margin: 2rem auto;
