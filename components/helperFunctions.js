@@ -62,7 +62,7 @@ export const setAllData = (
           description: '',
           addedDates,
           uid: user.uid,
-          name:'',
+          name: '',
         });
       }
     });
