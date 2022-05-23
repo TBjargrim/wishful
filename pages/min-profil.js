@@ -57,19 +57,23 @@ const Profile = ({
             {collectedInformation && (
               <>
                 {collectedInformation.profileImage !== '' ? (
+                  <div className={styles.imgWrapper}>
                   <img
                     src={collectedInformation.profileImage}
                     alt="logo"
                     width="90"
                     height="90"
                   />
+                  </div>
                 ) : (
+                  <div className={styles.imgWrapper}>
                   <NextImage
                     src="/profileImage.jpg"
                     alt="avatar"
                     width="55"
                     height="55"
                   />
+                  </div>
                 )}
                 <h5>{collectedInformation.name}</h5>
                 <p>{collectedInformation.description}</p>

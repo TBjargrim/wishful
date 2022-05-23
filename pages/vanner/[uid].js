@@ -107,21 +107,25 @@ const User = ({
         <div className={styles.userInfoContainer}>
           <div className={styles.topSection}>
             {profileImage ? (
-              <>
+              
+              <div className={styles.imgWrapper}>
                 <img
                   src={profileImage}
                   alt="profileImage"
                   width="90"
                   height="90"
                 />
-              </>
+              
+              </div>
             ) : (
+              <div className={styles.imgWrapper}>
               <NextImage
                 src="/profileImage.jpg"
                 alt="profileImage"
                 width="90"
                 height="90"
               />
+              </div>
             )}
 
             <h5>{name}</h5>
