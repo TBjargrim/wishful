@@ -225,7 +225,7 @@ const Hem = ({
                 currentMonthDates.map(({ title, type, writtenDate, icon }) => (
                   <div className={styles.eventCard}>
                     <div className={styles.cardImg}>
-                      <NextImage src={icon} alt="logo" width="45" height="45" />
+                      <NextImage src={icon} alt={icon} width="45" height="45" />
                     </div>
                     <div>
                       <h5>{writtenDate}</h5>
@@ -254,7 +254,7 @@ const Hem = ({
                   <div className={styles.cardImgReminder}>
                     <NextImage
                       src="/present-circle.svg"
-                      alt="logo"
+                      alt="present circle logo"
                       width="40"
                       height="40"
                     />

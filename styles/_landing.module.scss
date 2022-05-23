@@ -27,6 +27,18 @@
   }
 }
 
+.buttonWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-top: 3rem;
+  button {
+    margin: 1rem;
+  }
+  @include respond(mobile) {
+margin: 3rem auto 1rem auto;
+  }
+}
+
 .leftColumn {
   margin-right: 5rem;
   max-width: 39rem;

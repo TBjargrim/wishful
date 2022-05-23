@@ -135,15 +135,6 @@ const MyWishLists = ({
 
         <AnimateHeight id="panel" duration={500} height={height}>
           <form className={styles.newListForm}>
-            <div className={styles.listHeader}>
-              {/*               <NextImage
-                src="/empty-circle.svg"
-                alt="logo"
-                width="35"
-                height="35"
-              /> 
-              <h3>Ny lista ...</h3>*/}
-            </div>
             <div className={styles.contentWrapper}>
               <div className={styles.inputWrapper}>
                 <div className={styles.nameInput}>
@@ -237,7 +228,7 @@ const MyWishLists = ({
             <div key={index} className={styles.wishlist}>
               <div className={styles.iconTitleWrapper}>
                 <div onClick={() => openList(id)}>
-                  <NextImage src={icon} alt="logo" width="35" height="35" />
+                  <NextImage src={icon} alt={icon} width="35" height="35" />
                   <h4>{listName}</h4>
                 </div>
                 <div className={styles.deleteBtn}>
@@ -254,9 +245,9 @@ const MyWishLists = ({
                 <div className={styles.wrapper}>
                   <ul className={styles.addedItems}>
                     {items &&
-                      items.map((item) => (
+                      items.map((item, index) => (
                         <div className={styles.itemInWishlist}>
-                          <li key={item}>{item}</li>
+                          <li key={index}>{item}</li>
                           <button
                             onClick={(e) => handleRemoveItem(e, item, index)}
                           >

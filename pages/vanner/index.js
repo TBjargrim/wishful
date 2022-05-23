@@ -16,6 +16,7 @@ import { useAuth } from '../../context/AuthContext';
 import { setAllData } from '../../components/helperFunctions';
 
 const Friends = ({
+  collectedInformation,
   userDetails,
   usersFollow,
   setUsersFollow,
@@ -116,11 +117,18 @@ const Friends = ({
                   <a>
                     <div className={styles.profileImage}>
                       {f.profileImage !== '' ? (
-                        <></>
+                        <>
+                          <img
+                            src={f.profileImage}
+                            alt="profileImage"
+                            width="90"
+                            height="90"
+                          />
+                        </>
                       ) : (
                         <NextImage
-                          src="/avatar_1.svg"
-                          alt="logo"
+                          src="/profileImage.jpg"
+                          alt="profileImage"
                           width="50"
                           height="50"
                         />
@@ -165,10 +173,17 @@ const Friends = ({
                     <a>
                       <div className={styles.profileImage}>
                         {f.profileImage !== '' ? (
-                          <></>
+                          <>
+                            <img
+                              src={f.profileImage}
+                              alt="profileImage"
+                              width="90"
+                              height="90"
+                            />
+                          </>
                         ) : (
                           <NextImage
-                            src="/avatar_1.svg"
+                            src="/profileImage.jpg"
                             alt="logo"
                             width="50"
                             height="50"

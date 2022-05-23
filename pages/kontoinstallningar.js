@@ -3,12 +3,12 @@ import Button from '../components/shared/button/Button';
 import Icon from '../components/shared/Icon';
 import styles from '../styles/_accountSettings.module.scss';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { colRefUserDetails, db } from '../firebase/config';
 import { useAuth } from '../context/AuthContext';
 import { changedDate } from '../components/helperFunctions';
 import { setAllData } from '../components/helperFunctions';
-
+import ProfileImage from '../components/profileImage/ProfileImage';
+import AnimateHeight from 'react-animate-height';
 import {
   setDoc,
   doc,
@@ -17,7 +17,6 @@ import {
   onSnapshot,
   query,
 } from 'firebase/firestore';
-import AnimateHeight from 'react-animate-height';
 
 const Settings = ({
   setName,
@@ -29,7 +28,7 @@ const Settings = ({
   setAllWishlists,
 }) => {
   const { user } = useAuth();
-  const router = useRouter();
+
   const [height, setHeight] = useState(0);
   const [addedDate, setAddedDate] = useState({});
 
@@ -63,8 +62,6 @@ const Settings = ({
       ...collectedInformation,
       updatedBirthdate: updatedBirthdate,
     });
-
-    setCollectedInformation({ ...collectedInformation, name });
 
     const docRef = doc(db, 'usersDetails', user.uid);
 
@@ -114,7 +111,7 @@ const Settings = ({
       });
     }
   };
-
+  console.log(collectedInformation);
   const onValueChange = (e) => {
     const weddingDayIcon = '/wedding-circle.svg';
     const yearDayIcon = '/confetti-circle.svg';
@@ -170,13 +167,18 @@ const Settings = ({
       <h3>Fyll i din profil</h3>
       <p>Den här informationen kommer vara synlig på din sida</p>
 
+      <ProfileImage
+        collectedInformation={collectedInformation}
+        setCollectedInformation={setCollectedInformation}
+      />
+
       <form onSubmit={(e) => handleSubmit(e, '/min-profil')}>
         <div className={styles.topSection}>
           <div className={styles.fields}>
             <div className={styles.userAvatar}>
-              <Icon src="/avatar_1.svg" alt="logo" width="70" height="70" />
+              {/*  <Icon src="/avatar_1.svg" alt="logo" width="70" height="70" /> */}
             </div>
-            {collectedInformation && (
+            {/*             {collectedInformation && (
               <>
                 <label htmlFor="profileImage">
                   Lägg till länk till profilbild
@@ -190,7 +192,7 @@ const Settings = ({
                   onChange={(e) => handleChange(e)}
                 />
               </>
-            )}
+            )} */}
             <label htmlFor="name">Användarnamn</label>
             <input
               name="name"

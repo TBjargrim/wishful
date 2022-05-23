@@ -6,20 +6,20 @@ const Footer = () => {
   return (
     <section className={styles.footerContainer}>
       <div className={styles.leftColumn}>
-        <Icon src="/logo_2.svg" alttext="logo" width="100" height="30" />
+        <Icon src="/logo_2.svg" alttext="Wishful logo" width="100" height="30" />
         <h5>Kontakta oss</h5>
         <div className={styles.contactInfo}>
-          <Icon src="/phoneIcon.svg" alttext="Icon" />
+          <Icon src="/phoneIcon.svg" alttext="phoneIcon" />
           <p>+467 1234 56 78</p>
         </div>
         <div className={styles.contactInfo}>
-          <Icon src="/mailIcon.svg" alttext="Icon" />
+          <Icon src="/mailIcon.svg" alttext="mailIcon" />
           <p>wishful@wishful.se</p>
         </div>
         <div className={styles.balloonsImageLeft}>
           <Icon
             src="/balloons1.svg"
-            alttext="Balloons"
+            alttext="Balloons image for footer"
             width="200"
             height="150"
           />
@@ -31,17 +31,17 @@ const Footer = () => {
           <h5>Sandra Persson</h5>
           <div className={styles.iconWrapper}>
             <div className={styles.contactInfo}>
-              <Icon src="/githubIcon.svg" alttext="Icon" />
+              <Icon src="/githubIcon.svg" alttext="githubIcon" />
               <p>github.se/sandrapersson149</p>
             </div>
 
             <div className={styles.contactInfo}>
-              <Icon src="/linkedinIcon.svg" alttext="Icon" />
+              <Icon src="/linkedinIcon.svg" alttext="linkedinIcon" />
               <p>linkedin.com</p>
             </div>
 
             <div className={styles.contactInfo}>
-              <Icon src="/mailIcon.svg" alttext="Icon" />
+              <Icon src="/mailIcon.svg" alttext="mailIcon" />
               <p>sandrapersson.dev@gmail.com</p>
             </div>
           </div>
@@ -51,17 +51,17 @@ const Footer = () => {
           <h5>Therese Bjärgrim</h5>
           <div className={styles.iconWrapper}>
             <div className={styles.contactInfo}>
-              <Icon src="/githubIcon.svg" alttext="Icon" />
+              <Icon src="/githubIcon.svg" alttext="githubIcon" />
               <p>github.se/tbjargrim</p>
             </div>
 
             <div className={styles.contactInfo}>
-              <Icon src="/linkedinIcon.svg" alttext="Icon" />
+              <Icon src="/linkedinIcon.svg" alttext="linkedinIcon" />
               <p>linkedin.com</p>
             </div>
 
             <div className={styles.contactInfo}>
-              <Icon src="/mailIcon.svg" alttext="Icon" />
+              <Icon src="/mailIcon.svg" alttext="mailIcon" />
               <p>tbjargrim@gmail.com</p>
             </div>
           </div>
@@ -69,7 +69,7 @@ const Footer = () => {
         <div className={styles.balloonsImageRight}>
           <Icon
             src="/balloons1.svg"
-            alttext="Balloons"
+            alttext="Balloons image for footer"
             width="250"
             height="180"
           />
