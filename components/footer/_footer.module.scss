@@ -64,6 +64,7 @@
   @include respond(tablet) {
     padding: 2rem;
     justify-content: space-around;
+
     p {
       display: none;
     }
@@ -75,6 +76,7 @@
     padding: 1rem;
     justify-content: center;
     flex-wrap: wrap;
+    
     p {
       display: none;
     }
@@ -112,9 +114,6 @@
   p {
     margin-left: 0.5rem;
   }
-
-  @include respond(mobile) {
-  }
 }
 
 .iconWrapper {
@@ -123,11 +122,6 @@
   }
 
   @include respond(tablet) {
-    display: flex;
-    padding: 0;
-  }
-
-  @include respond(mobile) {
     display: flex;
     padding: 0;
   }

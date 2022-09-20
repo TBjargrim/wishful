@@ -18,7 +18,6 @@ import Header from '../components/shared/Header';
 import Link from 'next/link';
 
 const Hem = ({
-  name,
   userDetails,
   usersFollow,
   addedDates,
@@ -108,7 +107,7 @@ const Hem = ({
         };
         allAddedDates.push(friendAddedDate);
       }
-    }
+    };
 
     const eventsDataVol2 = allAddedDates.map((v) => ({
       title: v.name,
@@ -154,7 +153,7 @@ const Hem = ({
       if (str.getMonth() + 1 === currentMonth) {
         monthDates.push(allDates[i]);
       }
-    }
+    };
 
     return monthDates;
   };
@@ -197,14 +196,15 @@ const Hem = ({
         };
         allUpcommingEvents.push(dateForReminder);
       }
-    }
+    };
+
     const sortedArr = allUpcommingEvents.sort((x, y) => {
       return x.newDate - y.newDate;
     });
 
     return sortedArr;
   };
-  console.log(reminderDates);
+
   return (
     <>
       <Header children="Hem" />

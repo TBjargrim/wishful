@@ -1,13 +1,13 @@
 import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
-let testDateString = '2015-10-14';
-export function changedDate(date) {
-  function getTheDay(date) {
+
+export const changedDate= (date) => {
+  const getTheDay = (date) => {
     return date.slice(8, 10);
   }
 
-  function getMonth(date) {
-    let months = [
+  const getMonth = (date) => {
+    const months = [
       'Januari',
       'Februari',
       'Mars',
@@ -24,6 +24,7 @@ export function changedDate(date) {
 
     let splitDate = date.split('-');
     let getMonth = splitDate[1];
+
     if (getMonth && getMonth.slice(0, 1) == 0) {
       let noZero = getMonth.slice(1, 2);
       let getOneLessNumber = (noZero -= 1);
@@ -75,6 +76,7 @@ export const setAllData = (
         setDoc(docRefFriends, { friends: [] });
       }
     });
+    
     onSnapshot(docRefWishlist, (doc) => {
       if (doc.data() !== undefined) {
         const data = { ...doc.data() };

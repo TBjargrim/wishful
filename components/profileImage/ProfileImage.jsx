@@ -28,12 +28,10 @@ const ProfileImage = ({
   const formHandler = (e) => {
     e.preventDefault();
     const file = e.target[0].files[0];
-    console.log(file);
     uploadFiles(file);
   };
 
   const uploadFiles = (file) => {
-    //
     if (!file) return;
     const storageRef = ref(storage, `files/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);

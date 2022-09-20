@@ -66,8 +66,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40px;
-    height: 40px;
+    width: 2.5rem;
+    height: 2.5rem;
     margin-left: 1rem;
     cursor: pointer;
     transition: all 0.5s ease-in-out;
@@ -79,10 +79,10 @@
 
   @include respond(tablet) {
     position: relative;
-    width: 40px;
-    height: 4px;
+    width: 2.5rem;
+    height: 0.25rem;
     background-color: $color-primary;
-    border-radius: 5px;
+    border-radius: 0.313rem;
     transition: all 0.5s ease-in-out;
   }
 }
@@ -95,33 +95,33 @@
     content: '';
     display: flex;
     position: absolute;
-    width: 40px;
-    height: 4px;
+    width: 2.5rem;
+    height: 0.25rem;
     background: $color-primary;
-    border-radius: 5px;
+    border-radius: 0.313rem;
     transition: all 0.5s ease-in-out;
   }
 }
 
 .menuButton::before {
-  transform: translateY(-16px);
+  transform: translateY(-1rem);
 }
 
 .menuButton::after {
-  transform: translateY(16px);
+  transform: translateY(1rem);
 }
 
 .mobileContainer.open .menuButton {
-  transform: translateX(-50px);
+  transform: translateX(-3.125rem);
   background: transparent;
 }
 
 .mobileContainer.open .menuButton::before {
-  transform: rotate(45deg) translate(35px, -35px);
+  transform: rotate(45deg) translate(2.188rem, -2.188rem);
 }
 
 .mobileContainer.open .menuButton::after {
-  transform: rotate(-45deg) translate(35px, 35px);
+  transform: rotate(-45deg) translate(2.188rem, 2.188rem);
 }
 
 .mobileList {
@@ -174,18 +174,19 @@
 }
 
 .logoutBtnContainer {
-  border-top: 1px solid;
+  border-top: 0.063rem solid;
   border-color: $color-grey600;
   margin-top: 2rem;
   width: 50%;
   display: flex;
   justify-content: center;
   align-self: center;
+  
   button {
     margin-top: 2rem;
     background: #ff6e83;
-    box-shadow: 8px 11px 25px 1px rgba(98, 98, 98, 0.13);
-    border-radius: 15px;
+    box-shadow: 0.5rem 0.688rem 1.563rem 0.063rem rgba(98, 98, 98, 0.13);
+    border-radius: 0.938rem;
     border: transparent;
     padding: 0.5rem;
     width: 12rem;
@@ -195,6 +196,7 @@
 
   @include respond(mobile) {
     width: 80%;
+    
     button {
       font-size: $fs-p3;
     }

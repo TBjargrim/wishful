@@ -92,7 +92,6 @@ const Friends = ({
     } else didMount.current = true;
   }, [usersFollow]);
 
-  console.log(usersFollow);
   return (
     <>
       <Header children="Hitta vänner" />

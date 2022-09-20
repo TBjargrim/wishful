@@ -8,7 +8,7 @@ import useRouter from 'next/router';
 const DropdownMenu = ({ collectedInformation }) => {
   const dropdownRef = useRef(null);
   const [isActive, setIsActive] = useState(false);
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
   const router = useRouter;
 
   const handleOpenMenu = () => setIsActive(!isActive);
@@ -39,12 +39,14 @@ const DropdownMenu = ({ collectedInformation }) => {
 
   const setActiveClass = isActive ? `${styles.active}` : `${styles.inActive}`;
 
+  const { profileImage } = collectedInformation
+  
   return (
     <div className={styles.menuContainer}>
       <div onClick={handleOpenMenu} className={styles.menuTrigger}>
-        {collectedInformation.profileImage !== '' ? (
+        {profileImage !== '' ? (
           <img
-            src={collectedInformation.profileImage}
+            src={profileImage}
             alt="logo"
             width="90"
             height="90"

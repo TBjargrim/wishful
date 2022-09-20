@@ -1,11 +1,10 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import styles from '../../styles/_profile.module.scss';
 import AnimateHeight from 'react-animate-height';
 import NextImage from 'next/image';
 import Button from '../shared/button/Button';
 
 const MyWishLists = ({
-  name,
   setAllWishlists,
   allWishlists,
   newWishlist,
@@ -19,13 +18,14 @@ const MyWishLists = ({
   const openList = (id) => {
     if (open === id) {
       return setOpen(true);
+    } else {
+      setOpen(id);
     }
-    setOpen(id);
   };
 
   const addNewItem = (index) => (e) => {
     e.preventDefault();
-    let foundLists = [...allWishlists];
+    const foundLists = [...allWishlists];
     foundLists[index] = {
       id: foundLists[index].id,
       listName: foundLists[index].listName,
@@ -105,11 +105,11 @@ const MyWishLists = ({
 
   const handleRemoveItem = (e, item, index) => {
     e.preventDefault();
-    let findList = allWishlists[index];
-    let itemsInList = findList.items;
-    let removeItem = itemsInList.filter((items) => items !== item);
+    const findList = allWishlists[index];
+    const itemsInList = findList.items;
+    const removeItem = itemsInList.filter((items) => items !== item);
 
-    let foundLists = [...allWishlists];
+    const foundLists = [...allWishlists];
     foundLists[index] = {
       id: foundLists[index].id,
       listName: foundLists[index].listName,
@@ -119,7 +119,7 @@ const MyWishLists = ({
     };
     setAllWishlists(foundLists);
   };
-  console.log(allWishlists);
+
   return (
     <div className={styles.wishlistContainer}>
       <div>

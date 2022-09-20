@@ -40,13 +40,6 @@ const User = ({
 
   const { wishlist } = wishlistsUser[0];
 
-  const openList = (id) => {
-    if (open === id) {
-      return setOpen(true);
-    }
-    setOpen(id);
-  };
-
   useEffect(() => {
     setAllData(
       user,
@@ -99,7 +92,7 @@ const User = ({
       });
     }
   }, [usersFollow]);
-  console.log(profileImage);
+
   return (
     <>
       <Header children={name} />
